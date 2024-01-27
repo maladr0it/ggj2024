@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {GROUND_LEVEL} from "../constants";
+import { GROUND_LEVEL } from "../constants";
 
 export class Cactus {
   sprite = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
@@ -9,9 +9,9 @@ export class Cactus {
     this.sprite.anchor.set(0, 1);
   }
 
-  static create(x: number, y = GROUND_LEVEL) {
+  static spawn(x: number, y = GROUND_LEVEL) {
     const entity = new Cactus();
-    entity.x = x
+    entity.x = x;
     entity.y = y;
     return entity;
   }

@@ -6,16 +6,17 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
-import { entity_create, entity_render } from "./entity";
 import { log_clear, log_getContent, log_write } from "./log";
 
+import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
+import { level } from "./level";
+import { Cactus } from "./entities/Cactus";
 import { Score } from "./score";
 
 import "./style.css";
-import {GRAVITY, GROUND_LEVEL, JUMP_VEL} from "./constants";
-import {Cactus} from "./entities/Cactus";
+import { Dino } from "./entities/Dino";
 
-const canvasWrapperEl = document.getElementById("canvas-wrapper");
+const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
 
 const app = new PIXI.Application({
@@ -25,120 +26,47 @@ const app = new PIXI.Application({
 });
 
 //
-// Load assets
-//
-const runSprite = PIXI.AnimatedSprite.fromImages([
-  "sprites/dino-run1.png",
-  "sprites/dino-run2.png",
-]);
-runSprite.anchor.set(0, 1); // anchor to bottom so we can test for ground contact more easily
-runSprite.animationSpeed = 0.1; // what does 0.1 mean exactly?
-
-const jumpSprite = PIXI.AnimatedSprite.fromImages(["sprites/dino-jump1.png"]);
-jumpSprite.anchor.set(0, 1);
-jumpSprite.animationSpeed = 0.1;
-
-const groundSprite1 = PIXI.AnimatedSprite.fromImages(["sprites/ground.png"]);
-groundSprite1.anchor.set(0, 1);
-const groundSprite2 = PIXI.AnimatedSprite.fromImages(["sprites/ground.png"]);
-groundSprite2.anchor.set(0, 1);
-
-
-//
-// Level Map Data
-//
-
-const CACTI = [
-  Cactus.create(500)
-]
-
-//
 // game state
 //
 const keyboard = inputSource_create();
+const dino = new Dino();
 
-let distance = 0; // distance the dino has travelled
-let runSpeed = 0;
-
-const dino = entity_create(jumpSprite);
-let ground1 = entity_create(groundSprite1);
-let ground2 = entity_create(groundSprite2);
+export const state = {
+  dino,
+  keyboard,
+  distance: 0, // distance the dino has travelled
+  runSpeed: 0,
+};
 
 const score = new Score(20, 20, app.stage);
-score.setValue(1020)
+score.setValue(1020);
 
 //
 // Main loop
 //
 const tick = (dt: number) => {
-  const { activeButtons, pressedButtons } = inputSource_read(keyboard);
+  // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
-  // Apply forces
-  dino.dy += GRAVITY * dt;
-  if(pressedButtons.has("start/jump") && runSpeed === 0) {
-    runSpeed = 10;
-    runSprite.play();
-  }
-
-  // dino is in the air
-  if (dino.y < GROUND_LEVEL) {
-    dino.dy += GRAVITY * dt;
-  }
-
-  dino.y = Math.min(dino.y + dino.dy * dt, GROUND_LEVEL);
-
-  // dino landed on the ground
-  if (dino.y === GROUND_LEVEL && runSpeed > 0) {
-    dino.sprite = runSprite;
-  }
-
-  // dino jumped
-  if ((pressedButtons.has("up") || pressedButtons.has("start/jump")) && dino.y === GROUND_LEVEL) {
-    dino.dy = JUMP_VEL;
-    dino.sprite = jumpSprite;
-  }
+  dino.update(dt);
 
   // move the ground
-  distance += runSpeed;
-  ground1.x -= runSpeed;
-  ground2.x -= runSpeed;
-  for(const cactus of CACTI) {
-    cactus.x -= runSpeed;
-  }
+  state.distance += state.runSpeed;
 
-  // if the ground has gone offscreen, move it
-  if (ground1.x + ground1.sprite.width < 0) {
-    ground1.x = ground2.x + ground2.sprite.width;
-    const temp = ground1;
-    ground1 = ground2;
-    ground2 = temp;
-  }
-
-  log_write("distance:", distance);
-
-  // render (update sprites)
-  //
-  entity_render(ground1, app.stage);
-  entity_render(ground2, app.stage);
-  entity_render(dino, app.stage);
+  log_write("distance:", state.distance);
 
   logEl.innerText = log_getContent();
   log_clear();
 };
 
-dino.x = 50;
-dino.y = GROUND_LEVEL;
+const start = () => {
+  dino.spawn(app.stage, 50, GROUND_LEVEL);
 
-ground1.y = GROUND_LEVEL;
-ground1.x = 0;
-ground2.y = GROUND_LEVEL;
-ground2.x = ground1.sprite.width;
+  for (const item of level) {
+    app.stage.addChild(item.sprite);
+  }
 
-app.ticker.add(tick);
-
-for(const cactus of CACTI) {
-  app.stage.addChild(cactus.sprite);
-}
+  app.ticker.add(tick);
+};
 
 //
 // Add stuff to DOM
@@ -153,3 +81,4 @@ document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(keyboard, event.key);
 });
 
+start();

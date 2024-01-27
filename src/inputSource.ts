@@ -20,8 +20,8 @@ const keyboardMap = {
   ArrowDown: "down",
   ArrowLeft: "left",
   ArrowRight: "right",
-  z: "action_a",
-  x: "action_b",
+  Space: "action_a",
+  c: "action_b",
 } as const;
 
 const isInputKey = (key: string): key is keyof typeof keyboardMap => {
