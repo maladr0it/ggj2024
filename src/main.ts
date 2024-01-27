@@ -48,7 +48,7 @@ const tick = (dt: number) => {
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
-      scoreTicker.container.visible = false;
+      state.scoreTicker.container.visible = false;
       if (state.keyboard.activeButtons.has("jump")) {
         setGameStatus(GameStatus.Initializing);
       }
@@ -66,7 +66,7 @@ const tick = (dt: number) => {
       break;
     
     case GameStatus.Playing:
-      scoreTicker.container.visible = true;
+      state.scoreTicker.container.visible = true;
       background.reveal(dt);
       state.dino.update(dt);
 
