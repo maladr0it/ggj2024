@@ -77,4 +77,8 @@ export abstract class Entity {
   }
 
   update(_dt: number) {}
+
+  isCollidingWith(hitbox: PIXI.Rectangle) {
+    return this.sprite.getBounds().intersects(hitbox);
+  }
 }
