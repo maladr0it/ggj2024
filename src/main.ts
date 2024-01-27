@@ -103,7 +103,7 @@ const startButtonClick = () => {
 // Add stuff to DOM
 //
 // @ts-ignore
-document.body.appendChild(app.view);
+document.body.querySelector("#app").appendChild(app.view);
 
 document.addEventListener("keydown", (event) => {
   inputSource_handleKeyDown(keyboard, event.key);
