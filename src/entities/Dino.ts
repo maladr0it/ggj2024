@@ -15,9 +15,9 @@ const jumpAnim = [await PIXI.Texture.fromURL("sprites/dino-jump1.png")];
 
 export class Dino {
   private spawned = false;
-  private sprite: PIXI.AnimatedSprite;
   private dy = 0;
   private dx = 0;
+  public sprite: PIXI.AnimatedSprite;
 
   constructor() {
     this.sprite = new PIXI.AnimatedSprite(runAnim);
@@ -45,7 +45,6 @@ export class Dino {
     container.addChild(this.sprite);
     this.x = x;
     this.y = y;
-    this.sprite.play();
 
     this.spawned = true;
   }
