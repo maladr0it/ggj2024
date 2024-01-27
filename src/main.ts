@@ -46,6 +46,10 @@ const tick = (dt: number) => {
 
   state.dino.update(dt);
 
+  for(const item of level) {
+    item.update(dt);
+  }
+
   // move the ground
   state.distance += state.runSpeed;
 
