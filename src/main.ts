@@ -16,9 +16,9 @@ import { Background } from "./background";
 import * as Tone from "tone";
 import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
 
-await assets.load();
+// PIXI.settings.ROUND_PIXELS = false;
 
-PIXI.settings.ROUND_PIXELS = false;
+await assets.load();
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -39,7 +39,7 @@ app.stage.addChild(scene);
 const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
-const scoreTicker = new ScoreTicker(450, 10, scene);
+const scoreTicker = new ScoreTicker(450, 10, background.container);
 
 //
 // Main loop
@@ -49,7 +49,6 @@ const tick = (dt: number) => {
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
-      scoreTicker.container.visible = false;
       if (state.keyboard.activeButtons.has("jump")) {
         setGameStatus(GameStatus.Initializing);
       }
@@ -63,12 +62,11 @@ const tick = (dt: number) => {
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
       }
-      
+
       break;
-    
+
     case GameStatus.Playing:
-      scoreTicker.container.visible = true;
-      background.reveal(dt);
+      background.update(dt);
       state.dino.update(dt);
 
       // Move the ground.
@@ -82,7 +80,7 @@ const tick = (dt: number) => {
       scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
 
       break;
-    
+
     case GameStatus.GameOver:
       break;
   }
@@ -96,7 +94,7 @@ const tick = (dt: number) => {
 const start = () => {
   scene.addChild(background.container);
 
-  state.dino.spawn(scene, 20, GROUND_LEVEL);
+  state.dino.spawn(scene, 0, GROUND_LEVEL);
 
   for (const item of level) {
     scene.addChild(item.sprite);

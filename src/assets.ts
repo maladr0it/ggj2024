@@ -4,8 +4,12 @@ import { ToneAudioBuffer } from "tone";
 const loadAssets = async () =>
   awaitValues({
     sprites: awaitValues({
-      ground: PIXI.Texture.fromURL("sprites/ground.png"),
-      cloud: PIXI.Texture.fromURL("sprites/cloud.png"),
+      ground: PIXI.Texture.fromURL("sprites/ground.png", {
+        scaleMode: PIXI.SCALE_MODES.NEAREST,
+      }),
+      cloud: PIXI.Texture.fromURL("sprites/cloud.png", {
+        scaleMode: PIXI.SCALE_MODES.NEAREST,
+      }),
     }),
     audio: awaitValues({
       jump: new ToneAudioBuffer().load("audio/jump.mp3"),

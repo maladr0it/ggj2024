@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/eases": "^1.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "eases": "^1.0.8",
     "pixi.js": "^7.4.0",
     "tone": "^14.7.77"
   }

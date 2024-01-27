@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js";
 import { assets } from "./assets";
+import { Tween } from "./utils/tween";
+import { state } from "./state";
 
 interface ParallaxParams {
   texture: PIXI.Texture;
@@ -62,13 +64,13 @@ export class Background {
     this.mask = new PIXI.Graphics();
     this.container.addChild(this.mask);
     this.container.mask = this.mask;
-    this.reveal(0);
+    this.updateMask();
 
     const ground = new Parallax({
       texture: assets().sprites.ground,
       containerWidth: width,
     });
-    ground.container.y = 80;
+    ground.container.y = 90;
 
     this.container.addChild(ground.container);
     this.layers.push(ground);
@@ -86,14 +88,25 @@ export class Background {
     this.layers.push(clouds);
   }
 
+  update(dt: number) {
+    this.setPosition(state.distance);
+    this.revealTween.update(dt);
+    this.updateMask();
+  }
+
   setPosition(x: number) {
     for (const layer of this.layers) layer.setPosition(x);
   }
 
-  private revealedWidth = 70;
-  reveal(dt: number) {
-    this.revealedWidth = Math.min(this.width, this.revealedWidth + 10 * dt);
+  initialWidth = 45;
+  revealTween = new Tween(30);
+  updateMask() {
     this.mask.beginFill(0xffffff);
-    this.mask.drawRect(0, 0, this.revealedWidth, this.height);
+    const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
+    this.mask.drawRect(0, 0, revealedWidth, this.height);
+  }
+
+  get revealed() {
+    return this.revealTween.done;
   }
 }

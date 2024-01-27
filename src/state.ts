@@ -1,6 +1,7 @@
 //
 // game state
 //
+import { RUN_SPEED } from "./constants";
 import { Dino } from "./entities/Dino";
 import { inputSource_create } from "./inputSource";
 
@@ -26,7 +27,7 @@ export function setGameStatus(newStatus: GameStatus) {
   if (status === GameStatus.Initializing) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {
-    state.runSpeed = 10;
+    state.runSpeed = RUN_SPEED;
   } else if (status === GameStatus.GameOver) {
     state.runSpeed = 0;
     state.dino.sprite.stop();
