@@ -47,6 +47,9 @@ state.scoreTicker.spawn(450, 10, scene);
 const tick = (dt: number) => {
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
+  // update status timer for auto-transitions
+  state.gameStatusTimer += dt;
+
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
       state.scoreTicker.container.visible = false;
@@ -66,6 +69,11 @@ const tick = (dt: number) => {
 
       break;
 
+    // @ts-ignore fallthrough
+    case GameStatus.Dying:
+      if(state.gameStatusTimer > 20) {
+        setGameStatus(GameStatus.GameOver);
+      }
     case GameStatus.Playing:
       state.scoreTicker.container.visible = true;
       background.reveal(dt);

@@ -15,12 +15,14 @@ export const state = {
   keyboard,
   distance: 0, // distance the dino has travelled
   runSpeed: 10,
+  gameStatusTimer: 0,
 };
 
 export enum GameStatus {
   Unstarted,
   Initializing, // Initial jump
   Playing,
+  Dying,
   GameOver,
 }
 
@@ -30,13 +32,17 @@ export function getGameStatus() {
   return status;
 }
 
+
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
 
+  state.gameStatusTimer = 0;
   if (status === GameStatus.Initializing) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {
     state.runSpeed = 10;
+  } else if (status === GameStatus.Dying) {
+    state.runSpeed = 3;
   } else if (status === GameStatus.GameOver) {
     state.runSpeed = 0;
     state.dino.sprite.stop();
