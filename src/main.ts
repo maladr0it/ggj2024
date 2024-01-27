@@ -9,6 +9,8 @@ import {
 import { entity_create, entity_render } from "./entity";
 import { log_clear, log_getContent, log_write } from "./log";
 
+import { Score } from "./score";
+
 import "./style.css";
 
 const GRAVITY = 0.1;
@@ -58,6 +60,9 @@ const dino = entity_create(jumpSprite);
 let ground1 = entity_create(groundSprite1);
 let ground2 = entity_create(groundSprite2);
 
+const score = new Score(20, 20, app.stage);
+score.setValue(1020)
+
 //
 // Main loop
 //
@@ -76,6 +81,16 @@ const tick = (dt: number) => {
 
   // Apply forces
   dino.dy += GRAVITY * dt;
+  if(pressedButtons.has("start/jump") && runSpeed === 0) {
+    runSpeed = 10;
+    runSprite.play();
+  }
+
+  // dino is in the air
+  if (dino.y < GROUND_LEVEL) {
+    dino.dy += GRAVITY * dt;
+  }
+
   dino.y = Math.min(dino.y + dino.dy * dt, GROUND_LEVEL);
 
   // dino landed on the ground
