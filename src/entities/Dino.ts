@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
-import { state } from "../main";
+import { state } from "../state";
 
 const ANIMATION_SPEED = 0.1;
 
@@ -11,6 +11,10 @@ const runAnim = [
   await PIXI.Texture.fromURL("sprites/dino-run2.png"),
 ];
 const jumpAnim = [await PIXI.Texture.fromURL("sprites/dino-jump1.png")];
+
+export const dinoDecapAnim = [
+  await PIXI.Texture.fromURL("sprites/dino-decap.png"),
+];
 
 export class Dino {
   private spawned = false;
@@ -40,6 +44,10 @@ export class Dino {
     return this.sprite.y;
   }
 
+  get hitbox() {
+    return this.sprite.getBounds();
+  }
+
   spawn(container: PIXI.Container, x: number, y: number) {
     container.addChild(this.sprite);
     this.x = x;
@@ -53,7 +61,7 @@ export class Dino {
     this.sprite.parent.removeChild(this.sprite);
   }
 
-  private playAnimation(anim: PIXI.Texture[]) {
+  playAnimation(anim: PIXI.Texture[]) {
     if (!this.spawned) {
       throw new Error("Entity must be spawned first");
     }

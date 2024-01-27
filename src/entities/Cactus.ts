@@ -1,9 +1,10 @@
 import * as PIXI from "pixi.js";
 import { GROUND_LEVEL } from "../constants";
+import {state} from "../state";
+import {dinoDecapAnim} from "./Dino";
 
 export class Cactus {
   sprite = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
-  hitbox = this.sprite.getBounds();
 
   constructor() {
     this.sprite.anchor.set(0, 1);
@@ -33,6 +34,12 @@ export class Cactus {
   }
 
   isCollidingWith(hitbox: PIXI.Rectangle) {
-    return this.hitbox.intersects(hitbox);
+    return this.sprite.getBounds().intersects(hitbox);
+  }
+
+  update(dt: number) {
+    if(this.isCollidingWith(state.dino.hitbox)) {
+      state.dino.playAnimation(dinoDecapAnim);
+    }
   }
 }
