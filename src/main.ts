@@ -74,11 +74,6 @@ const tick = (dt: number) => {
     runSprite.play();
   }
 
-  // // dino is in the air
-  // if (dino.y < GROUND_LEVEL) {
-  //   dino.dy += GRAVITY * dt;
-  // }
-
   // Apply forces
   dino.dy += GRAVITY * dt;
   if(pressedButtons.has("start/jump") && runSpeed === 0) {
