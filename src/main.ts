@@ -58,8 +58,6 @@ score.setValue(1020);
 // Main loop
 //
 const tick = (dt: number) => {
-  log_write("isplaying", dino.sprite.playing);
-
   const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
   // Apply forces
