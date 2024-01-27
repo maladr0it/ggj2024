@@ -6,15 +6,16 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
+import { GRAVITY, GROUND_LEVEL, JUMP_VEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
 import { ScoreTicker } from "./score";
 
-import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
 import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
+
+import "./style.css";
 
 await assets.load();
 
@@ -45,6 +46,7 @@ const scoreTicker = new ScoreTicker(450, 10, scene);
 // Main loop
 //
 const tick = (dt: number) => {
+  background.setPosition(state.distance);
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
   switch (getGameStatus()) {
@@ -118,11 +120,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", event => {
+document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 
