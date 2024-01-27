@@ -6,14 +6,17 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
-
 import { entity_create, entity_render } from "./entity";
+import { log_clear, log_getContent, log_write } from "./log";
 
 import "./style.css";
 
 const GRAVITY = 0.1;
 const GROUND_LEVEL = 100;
 const JUMP_VEL = -3;
+
+const canvasWrapperEl = document.getElementById("canvas-wrapper");
+const logEl = document.getElementById("log")!;
 
 const app = new PIXI.Application({
   width: 600,
@@ -40,16 +43,20 @@ groundSprite1.anchor.set(0, 1);
 const groundSprite2 = PIXI.AnimatedSprite.fromImages(["sprites/ground.png"]);
 groundSprite2.anchor.set(0, 1);
 
+const cactusSprite1 = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
+cactusSprite1.anchor.set(0, 1);
+
 //
 // game state
 //
 const keyboard = inputSource_create();
 
+let distance = 0; // distance the dino has travelled
 let runSpeed = 0;
 
 const dino = entity_create(jumpSprite);
-const ground1 = entity_create(groundSprite1);
-const ground2 = entity_create(groundSprite2);
+let ground1 = entity_create(groundSprite1);
+let ground2 = entity_create(groundSprite2);
 
 //
 // Main loop
@@ -62,11 +69,13 @@ const tick = (dt: number) => {
     runSprite.play();
   }
 
-  // dino is in the air
-  if (dino.y < GROUND_LEVEL) {
-    dino.dy += GRAVITY * dt;
-  }
+  // // dino is in the air
+  // if (dino.y < GROUND_LEVEL) {
+  //   dino.dy += GRAVITY * dt;
+  // }
 
+  // Apply forces
+  dino.dy += GRAVITY * dt;
   dino.y = Math.min(dino.y + dino.dy * dt, GROUND_LEVEL);
 
   // dino landed on the ground
@@ -81,15 +90,28 @@ const tick = (dt: number) => {
   }
 
   // move the ground
-  // TODO: make the ground cycle forever
+  distance += runSpeed;
   ground1.x -= runSpeed;
   ground2.x -= runSpeed;
+
+  // if the ground has gone offscreen, move it
+  if (ground1.x + ground1.sprite.width < 0) {
+    ground1.x = ground2.x + ground2.sprite.width;
+    const temp = ground1;
+    ground1 = ground2;
+    ground2 = temp;
+  }
+
+  log_write("distance:", distance);
 
   // render (update sprites)
   //
   entity_render(ground1, app.stage);
   entity_render(ground2, app.stage);
   entity_render(dino, app.stage);
+
+  logEl.innerText = log_getContent();
+  log_clear();
 };
 
 dino.x = 50;
@@ -106,7 +128,7 @@ app.ticker.add(tick);
 // Add stuff to DOM
 //
 // @ts-ignore
-document.body.querySelector("#app").appendChild(app.view);
+canvasWrapperEl.appendChild(app.view);
 
 document.addEventListener("keydown", (event) => {
   inputSource_handleKeyDown(keyboard, event.key);
