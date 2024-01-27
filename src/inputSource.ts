@@ -1,6 +1,6 @@
 type InputButton =
   | "quit"
-  | "up"
+  | "jump"
   | "down"
   | "left"
   | "right"
@@ -14,13 +14,13 @@ type InputSource = {
 
 const keyboardMap = {
   escape: "quit",
-  ArrowUp: "up",
+  ArrowUp: "jump",
   ArrowDown: "down",
   ArrowLeft: "left",
   ArrowRight: "right",
-  Space: "action_a",
+  Space: "jump",
   c: "action_b",
-} as const;
+} as const satisfies Record<string, InputButton>;
 
 const isInputKey = (key: string): key is keyof typeof keyboardMap => {
   return key in keyboardMap;

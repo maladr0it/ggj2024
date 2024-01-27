@@ -74,7 +74,7 @@ export class Dino {
     }
 
     // dino jumped
-    if (state.keyboard.activeButtons.has("up") && this.y === GROUND_LEVEL) {
+    if (state.keyboard.activeButtons.has("jump") && this.y === GROUND_LEVEL) {
       this.dy = JUMP_VEL;
       this.playAnimation(jumpAnim);
       playSound("jump");
