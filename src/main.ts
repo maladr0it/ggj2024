@@ -12,10 +12,8 @@ import { log_clear, log_getContent, log_write } from "./log";
 import { Score } from "./score";
 
 import "./style.css";
-
-const GRAVITY = 0.1;
-const GROUND_LEVEL = 100;
-const JUMP_VEL = -3;
+import {GRAVITY, GROUND_LEVEL, JUMP_VEL} from "./constants";
+import {Cactus} from "./entities/Cactus";
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper");
 const logEl = document.getElementById("log")!;
@@ -45,8 +43,14 @@ groundSprite1.anchor.set(0, 1);
 const groundSprite2 = PIXI.AnimatedSprite.fromImages(["sprites/ground.png"]);
 groundSprite2.anchor.set(0, 1);
 
-const cactusSprite1 = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
-cactusSprite1.anchor.set(0, 1);
+
+//
+// Level Map Data
+//
+
+const CACTI = [
+  Cactus.create(500)
+]
 
 //
 // game state
@@ -98,6 +102,9 @@ const tick = (dt: number) => {
   distance += runSpeed;
   ground1.x -= runSpeed;
   ground2.x -= runSpeed;
+  for(const cactus of CACTI) {
+    cactus.x -= runSpeed;
+  }
 
   // if the ground has gone offscreen, move it
   if (ground1.x + ground1.sprite.width < 0) {
@@ -128,6 +135,10 @@ ground2.y = GROUND_LEVEL;
 ground2.x = ground1.sprite.width;
 
 app.ticker.add(tick);
+
+for(const cactus of CACTI) {
+  app.stage.addChild(cactus.sprite);
+}
 
 //
 // Add stuff to DOM
