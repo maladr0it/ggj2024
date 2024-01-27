@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { getScore } from "./state";
 
 const number0 = PIXI.Texture.from('public/sprites/text/0.png');
 const number1 = PIXI.Texture.from('public/sprites/text/1.png');
@@ -49,7 +50,7 @@ export class ScoreTicker {
   highScore: Score | null = null;
   currentScore: Score | null = null;
 
-  constructor(x: number, y: number, stage: PIXI.Container) {
+  spawn(x: number, y: number, stage: PIXI.Container) {
     this.highScorePrefix = PIXI.Sprite.from('public/sprites/text/hi.png');
     this.highScorePrefix.x = x;
     this.highScorePrefix.y = y;
@@ -57,14 +58,14 @@ export class ScoreTicker {
     stage.addChild(this.highScorePrefix)
     
     this.highScore = new Score(x + CHAR_WIDTH * 3, y, stage, HIGH_SCORE_ALPHA);
-    this.highScore.setValue(2000); // TODO: Use actual value
     
     this.currentScore = new Score(x + CHAR_WIDTH * 9, y, stage);
-    this.currentScore.setValue(1020); // TODO: Use actual value
+
+    this.setHighScore(getScore());
   }
 
-  setScore(value: number) {
-    this.currentScore?.setValue(value);
+  update() {
+    this.currentScore?.setValue(getScore());
   }
 
   setHighScore(value: number) {

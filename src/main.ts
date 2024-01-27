@@ -38,8 +38,7 @@ app.stage.addChild(scene);
 //
 const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
-const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
-const scoreTicker = new ScoreTicker(450, 10, scene);
+state.scoreTicker.spawn(450, 10, scene);
 
 //
 // Main loop
@@ -76,7 +75,7 @@ const tick = (dt: number) => {
       }
 
       // Update score.
-      scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
+      state.scoreTicker.update();
 
       break;
     
