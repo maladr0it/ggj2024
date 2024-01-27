@@ -14,7 +14,7 @@ import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getStatus, startGame, state } from "./state";
+import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
 
 await assets.load();
 
@@ -47,12 +47,24 @@ const scoreTicker = new ScoreTicker(450, 10, scene);
 const tick = (dt: number) => {
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
-  switch (getStatus()) {
+  switch (getGameStatus()) {
     case GameStatus.Unstarted:
       if (state.keyboard.activeButtons.has("up")) {
-        startGame();
+        setGameStatus(GameStatus.Initializing);
       }
+
       break;
+
+    // After game starts have dino jump once before dino starts moving
+    case GameStatus.Initializing:
+      state.dino.update(dt);
+
+      if (state.dino.currentAnimation !== "jumping") {
+        setGameStatus(GameStatus.Playing);
+      }
+      
+      break;
+    
     case GameStatus.Playing:
       state.dino.update(dt);
 
@@ -67,6 +79,7 @@ const tick = (dt: number) => {
       scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
 
       break;
+    
     case GameStatus.GameOver:
       break;
   }
