@@ -32,5 +32,4 @@ export const entity_render = (entity: Entity, stage: PIXI.Container) => {
 
   entity._spriteHandle.x = entity.x;
   entity._spriteHandle.y = entity.y;
-  entity._spriteHandle.play();
 };
