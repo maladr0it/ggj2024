@@ -6,6 +6,7 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
+
 import { log_clear, log_getContent, log_write } from "./log";
 
 import { Score } from "./score";
@@ -51,9 +52,19 @@ dino.sprite.animationSpeed = 0.1;
 let distance = 0; // distance the dino has travelled
 let runSpeed = 0;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+const dino = entity_create(jumpSprite);
+let ground1 = entity_create(groundSprite1);
+let ground2 = entity_create(groundSprite2);
+
+>>>>>>> 576b1e3 (remove entity)
 const score = new Score(20, 20, app.stage);
 score.setValue(1020);
 
+=======
+>>>>>>> 1c9be99 (remove entity)
 //
 // Main loop
 //
@@ -65,6 +76,7 @@ const tick = (dt: number) => {
   // Apply forces
   const prevDinoY = dino.sprite.y;
   dino.dy += GRAVITY * dt;
+<<<<<<< HEAD
   dino.sprite.y = Math.min(dino.sprite.y + dino.dy * dt, GROUND_LEVEL);
   // dino hit the ground
   if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
@@ -77,6 +89,39 @@ const tick = (dt: number) => {
     (pressedButtons.has("up") || pressedButtons.has("start/jump")) &&
     dino.sprite.y === GROUND_LEVEL
   ) {
+=======
+<<<<<<< HEAD
+  if(pressedButtons.has("start/jump") && runSpeed === 0) {
+    runSpeed = 10;
+    runSprite.play();
+  }
+
+  // dino is in the air
+  if (dino.y < GROUND_LEVEL) {
+    dino.dy += GRAVITY * dt;
+  }
+
+  dino.y = Math.min(dino.y + dino.dy * dt, GROUND_LEVEL);
+
+  // dino landed on the ground
+  if (dino.y === GROUND_LEVEL && runSpeed > 0) {
+    dino.sprite = runSprite;
+  }
+
+  // dino jumped
+  if ((pressedButtons.has("up") || pressedButtons.has("start/jump")) && dino.y === GROUND_LEVEL) {
+=======
+  dino.sprite.y = Math.min(dino.sprite.y + dino.dy * dt, GROUND_LEVEL);
+  // dino hit the ground
+  if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
+    dino.sprite.textures = runAnim;
+    dino.sprite.play();
+  }
+
+  // dino jumped
+  if (pressedButtons.has("up") && dino.sprite.y === GROUND_LEVEL) {
+>>>>>>> 1c9be99 (remove entity)
+>>>>>>> 576b1e3 (remove entity)
     dino.dy = JUMP_VEL;
     dino.sprite.textures = jumpAnim;
     dino.sprite.play();
@@ -91,15 +136,28 @@ const tick = (dt: number) => {
   log_clear();
 };
 
+<<<<<<< HEAD
 const start = () => {
+=======
+const startButtonClick = () => {
+>>>>>>> 576b1e3 (remove entity)
   app.stage.addChild(dino.sprite);
   dino.sprite.textures = runAnim;
   dino.sprite.x = 50;
   dino.sprite.y = GROUND_LEVEL;
   dino.sprite.play();
 
+<<<<<<< HEAD
   app.ticker.add(tick);
 };
+=======
+  // ground1.y = GROUND_LEVEL;
+  // ground1.x = 0;
+  // ground2.y = GROUND_LEVEL;
+  // ground2.x = ground1.sprite.width;
+
+app.ticker.add(tick);
+>>>>>>> 576b1e3 (remove entity)
 
 //
 // Add stuff to DOM
