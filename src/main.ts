@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GRAVITY, GROUND_LEVEL, JUMP_VEL, SCENE_SIZE } from "./constants";
+import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
 import { Score, ScoreTicker } from "./score";
 
