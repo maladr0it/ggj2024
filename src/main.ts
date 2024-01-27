@@ -48,6 +48,7 @@ const tick = (dt: number) => {
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
+      scoreTicker.container.visible = false;
       if (state.keyboard.activeButtons.has("jump")) {
         setGameStatus(GameStatus.Initializing);
       }
@@ -65,6 +66,8 @@ const tick = (dt: number) => {
       break;
     
     case GameStatus.Playing:
+      scoreTicker.container.visible = true;
+      background.reveal(dt);
       state.dino.update(dt);
 
       // Move the ground.
@@ -90,9 +93,9 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  scene.addChild(background);
+  scene.addChild(background.container);
 
-  state.dino.spawn(scene, 50, GROUND_LEVEL);
+  state.dino.spawn(scene, 20, GROUND_LEVEL);
 
   for (const item of level) {
     scene.addChild(item.sprite);
