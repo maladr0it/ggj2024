@@ -6,7 +6,6 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
-
 import { log_clear, log_getContent, log_write } from "./log";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
