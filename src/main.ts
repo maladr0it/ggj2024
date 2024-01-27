@@ -41,9 +41,6 @@ const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 state.scoreTicker.spawn(450, 10, scene);
 
-const score = new Score(20, 20, scene);
-score.setValue(1020);
-
 //
 // Main loop
 //
