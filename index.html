@@ -1,15 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <line rel="stylesheet" href="/src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
   </head>
-  <body>
-    <div id="canvas-wrapper"></div>
 
-    <pre id="log"></pre>
-    <script type="module" src="/src/main.ts"></script>
+  <body
+    id="t"
+    class="neterror"
+    style="font-family: 'sans', Arial, sans-serif; font-size: 75%"
+    jstcache="0"
+  >
+    <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
+      <div id="main-content" jstcache="0">
+
+        <div id="canvas-wrapper"></div>
+        <pre id="log"></pre>
+
+        <div id="main-message" jstcache="0">
+          <h1 jstcache="0">
+            <span jsselect="heading" jsvalues=".innerHTML:msg" jstcache="9"
+              >No internet</span
+            >
+            <a id="error-information-button" class="hidden"></a>
+          </h1>
+          <p jsselect="summary" jsvalues=".innerHTML:msg" jstcache="1">
+            No internet
+          </p>
+          <!--The suggestion list and error code are normally presented inline,
+                in which case error-information-popup-* divs have no effect. When
+                error-information-popup-container has the use-popup-container class, this
+                information is provided in a popup instead.-->
+          <div id="error-information-popup-container" jstcache="0">
+            <div id="error-information-popup" jstcache="0">
+              <div id="error-information-popup-box" jstcache="0">
+                <div id="error-information-popup-content" jstcache="0">
+                  <div
+                    id="suggestions-list"
+                    style=""
+                    jsdisplay="(suggestionsSummaryList &amp;&amp; suggestionsSummaryList.length)"
+                    jstcache="16"
+                  >
+                    <p
+                      jsvalues=".innerHTML:suggestionsSummaryListHeader"
+                      jstcache="18"
+                    >
+                      Try:
+                    </p>
+                    <ul class="">
+                      <li>Checking the network cables, modem, and router</li>
+                      <li>Reconnecting to Wi-Fi</li>
+                    </ul>
+                  </div>
+                  <div class="error-code" jscontent="errorCode" jstcache="17">
+                    ERR_INTERNET_DISCONNECTED
+                  </div>
+                  <p id="error-information-popup-close" jstcache="0">
+                    <a
+                      class="link-button"
+                      jscontent="closeDescriptionPopup"
+                      onclick="toggleErrorInformationPopup();"
+                      jstcache="20"
+                      >null</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="download-links-wrapper" class="hidden" jstcache="0">
+            <div id="download-link-wrapper" jstcache="0">
+              <a id="download-link" class="link-button" style="display: none">
+              </a>
+            </div>
+            <div id="download-link-clicked-wrapper" class="hidden" jstcache="0">
+              <div
+                id="download-link-clicked"
+                class="link-button"
+                style="display: none"
+              ></div>
+            </div>
+          </div>
+          <div id="save-page-for-later-button" class="hidden" jstcache="0">
+            <a class="link-button" style="display: none"> </a>
+          </div>
+          <div
+            id="cancel-save-page-button"
+            class="hidden"
+            style="display: none"
+          ></div>
+          <div
+            id="offline-content-list"
+            class="list-hidden"
+            hidden=""
+            jstcache="0"
+          >
+            <div
+              id="offline-content-list-visibility-card"
+              onclick="toggleOfflineContentListVisibility(true)"
+              jstcache="0"
+            >
+              <div id="offline-content-list-title" style="display: none"></div>
+              <div jstcache="0">
+                <div
+                  id="offline-content-list-show-text"
+                  style="display: none"
+                ></div>
+                <div
+                  id="offline-content-list-hide-text"
+                  style="display: none"
+                ></div>
+              </div>
+            </div>
+            <div id="offline-content-suggestions" jstcache="0"></div>
+            <div id="offline-content-list-action" jstcache="0">
+              <a class="link-button" style="display: none"> </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="module" src="/src/main.ts"></script>
+    </div>
   </body>
 </html>
