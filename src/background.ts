@@ -45,13 +45,14 @@ export class Background extends PIXI.Container {
     const mask = new PIXI.Graphics();
     mask.beginFill(0xffffff);
     mask.drawRect(0, 0, width, height);
+    this.addChild(mask);
     this.mask = mask;
 
     const ground = new Parallax({
       texture: assets().ground,
       containerWidth: width,
     });
-    ground.y = 100;
+    ground.y = 80;
     this.addChild(ground);
     this.layers.push(ground);
 

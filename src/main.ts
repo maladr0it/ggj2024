@@ -8,12 +8,12 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { Score } from "./score";
+import { Score, ScoreTicker } from "./score";
 
 import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
-import {state} from "./state";
+import { state } from "./state";
 
 await assets.load();
 
@@ -21,15 +21,21 @@ const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
 
 const app = new PIXI.Application({
-  width: 600,
-  height: 150,
-  background: "red",
+  width: window.innerWidth,
+  height: window.innerHeight,
+  backgroundAlpha: 0,
 });
 
+const scene = new PIXI.Container();
+app.stage.addChild(scene);
 
-const score = new Score(20, 20, app.stage);
-score.setValue(1020);
+//
+// game state
+//
 const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
+
+const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
+const scoreTicker = new ScoreTicker(450, 10, scene);
 
 //
 // Main loop
@@ -43,6 +49,8 @@ const tick = (dt: number) => {
   // move the ground
   state.distance += state.runSpeed;
 
+  scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
+
   log_write("distance:", state.distance);
 
   logEl.innerText = log_getContent();
@@ -50,15 +58,21 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  app.stage.addChild(background);
+  scene.addChild(background);
 
-  state.dino.spawn(app.stage, 50, GROUND_LEVEL);
+  state.dino.spawn(scene, 50, GROUND_LEVEL);
 
   for (const item of level) {
-    app.stage.addChild(item.sprite);
+    scene.addChild(item.sprite);
   }
 
   app.ticker.add(tick);
+};
+
+const onResize = () => {
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+  scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
+  scene.y = 150;
 };
 
 //
@@ -67,11 +81,13 @@ const start = () => {
 // @ts-ignore
 canvasWrapperEl.appendChild(app.view);
 
+window.addEventListener("resize", onResize);
 document.addEventListener("keydown", event => {
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", event => {
+document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 
+onResize();
 start();
