@@ -1,22 +1,19 @@
 import * as PIXI from "pixi.js";
 
 import {
-  inputSource_create,
   inputSource_handleKeyDown,
   inputSource_handleKeyUp,
-  inputSource_read,
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GRAVITY, GROUND_LEVEL, JUMP_VEL, SCENE_SIZE } from "./constants";
+import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { Cactus } from "./entities/Cactus";
 import { Score } from "./score";
 
 import "./style.css";
-import { Dino } from "./entities/Dino";
 import { assets } from "./assets";
 import { Background } from "./background";
+import {state} from "./state";
 
 await assets.load();
 
@@ -29,22 +26,10 @@ const app = new PIXI.Application({
   background: "red",
 });
 
-//
-// game state
-//
-const keyboard = inputSource_create();
-const dino = new Dino();
-const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
-
-export const state = {
-  dino,
-  keyboard,
-  distance: 0, // distance the dino has travelled
-  runSpeed: 0,
-};
 
 const score = new Score(20, 20, app.stage);
 score.setValue(1020);
+const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 //
 // Main loop
@@ -53,7 +38,7 @@ const tick = (dt: number) => {
   background.setPosition(state.distance);
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
-  dino.update(dt);
+  state.dino.update(dt);
 
   // move the ground
   state.distance += state.runSpeed;
@@ -67,7 +52,7 @@ const tick = (dt: number) => {
 const start = () => {
   app.stage.addChild(background);
 
-  dino.spawn(app.stage, 50, GROUND_LEVEL);
+  state.dino.spawn(app.stage, 50, GROUND_LEVEL);
 
   for (const item of level) {
     app.stage.addChild(item.sprite);
@@ -83,10 +68,10 @@ const start = () => {
 canvasWrapperEl.appendChild(app.view);
 
 document.addEventListener("keydown", event => {
-  inputSource_handleKeyDown(keyboard, event.key);
+  inputSource_handleKeyDown(state.keyboard, event.key);
 });
 document.addEventListener("keyup", event => {
-  inputSource_handleKeyUp(keyboard, event.key);
+  inputSource_handleKeyUp(state.keyboard, event.key);
 });
 
 start();
