@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
-import { state } from "../main";
+import { state } from "../state";
 
 const ANIMATION_SPEED = 0.1;
 
