@@ -6,6 +6,7 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
+
 import { log_clear, log_getContent, log_write } from "./log";
 import { Score } from "./score";
 
@@ -73,10 +74,7 @@ const tick = (dt: number) => {
   }
 
   // dino jumped
-  if (
-    (pressedButtons.has("up") || pressedButtons.has("start/jump")) &&
-    dino.sprite.y === GROUND_LEVEL
-  ) {
+  if (pressedButtons.has("up") && dino.sprite.y === GROUND_LEVEL) {
     dino.dy = JUMP_VEL;
     dino.sprite.textures = jumpAnim;
     dino.sprite.play();
