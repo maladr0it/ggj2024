@@ -7,12 +7,14 @@ import {
   inputSource_read,
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
-import { Score } from "./score";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
 import { Cactus } from "./entities/Cactus";
+import { Score } from "./score";
 
-const canvasWrapperEl = document.getElementById("canvas-wrapper");
+import "./style.css";
+
+const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
 
 const app = new PIXI.Application({
