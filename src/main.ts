@@ -11,7 +11,7 @@ import { log_clear, log_getContent, log_write } from "./log";
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
 import { level } from "./level";
 import { Cactus } from "./entities/Cactus";
-import { Score } from "./score";
+import { Score, ScoreTicker } from "./score";
 
 import "./style.css";
 import { Dino } from "./entities/Dino";
@@ -35,11 +35,11 @@ export const state = {
   dino,
   keyboard,
   distance: 0, // distance the dino has travelled
-  runSpeed: 0,
+  runSpeed: 10,
 };
 
-const score = new Score(20, 20, app.stage);
-score.setValue(1020);
+const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
+const scoreTicker = new ScoreTicker(450, 10, app.stage);
 
 //
 // Main loop
@@ -51,6 +51,8 @@ const tick = (dt: number) => {
 
   // move the ground
   state.distance += state.runSpeed;
+
+  scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
 
   log_write("distance:", state.distance);
 
