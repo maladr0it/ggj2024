@@ -73,7 +73,10 @@ const tick = (dt: number) => {
   }
 
   // dino jumped
-  if (pressedButtons.has("up") && dino.sprite.y === GROUND_LEVEL) {
+  if (
+    (pressedButtons.has("up") || pressedButtons.has("start/jump")) &&
+    dino.sprite.y === GROUND_LEVEL
+  ) {
     dino.dy = JUMP_VEL;
     dino.sprite.textures = jumpAnim;
     dino.sprite.play();
