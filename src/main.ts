@@ -10,10 +10,8 @@ import { log_clear, log_getContent, log_write } from "./log";
 import { Score } from "./score";
 
 import "./style.css";
-
-const GRAVITY = 0.1;
-const GROUND_LEVEL = 100;
-const JUMP_VEL = -3;
+import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
+import { Cactus } from "./entities/Cactus";
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper");
 const logEl = document.getElementById("log")!;
@@ -32,6 +30,8 @@ const runAnim = [
   PIXI.Texture.from("sprites/dino-run2.png"),
 ];
 const jumpAnim = [PIXI.Texture.from("sprites/dino-jump1.png")];
+
+const CACTI = [Cactus.create(500)];
 
 //
 // game state
@@ -97,6 +97,10 @@ const start = () => {
 };
 
 app.ticker.add(tick);
+
+for (const cactus of CACTI) {
+  app.stage.addChild(cactus.sprite);
+}
 
 //
 // Add stuff to DOM
