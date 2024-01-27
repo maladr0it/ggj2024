@@ -24,10 +24,13 @@ const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
 
 const app = new PIXI.Application({
-  width: 600,
-  height: 150,
-  background: "red",
+  width: window.innerWidth,
+  height: window.innerHeight,
+  backgroundAlpha: 0,
 });
+
+const scene = new PIXI.Container();
+app.stage.addChild(scene);
 
 //
 // game state
@@ -43,7 +46,7 @@ export const state = {
   runSpeed: 0,
 };
 
-const score = new Score(20, 20, app.stage);
+const score = new Score(20, 20, scene);
 score.setValue(1020);
 
 //
@@ -65,15 +68,21 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  app.stage.addChild(background);
+  scene.addChild(background);
 
-  dino.spawn(app.stage, 50, GROUND_LEVEL);
+  dino.spawn(scene, 50, GROUND_LEVEL);
 
   for (const item of level) {
-    app.stage.addChild(item.sprite);
+    scene.addChild(item.sprite);
   }
 
   app.ticker.add(tick);
+};
+
+const onResize = () => {
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+  scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
+  scene.y = 150;
 };
 
 //
@@ -82,6 +91,7 @@ const start = () => {
 // @ts-ignore
 canvasWrapperEl.appendChild(app.view);
 
+window.addEventListener("resize", onResize);
 document.addEventListener("keydown", event => {
   inputSource_handleKeyDown(keyboard, event.key);
 });
@@ -89,4 +99,5 @@ document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(keyboard, event.key);
 });
 
+onResize();
 start();
