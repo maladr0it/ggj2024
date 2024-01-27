@@ -9,6 +9,8 @@ import {
 // import { entity_create, entity_render } from "./entity";
 import { log_clear, log_getContent, log_write } from "./log";
 
+import { Score } from "./score";
+
 import "./style.css";
 
 const GRAVITY = 0.1;
@@ -49,6 +51,9 @@ dino.sprite.animationSpeed = 0.1;
 
 let distance = 0; // distance the dino has travelled
 let runSpeed = 10;
+
+const score = new Score(20, 20, app.stage);
+score.setValue(1020)
 
 //
 // Main loop
