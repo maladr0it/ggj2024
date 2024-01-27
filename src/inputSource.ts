@@ -1,4 +1,5 @@
 type InputButton =
+  | "start/jump"
   | "quit"
   | "up"
   | "down"
@@ -13,6 +14,7 @@ type InputSource = {
 };
 
 const keyboardMap = {
+  " ": "start/jump",
   escape: "quit",
   ArrowUp: "up",
   ArrowDown: "down",
