@@ -49,7 +49,6 @@ score.setValue(1020);
 // Main loop
 //
 const tick = (dt: number) => {
-  background.setPosition(state.distance);
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
   switch (getGameStatus()) {
