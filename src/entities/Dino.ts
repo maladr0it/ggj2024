@@ -4,27 +4,31 @@ import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { state } from "../state";
 import { playSound } from "../audio";
 
-const ANIMATION_SPEED = 0.1;
+const ANIMATION_SPEED = 0.2;
 
 // Assets
-const runAnim = [
-  await PIXI.Texture.fromURL("sprites/dino-run1.png"),
-  await PIXI.Texture.fromURL("sprites/dino-run2.png"),
-];
-const jumpAnim = [await PIXI.Texture.fromURL("sprites/dino-jump1.png")];
-
-export const dinoDecapAnim = [
-  await PIXI.Texture.fromURL("sprites/dino-decap.png"),
-];
+const animations: Record<string, PIXI.Texture[]> = {
+  "running": [
+    await PIXI.Texture.fromURL("sprites/dino-run1.png"),
+    await PIXI.Texture.fromURL("sprites/dino-run2.png"),
+  ],
+  "jumping": [
+    await PIXI.Texture.fromURL("sprites/dino-jump1.png")
+  ],
+  "decapitate": [
+    await PIXI.Texture.fromURL("sprites/dino-decap.png"),
+  ]
+};
 
 export class Dino {
   private spawned = false;
   private dy = 0;
   private dx = 0;
+  public currentAnimation = "jumping";
   public sprite: PIXI.AnimatedSprite;
 
   constructor() {
-    this.sprite = new PIXI.AnimatedSprite(runAnim);
+    this.sprite = new PIXI.AnimatedSprite(animations[this.currentAnimation]);
     this.sprite.anchor.set(0, 1);
     this.sprite.animationSpeed = ANIMATION_SPEED;
   }
@@ -61,11 +65,12 @@ export class Dino {
     this.sprite.parent.removeChild(this.sprite);
   }
 
-  playAnimation(anim: PIXI.Texture[]) {
+  playAnimation(newAnimation: string) {
+    this.currentAnimation = newAnimation;
     if (!this.spawned) {
       throw new Error("Entity must be spawned first");
     }
-    this.sprite.textures = anim;
+    this.sprite.textures = animations[this.currentAnimation];
     this.sprite.play();
   }
 
@@ -77,13 +82,13 @@ export class Dino {
 
     // dino hit the ground
     if (prevDinoY < GROUND_LEVEL && this.y === GROUND_LEVEL) {
-      this.playAnimation(runAnim);
+      this.playAnimation("running");
     }
 
     // dino jumped
     if (state.keyboard.activeButtons.has("jump") && this.y === GROUND_LEVEL) {
       this.dy = JUMP_VEL;
-      this.playAnimation(jumpAnim);
+      this.playAnimation("jumping");
       playSound("jump");
     }
   }
