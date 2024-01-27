@@ -92,7 +92,7 @@ const tick = (dt: number) => {
     ground2 = temp;
   }
 
-  log_write(distance);
+  log_write("distance:", distance);
 
   // render (update sprites)
   //
