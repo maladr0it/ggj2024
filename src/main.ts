@@ -23,15 +23,15 @@ const app = new PIXI.Application({
   background: "red",
 });
 
-//
-// Load assets
-//
 const runAnim = [
   PIXI.Texture.from("sprites/dino-run1.png"),
   PIXI.Texture.from("sprites/dino-run2.png"),
 ];
 const jumpAnim = [PIXI.Texture.from("sprites/dino-jump1.png")];
 
+//
+// Level Map Data
+//
 const CACTI = [Cactus.create(500)];
 
 //
@@ -67,6 +67,7 @@ const tick = (dt: number) => {
   dino.dy += GRAVITY * dt;
 
   dino.sprite.y = Math.min(dino.sprite.y + dino.dy * dt, GROUND_LEVEL);
+
   // dino hit the ground
   if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
     dino.sprite.textures = runAnim;
@@ -102,14 +103,6 @@ const start = () => {
 
   app.ticker.add(tick);
 };
-
-for (const cactus of CACTI) {
-  app.stage.addChild(cactus.sprite);
-}
-
-for (const cactus of CACTI) {
-  app.stage.addChild(cactus.sprite);
-}
 
 //
 // Add stuff to DOM
