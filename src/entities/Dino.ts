@@ -3,6 +3,8 @@ import * as PIXI from "pixi.js";
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { state } from "../state";
 import { playSound } from "../audio";
+import { DinoHead } from "./DinoHead";
+import { level } from "../level";
 import { Entity } from "./Entity";
 
 // Assets
@@ -18,6 +20,7 @@ const animations: Record<string, PIXI.Texture[]> = {
 export class Dino extends Entity {
   private dy = 0;
   private dx = 0;
+  private decapitated = false;
 
   constructor() {
     super(animations, "jumping");
@@ -39,6 +42,20 @@ export class Dino extends Entity {
       this.dy = JUMP_VEL;
       this.playAnimation("jumping");
       playSound("jump");
+    }
+  }
+
+  dieWithDecapitation() {
+    if (!this.decapitated) {
+      this.decapitated = true;
+      this.playAnimation("decapitate");
+      const head = new DinoHead();
+      head.spawn(
+        this.sprite.parent,
+        state.dino.x + state.distance,
+        state.dino.y
+      );
+      level.push(head);
     }
   }
 }

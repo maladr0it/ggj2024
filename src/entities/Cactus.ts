@@ -40,8 +40,8 @@ export class Cactus {
 
   update(_dt: number) {
     this.x = this.initialX - state.distance;
-    if (this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.playAnimation("decapitate");
+    if(this.isCollidingWith(state.dino.hitbox)) {
+      state.dino.dieWithDecapitation();
     }
   }
 }
