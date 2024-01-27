@@ -69,11 +69,6 @@ score.setValue(1020)
 const tick = (dt: number) => {
   const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
-  if(pressedButtons.has("start/jump") && runSpeed === 0) {
-    runSpeed = 3;
-    runSprite.play();
-  }
-
   // Apply forces
   dino.dy += GRAVITY * dt;
   if(pressedButtons.has("start/jump") && runSpeed === 0) {
