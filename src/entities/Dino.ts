@@ -20,7 +20,7 @@ export class Dino extends Entity {
   private dx = 0;
 
   constructor() {
-    super(animations, "running");
+    super(animations, "jumping");
   }
 
   update(dt: number) {

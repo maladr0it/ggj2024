@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 
-const ANIMATION_SPEED = 0.1;
+const ANIMATION_SPEED = 0.2;
 
 export abstract class Entity {
   private spawned = false;
@@ -24,7 +24,6 @@ export abstract class Entity {
     container.addChild(this.sprite);
     this.x = x;
     this.y = y;
-    this.sprite.play();
 
     this.spawned = true;
   }
