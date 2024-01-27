@@ -20,10 +20,6 @@ export class Cactus extends Entity {
     this.y = y;
   }
 
-  isCollidingWith(hitbox: PIXI.Rectangle) {
-    return this.sprite.getBounds().intersects(hitbox);
-  }
-
   update(_dt: number) {
     this.x = this.initialX - state.distance;
     if(this.isCollidingWith(state.dino.hitbox)) {
