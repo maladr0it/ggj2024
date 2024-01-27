@@ -3,75 +3,27 @@ import * as PIXI from "pixi.js";
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { state } from "../state";
 import { playSound } from "../audio";
-
-const ANIMATION_SPEED = 0.2;
+import { DinoHead } from "./DinoHead";
+import { level } from "../level";
+import { Entity } from "./Entity";
 
 // Assets
 const animations: Record<string, PIXI.Texture[]> = {
-  "running": [
+  running: [
     await PIXI.Texture.fromURL("sprites/dino-run1.png"),
     await PIXI.Texture.fromURL("sprites/dino-run2.png"),
   ],
-  "jumping": [
-    await PIXI.Texture.fromURL("sprites/dino-jump1.png")
-  ],
-  "decapitate": [
-    await PIXI.Texture.fromURL("sprites/dino-decap.png"),
-  ]
+  jumping: [await PIXI.Texture.fromURL("sprites/dino-jump1.png")],
+  decapitate: [await PIXI.Texture.fromURL("sprites/dino-decap.png")],
 };
 
-export class Dino {
-  private spawned = false;
+export class Dino extends Entity {
   private dy = 0;
   private dx = 0;
-  public currentAnimation = "jumping";
-  public sprite: PIXI.AnimatedSprite;
+  private decapitated = false;
 
   constructor() {
-    this.sprite = new PIXI.AnimatedSprite(animations[this.currentAnimation]);
-    this.sprite.anchor.set(0, 1);
-    this.sprite.animationSpeed = ANIMATION_SPEED;
-  }
-
-  set x(x: number) {
-    this.sprite.x = x;
-  }
-
-  set y(y: number) {
-    this.sprite.y = y;
-  }
-
-  get x() {
-    return this.sprite.x;
-  }
-
-  get y() {
-    return this.sprite.y;
-  }
-
-  get hitbox() {
-    return this.sprite.getBounds();
-  }
-
-  spawn(container: PIXI.Container, x: number, y: number) {
-    container.addChild(this.sprite);
-    this.x = x;
-    this.y = y;
-
-    this.spawned = true;
-  }
-
-  despawn() {
-    this.sprite.parent.removeChild(this.sprite);
-  }
-
-  playAnimation(newAnimation: string) {
-    this.currentAnimation = newAnimation;
-    if (!this.spawned) {
-      throw new Error("Entity must be spawned first");
-    }
-    this.sprite.textures = animations[this.currentAnimation];
-    this.sprite.play();
+    super(animations, "jumping");
   }
 
   update(dt: number) {
@@ -90,6 +42,20 @@ export class Dino {
       this.dy = JUMP_VEL;
       this.playAnimation("jumping");
       playSound("jump");
+    }
+  }
+
+  dieWithDecapitation() {
+    if (!this.decapitated) {
+      this.decapitated = true;
+      this.playAnimation("decapitate");
+      const head = new DinoHead();
+      head.spawn(
+        this.sprite.parent,
+        state.dino.x + state.distance,
+        state.dino.y
+      );
+      level.push(head);
     }
   }
 }

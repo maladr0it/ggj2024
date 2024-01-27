@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { GROUND_LEVEL } from "../constants";
-import {state} from "../state";
+import { GameStatus, setGameStatus, state } from "../state";
 
 export class Cactus {
   sprite = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
@@ -38,10 +38,11 @@ export class Cactus {
     return this.sprite.getBounds().intersects(hitbox);
   }
 
-  update(dt: number) {
+  update(_dt: number) {
     this.x = this.initialX - state.distance;
     if(this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.playAnimation("decapitate");
+      state.dino.dieWithDecapitation();
+      setGameStatus(GameStatus.Dying)
     }
   }
 }

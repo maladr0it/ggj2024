@@ -8,9 +8,8 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { ScoreTicker } from "./score";
+import { Score, ScoreTicker } from "./score";
 
-import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
@@ -38,14 +37,16 @@ app.stage.addChild(scene);
 //
 const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
-const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
-const scoreTicker = new ScoreTicker(450, 10, background.container);
+state.scoreTicker.spawn(450, 10, background.container);
 
 //
 // Main loop
 //
 const tick = (dt: number) => {
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
+
+  // update status timer for auto-transitions
+  state.gameStatusTimer += dt;
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
@@ -65,7 +66,13 @@ const tick = (dt: number) => {
 
       break;
 
+    // @ts-ignore fallthrough
+    case GameStatus.Dying:
+      if (state.gameStatusTimer > 20) {
+        setGameStatus(GameStatus.GameOver);
+      }
     case GameStatus.Playing:
+      state.scoreTicker.container.visible = true;
       background.update(dt);
       state.dino.update(dt);
 
@@ -77,7 +84,7 @@ const tick = (dt: number) => {
       }
 
       // Update score.
-      scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
+      state.scoreTicker.update();
 
       break;
 

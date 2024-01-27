@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { getScore } from "./state";
 
 const number0 = PIXI.Texture.from("public/sprites/text/0.png");
 const number1 = PIXI.Texture.from("public/sprites/text/1.png");
@@ -61,13 +62,12 @@ export class Score {
 }
 
 export class ScoreTicker {
-  container: PIXI.Container;
+  container: PIXI.Container = new PIXI.Container();
   highScorePrefix: PIXI.Sprite | null = null;
   highScore: Score | null = null;
   currentScore: Score | null = null;
 
-  constructor(x: number, y: number, stage: PIXI.Container) {
-    this.container = new PIXI.Container();
+  spawn(x: number, y: number, stage: PIXI.Container) {
     this.container.x = x;
     this.container.y = y;
     stage.addChild(this.container);
@@ -75,21 +75,21 @@ export class ScoreTicker {
     this.highScorePrefix = PIXI.Sprite.from("public/sprites/text/hi.png");
     this.highScorePrefix.alpha = HIGH_SCORE_ALPHA;
     this.container.addChild(this.highScorePrefix);
-
+    
     this.highScore = new Score(
       CHAR_WIDTH * 3,
       0,
       this.container,
       HIGH_SCORE_ALPHA
     );
-    this.highScore.setValue(2000); // TODO: Use actual value
-
+    
     this.currentScore = new Score(CHAR_WIDTH * 9, 0, this.container);
-    this.currentScore.setValue(1020); // TODO: Use actual value
+
+    this.setHighScore(getScore());
   }
 
-  setScore(value: number) {
-    this.currentScore?.setValue(value);
+  update() {
+    this.currentScore?.setValue(getScore());
   }
 
   setHighScore(value: number) {

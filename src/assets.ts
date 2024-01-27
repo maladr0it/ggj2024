@@ -46,7 +46,7 @@ const awaitValues = async <T extends object>(
   const result: Partial<AwaitedValues<T>> = {};
   const keys = Object.keys(obj) as (keyof T)[];
   await Promise.all(
-    keys.map(async key => {
+    keys.map(async (key) => {
       result[key] = await obj[key];
     })
   );
