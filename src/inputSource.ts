@@ -18,7 +18,7 @@ const keyboardMap = {
   ArrowDown: "down",
   ArrowLeft: "left",
   ArrowRight: "right",
-  Space: "jump",
+  " ": "jump",
   c: "action_b",
 } as const satisfies Record<string, InputButton>;
 
