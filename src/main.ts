@@ -51,7 +51,6 @@ const tick = (dt: number) => {
       if (state.keyboard.activeButtons.has("up")) {
         startGame();
       }
-
       break;
     case GameStatus.Playing:
       state.dino.update(dt);
@@ -59,6 +58,9 @@ const tick = (dt: number) => {
       // Move the ground.
       state.distance += state.runSpeed;
       background.setPosition(state.distance);
+      for(const item of level) {
+        item.update(dt);
+      }
 
       // Update score.
       scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
