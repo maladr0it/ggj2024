@@ -102,10 +102,6 @@ const start = () => {
   app.ticker.add(tick);
 };
 
-for (const cactus of CACTI) {
-  app.stage.addChild(cactus.sprite);
-}
-
 //
 // Add stuff to DOM
 //
