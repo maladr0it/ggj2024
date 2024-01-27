@@ -8,14 +8,16 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { Score, ScoreTicker } from "./score";
+import { ScoreTicker } from "./score";
 
 import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
-import { state } from "./state";
+import { GameStatus, getStatus, startGame, state } from "./state";
 
 await assets.load();
+
+PIXI.settings.ROUND_PIXELS = false
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -24,6 +26,7 @@ const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundAlpha: 0,
+  antialias: false,
 });
 
 const scene = new PIXI.Container();
@@ -40,16 +43,30 @@ const scoreTicker = new ScoreTicker(450, 10, scene);
 //
 // Main loop
 //
-const tick = (dt: number) => {
-  background.setPosition(state.distance);
+const tick = (dt: number) => {  
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
-  state.dino.update(dt);
+  switch (getStatus()) {
+    case GameStatus.Unstarted:
+      if (state.keyboard.activeButtons.has("up")) {
+        startGame();
+      }
 
-  // move the ground
-  state.distance += state.runSpeed;
+      break;
+    case GameStatus.Playing:
+      state.dino.update(dt);
 
-  scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
+      // Move the ground.
+      state.distance += state.runSpeed;
+      background.setPosition(state.distance);
+
+      // Update score.
+      scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
+
+      break;
+    case GameStatus.GameOver:
+      break;
+  }
 
   log_write("distance:", state.distance);
 
