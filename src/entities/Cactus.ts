@@ -5,6 +5,7 @@ import {dinoDecapAnim} from "./Dino";
 
 export class Cactus {
   sprite = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
+  private initialX = 0;
 
   constructor() {
     this.sprite.anchor.set(0, 1);
@@ -14,6 +15,7 @@ export class Cactus {
     const entity = new Cactus();
     entity.x = x;
     entity.y = y;
+    entity.initialX = x;
     return entity;
   }
 
@@ -38,6 +40,7 @@ export class Cactus {
   }
 
   update(dt: number) {
+    this.x = this.initialX - state.distance;
     if(this.isCollidingWith(state.dino.hitbox)) {
       state.dino.playAnimation(dinoDecapAnim);
     }
