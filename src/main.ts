@@ -49,7 +49,7 @@ const tick = (dt: number) => {
 
   switch (getStatus()) {
     case GameStatus.Unstarted:
-      if (state.keyboard.activeButtons.has("up")) {
+      if (state.keyboard.activeButtons.has("jump")) {
         startGame();
       }
       break;
@@ -59,7 +59,7 @@ const tick = (dt: number) => {
       // Move the ground.
       state.distance += state.runSpeed;
       background.setPosition(state.distance);
-      for(const item of level) {
+      for (const item of level) {
         item.update(dt);
       }
 
