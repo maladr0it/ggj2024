@@ -6,12 +6,14 @@ export abstract class Entity {
   private spawned = false;
   sprite: PIXI.AnimatedSprite;
   animations: Record<string, PIXI.Texture[]>;
+  currentAnimation: string;
 
   constructor(
     animations: Record<string, PIXI.Texture[]>,
     defaultAnimation: string
   ) {
     this.animations = animations;
+    this.currentAnimation = defaultAnimation;
 
     this.sprite = new PIXI.AnimatedSprite(this.animations[defaultAnimation]);
     this.sprite.anchor.set(0, 1);
@@ -69,6 +71,7 @@ export abstract class Entity {
         `Animation name ${animName} doesn't exist on this entity`
       );
     }
+    this.currentAnimation = animName;
     this.sprite.textures = this.animations[animName];
 
     this.sprite.play();
