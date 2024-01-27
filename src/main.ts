@@ -15,6 +15,8 @@ import { Background } from "./background";
 import * as Tone from "tone";
 import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
 
+import "./style.css";
+
 // PIXI.settings.ROUND_PIXELS = false;
 
 await assets.load();
