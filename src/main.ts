@@ -8,13 +8,17 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "./constants";
+import { GRAVITY, GROUND_LEVEL, JUMP_VEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
 import { Cactus } from "./entities/Cactus";
 import { Score, ScoreTicker } from "./score";
 
 import "./style.css";
 import { Dino } from "./entities/Dino";
+import { assets } from "./assets";
+import { Background } from "./background";
+
+await assets.load();
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -30,6 +34,7 @@ const app = new PIXI.Application({
 //
 const keyboard = inputSource_create();
 const dino = new Dino();
+const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 export const state = {
   dino,
@@ -45,6 +50,7 @@ const scoreTicker = new ScoreTicker(450, 10, app.stage);
 // Main loop
 //
 const tick = (dt: number) => {
+  background.setPosition(state.distance);
   // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
 
   dino.update(dt);
@@ -61,6 +67,8 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
+  app.stage.addChild(background);
+
   dino.spawn(app.stage, 50, GROUND_LEVEL);
 
   for (const item of level) {
@@ -76,10 +84,10 @@ const start = () => {
 // @ts-ignore
 canvasWrapperEl.appendChild(app.view);
 
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   inputSource_handleKeyDown(keyboard, event.key);
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(keyboard, event.key);
 });
 
