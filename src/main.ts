@@ -64,13 +64,7 @@ const tick = (dt: number) => {
   // Apply forces
   const prevDinoY = dino.sprite.y;
   dino.dy += GRAVITY * dt;
-
   dino.sprite.y = Math.min(dino.sprite.y + dino.dy * dt, GROUND_LEVEL);
-  // dino hit the ground
-  if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
-    dino.sprite.textures = runAnim;
-    dino.sprite.play();
-  }
 
   // dino hit the ground
   if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
@@ -100,9 +94,9 @@ const start = () => {
   dino.sprite.x = 50;
   dino.sprite.y = GROUND_LEVEL;
   dino.sprite.play();
-
-  app.ticker.add(tick);
 };
+
+app.ticker.add(tick);
 
 //
 // Add stuff to DOM
