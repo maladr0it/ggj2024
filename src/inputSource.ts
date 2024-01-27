@@ -1,5 +1,4 @@
 type InputButton =
-  | "start/jump"
   | "quit"
   | "up"
   | "down"
@@ -14,14 +13,13 @@ type InputSource = {
 };
 
 const keyboardMap = {
-  " ": "start/jump",
   escape: "quit",
   ArrowUp: "up",
   ArrowDown: "down",
   ArrowLeft: "left",
   ArrowRight: "right",
-  z: "action_a",
-  x: "action_b",
+  Space: "action_a",
+  c: "action_b",
 } as const;
 
 const isInputKey = (key: string): key is keyof typeof keyboardMap => {
