@@ -9,6 +9,8 @@ import {
 
 import { entity_create, entity_render } from "./entity";
 
+import { Score } from "./score";
+
 import "./style.css";
 
 const GRAVITY = 0.1;
@@ -50,6 +52,9 @@ let runSpeed = 3;
 const dino = entity_create(runSprite);
 const ground1 = entity_create(groundSprite1);
 const ground2 = entity_create(groundSprite2);
+
+const score = new Score(20, 20, app.stage);
+score.setValue(1020)
 
 //
 // Main loop
