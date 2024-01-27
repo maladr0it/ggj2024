@@ -8,12 +8,14 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { ScoreTicker } from "./score";
+import { Score, ScoreTicker } from "./score";
 
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
 import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
+
+import "./style.css";
 
 import "./style.css";
 
@@ -41,6 +43,9 @@ const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
 const scoreTicker = new ScoreTicker(450, 10, scene);
+
+const score = new Score(20, 20, scene);
+score.setValue(1020);
 
 //
 // Main loop
