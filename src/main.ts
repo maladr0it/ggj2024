@@ -107,6 +107,10 @@ for (const cactus of CACTI) {
   app.stage.addChild(cactus.sprite);
 }
 
+for (const cactus of CACTI) {
+  app.stage.addChild(cactus.sprite);
+}
+
 //
 // Add stuff to DOM
 //
