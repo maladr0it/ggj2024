@@ -14,6 +14,7 @@ import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
 import { state } from "./state";
+import * as Tone from "tone";
 
 await assets.load();
 
@@ -83,9 +84,10 @@ canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
 document.addEventListener("keydown", event => {
+  Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 

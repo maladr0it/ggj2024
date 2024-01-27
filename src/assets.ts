@@ -1,12 +1,21 @@
 import * as PIXI from "pixi.js";
+import { ToneAudioBuffer } from "tone";
 
 const loadAssets = async () =>
   awaitValues({
-    ground: PIXI.Texture.fromURL("sprites/ground.png"),
-    cloud: PIXI.Texture.fromURL("sprites/cloud.png"),
+    sprites: awaitValues({
+      ground: PIXI.Texture.fromURL("sprites/ground.png"),
+      cloud: PIXI.Texture.fromURL("sprites/cloud.png"),
+    }),
+    audio: awaitValues({
+      jump: new ToneAudioBuffer().load("audio/jump.mp3"),
+      die: new ToneAudioBuffer().load("audio/die.mp3"),
+    }),
   });
 
-let _assets: Awaited<ReturnType<typeof loadAssets>> | null = null;
+export type Assets = Awaited<ReturnType<typeof loadAssets>>;
+
+let _assets: Assets | null = null;
 
 export const assets = () => {
   if (_assets === null) throw new Error("Assets are not loaded");

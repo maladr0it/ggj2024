@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { state } from "../state";
+import { playSound } from "../audio";
 
 const ANIMATION_SPEED = 0.1;
 
@@ -76,6 +77,7 @@ export class Dino {
     if (state.keyboard.activeButtons.has("up") && this.y === GROUND_LEVEL) {
       this.dy = JUMP_VEL;
       this.playAnimation(jumpAnim);
+      playSound("jump");
     }
   }
 }

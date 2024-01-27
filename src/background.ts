@@ -49,7 +49,7 @@ export class Background extends PIXI.Container {
     this.mask = mask;
 
     const ground = new Parallax({
-      texture: assets().ground,
+      texture: assets().sprites.ground,
       containerWidth: width,
     });
     ground.y = 80;
@@ -57,7 +57,7 @@ export class Background extends PIXI.Container {
     this.layers.push(ground);
 
     const clouds = new Parallax({
-      texture: assets().cloud,
+      texture: assets().sprites.cloud,
       containerWidth: width,
       scrollSpeed: 0.5,
       spacing: 400,
