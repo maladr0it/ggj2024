@@ -1,37 +1,23 @@
 import * as PIXI from "pixi.js";
-import { GROUND_LEVEL } from "../constants";
 import { GameStatus, setGameStatus, state } from "../state";
+import {Entity} from "./Entity";
+import {GROUND_LEVEL} from "../constants";
 
-export class Cactus {
-  sprite = PIXI.AnimatedSprite.fromImages(["sprites/cactus1.png"]);
+const animations: Record<string, PIXI.Texture[]> = {
+  default: [
+    await PIXI.Texture.fromURL("sprites/cactus1.png"),
+  ],
+}
+
+export class Cactus extends Entity {
   private initialX = 0;
 
-  constructor() {
+  constructor(x = 0, y = GROUND_LEVEL) {
+    super(animations, "default");
     this.sprite.anchor.set(0, 1);
-  }
-
-  static spawn(x: number, y = GROUND_LEVEL) {
-    const entity = new Cactus();
-    entity.x = x;
-    entity.y = y;
-    entity.initialX = x;
-    return entity;
-  }
-
-  set x(x: number) {
-    this.sprite.x = x;
-  }
-
-  set y(y: number) {
-    this.sprite.y = y;
-  }
-
-  get x() {
-    return this.sprite.x;
-  }
-
-  get y() {
-    return this.sprite.y;
+    this.initialX = x;
+    this.x = x;
+    this.y = y;
   }
 
   isCollidingWith(hitbox: PIXI.Rectangle) {
