@@ -45,9 +45,6 @@ const scoreTicker = new ScoreTicker(450, 10, scene);
 const score = new Score(20, 20, scene);
 score.setValue(1020);
 
-const score = new Score(20, 20, scene);
-score.setValue(1020);
-
 //
 // Main loop
 //

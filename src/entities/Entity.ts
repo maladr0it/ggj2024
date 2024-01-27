@@ -55,6 +55,10 @@ export abstract class Entity {
     return this.sprite.getBounds().height;
   }
 
+  despawn() {
+    this.sprite.parent.removeChild(this.sprite);
+  }
+
   playAnimation(animName: string) {
     if (!this.spawned) {
       throw new Error("Entity must be spawned first");
