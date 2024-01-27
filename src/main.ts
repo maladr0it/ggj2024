@@ -6,10 +6,6 @@ import {
   inputSource_handleKeyUp,
   inputSource_read,
 } from "./inputSource";
-<<<<<<< HEAD
-=======
-// import { entity_create, entity_render } from "./entity";
->>>>>>> cb84215 (remove entity)
 import { log_clear, log_getContent, log_write } from "./log";
 import { Score } from "./score";
 
@@ -27,25 +23,15 @@ const app = new PIXI.Application({
 });
 
 //
-<<<<<<< HEAD
 // Load assets
 //
-=======
-// Level Map Data
-//
-
-const CACTI = [Cactus.create(500)];
->>>>>>> cb84215 (remove entity)
 const runAnim = [
   PIXI.Texture.from("sprites/dino-run1.png"),
   PIXI.Texture.from("sprites/dino-run2.png"),
 ];
 const jumpAnim = [PIXI.Texture.from("sprites/dino-jump1.png")];
-<<<<<<< HEAD
 
 const CACTI = [Cactus.create(500)];
-=======
->>>>>>> cb84215 (remove entity)
 
 //
 // game state
@@ -64,12 +50,9 @@ dino.sprite.animationSpeed = 0.1;
 let distance = 0; // distance the dino has travelled
 let runSpeed = 0;
 
-<<<<<<< HEAD
 const score = new Score(20, 20, app.stage);
 score.setValue(1020);
 
-=======
->>>>>>> cb84215 (remove entity)
 //
 // Main loop
 //
@@ -82,10 +65,7 @@ const tick = (dt: number) => {
   const prevDinoY = dino.sprite.y;
   dino.dy += GRAVITY * dt;
   dino.sprite.y = Math.min(dino.sprite.y + dino.dy * dt, GROUND_LEVEL);
-<<<<<<< HEAD
 
-=======
->>>>>>> cb84215 (remove entity)
   // dino hit the ground
   if (prevDinoY < GROUND_LEVEL && dino.sprite.y === GROUND_LEVEL) {
     dino.sprite.textures = runAnim;
@@ -121,10 +101,6 @@ const start = () => {
 
   app.ticker.add(tick);
 };
-
-
-
-
 
 //
 // Add stuff to DOM
