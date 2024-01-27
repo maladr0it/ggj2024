@@ -17,8 +17,6 @@ import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
 
 import "./style.css";
 
-import "./style.css";
-
 await assets.load();
 
 PIXI.settings.ROUND_PIXELS = false;
@@ -70,9 +68,9 @@ const tick = (dt: number) => {
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
       }
-      
+
       break;
-    
+
     case GameStatus.Playing:
       scoreTicker.container.visible = true;
       background.reveal(dt);
@@ -89,7 +87,7 @@ const tick = (dt: number) => {
       scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
 
       break;
-    
+
     case GameStatus.GameOver:
       break;
   }
