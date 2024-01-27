@@ -8,13 +8,14 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { ScoreTicker } from "./score";
+import { Score, ScoreTicker } from "./score";
 
-import "./style.css";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
 import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
+
+import "./style.css";
 
 await assets.load();
 
@@ -41,6 +42,9 @@ const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
 const scoreTicker = new ScoreTicker(450, 10, scene);
 
+const score = new Score(20, 20, scene);
+score.setValue(1020);
+
 //
 // Main loop
 //
@@ -49,6 +53,7 @@ const tick = (dt: number) => {
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
+      scoreTicker.container.visible = false;
       if (state.keyboard.activeButtons.has("jump")) {
         setGameStatus(GameStatus.Initializing);
       }
@@ -62,10 +67,12 @@ const tick = (dt: number) => {
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
       }
-      
+
       break;
-    
+
     case GameStatus.Playing:
+      scoreTicker.container.visible = true;
+      background.reveal(dt);
       state.dino.update(dt);
 
       // Move the ground.
@@ -79,7 +86,7 @@ const tick = (dt: number) => {
       scoreTicker.setScore(Math.floor(state.distance * SCORE_MULTIPLIER));
 
       break;
-    
+
     case GameStatus.GameOver:
       break;
   }
@@ -91,9 +98,9 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  scene.addChild(background);
+  scene.addChild(background.container);
 
-  state.dino.spawn(scene, 50, GROUND_LEVEL);
+  state.dino.spawn(scene, 20, GROUND_LEVEL);
 
   for (const item of level) {
     scene.addChild(item.sprite);
@@ -115,11 +122,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", event => {
+document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 
