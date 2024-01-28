@@ -8,8 +8,7 @@ import { playSound } from "../audio";
 import { lerp } from "../utils/math";
 
 const animations = {
-  default: [sprites["cactus1.png"]],
-  burn: [sprites["cactus-burn1.png"], sprites["cactus-burn2.png"]],
+  default: [sprites["angry-cactus-ghost.png"]],
 };
 
 export enum CactusState {
@@ -29,7 +28,7 @@ export class CactusWithGun extends Entity {
     this.y = y;
     this.gunSprite = PIXI.Sprite.from(sprites["gun.png"]);
     this.gunSprite.scale.x = -1;
-    this.gunSprite.x = -4;
+    this.gunSprite.x = 2;
     this.gunSprite.y = -27;
     this.sprite.addChild(this.gunSprite);
   }
@@ -53,14 +52,6 @@ export class CactusWithGun extends Entity {
         bullet.dx = -10;
       }
       this.coolOffTimer += dt;
-    }
-  }
-
-  onCollide(other: Entity): void {
-    if (other instanceof Bullet) {
-      this.playAnimation("burn");
-      this.killedBy ??= other;
-      this.state = CactusState.Dead;
     }
   }
 }
