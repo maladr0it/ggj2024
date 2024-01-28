@@ -13,7 +13,7 @@ const animations = {
 export class GunPickup extends Entity {
   private initialX = 0;
   private pickedUp = false;
-  private coolOffTimer = 0;
+  private coolOffTimer = 0.5;
 
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "default");
