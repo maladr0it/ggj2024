@@ -34,7 +34,6 @@ type GameState = {
   keyboard: InputSource;
   distance: number;
   runSpeed: number;
-  gameStatusTimer: number;
   entities: Set<Entity>;
 };
 
@@ -66,7 +65,6 @@ function generateFreshGameState(): GameState {
     background,
     distance: 0, // distance the dino has travelled
     runSpeed: 0,
-    gameStatusTimer: 0,
     /** A Set instead of an Array as a conveniently gaurenteed-unique list of entities. */
     entities: new Set(generateLevel()),
   };
@@ -87,8 +85,7 @@ export function getGameStatus() {
 
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
-
-  state.gameStatusTimer = 0;
+  
   if (status === GameStatus.Initializing) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {
