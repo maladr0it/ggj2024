@@ -5,6 +5,7 @@ import { Bullet } from "./Bullet";
 import { playSound } from "../audio";
 import { lerp } from "../utils/math";
 import { sprites } from "../assets";
+import { Dino } from "./Dino";
 
 const animations = {
   default: [sprites["gun.png"]],
@@ -26,7 +27,7 @@ export class GunPickup extends Entity {
   update(dt: number) {
     if (this.pickedUp) {
       this.y = state.dino.y;
-      this.x = state.dino.x + state.dino.hitbox.width - 15;
+      this.x = state.dino.x + state.dino.w - 15;
       if (
         state.keyboard.activeButtons.has("right") &&
         this.coolOffTimer > 0.5
@@ -37,18 +38,16 @@ export class GunPickup extends Entity {
         const sound = playSound("bang");
         sound.playbackRate = lerp(0.8, 1.2, Math.random());
 
-        bullet.spawn(
-          this.sprite.parent,
-          this.x + this.hitbox.width,
-          this.y - this.hitbox.height
-        );
+        bullet.spawn(this.sprite.parent, this.x + this.w, this.y - this.h);
       }
       this.coolOffTimer += dt;
     } else {
       this.x = this.initialX - state.distance;
     }
+  }
 
-    if (this.isCollidingWith(state.dino.hitbox) && !this.pickedUp) {
+  onCollide(other: Entity): void {
+    if (other instanceof Dino) {
       this.pickedUp = true;
     }
   }
