@@ -21,9 +21,7 @@ export const generateLevel = (): Entity[] => {
 
   if (DEBUG) {
     return [
-      new UFO(i(1000)),
-      new CactusWithGun(i(1000)),
-      new SurpriseCactus(i(1000))
+      new Goal(i(1000)),
     ];
   }
 

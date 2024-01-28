@@ -163,15 +163,20 @@ export class Dino extends Entity {
       this.dy = -800;
     }
     if (other instanceof Goal) {
+      // @ts-ignore
+      document.getElementById("no-internet-message").innerText = "Reconnecting..."
+      // @ts-ignore
+      document.getElementById("error-information-popup-container").innerHTML = ""
+      
       state.runSpeed = 0;
       this.hasWon = true;
       setTimeout(() => {
         playSound("win");
         other.playAnimation("working");
         setTimeout(() => {
-          window.location.href = "https://globalgamejam.org/";
-        }, 2000);
-      }, 2000);
+          window.location.href = "https://www.aol.com/";
+        }, 1400);
+      }, 300);
     }
   }
 }
