@@ -13,8 +13,9 @@ export class Trigger extends Entity {
   constructor(offset: number, onHit: () => void = () => console.log("bang!")) {
     super(animations, "default");
     this.offset = offset;
-    this.y = GROUND_LEVEL;
     this.sprite.visible = false;
+    this.sprite.y = GROUND_LEVEL;
+    this.sprite.height = 1000;
     this.onHit = onHit;
   }
   fired = false;

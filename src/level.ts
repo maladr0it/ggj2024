@@ -4,6 +4,7 @@ import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
 import { UFO } from "./entities/UFO";
 import { Car } from "./entities/Car";
+import { Trigger } from "./entities/Trigger";
 
 export const generateLevel = (): Entity[] => [
   new Cactus(1000),
