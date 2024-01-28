@@ -46,20 +46,18 @@ const tick = () => {
   const dt = (now - then) / 1000;
   then = now;
 
-  state.gameStatusTimer += dt;
-
-  state.clipping.update(dt);
   if (getGameStatus() !== GameStatus.Unstarted) {
+    state.clipping.update(dt);
     state.dino.update(dt);
+  
+    // Move the ground.
+    state.distance += state.runSpeed * dt;
+    for (const layer of state.background) layer.setPosition(state.distance);
+    for (const item of state.entities) item.update(dt);
+    
+    // Update score.
+    state.scoreTicker.update();
   }
-
-  // Move the ground.
-  state.distance += state.runSpeed * dt;
-  for (const layer of state.background) layer.setPosition(state.distance);
-  for (const item of state.entities) item.update(dt);
-
-  // Update score.
-  state.scoreTicker.update();
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
