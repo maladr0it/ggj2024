@@ -1,10 +1,9 @@
 import * as PIXI from "pixi.js";
 import { state } from "../state";
 import { Entity } from "./Entity";
-import { GROUND_LEVEL, SCENE_SIZE } from "../constants";
+import { GROUND_LEVEL } from "../constants";
 import { Bullet } from "./Bullet";
 import { playSound } from "../audio";
-import { log_write } from "../log";
 
 const animations: Record<string, PIXI.Texture[]> = {
   default: [await PIXI.Texture.fromURL("sprites/gun.png")],

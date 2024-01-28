@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { GROUND_LEVEL } from "../constants";
 import { state } from "../state";
 import { Entity } from "./Entity";
+import { log_write } from "../log";
 
 const animations = {
   idle: [await PIXI.Texture.fromURL("sprites/car1.png")],
