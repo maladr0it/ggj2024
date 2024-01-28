@@ -67,6 +67,7 @@ const SPRITE_PATHS = [
   "cactus-burn1.png",
   "cactus-burn2.png",
   "cactus1.png",
+  "spider.png",
   "cloud.png",
   "ground.png",
   "gun.png",
@@ -114,6 +115,7 @@ const loadAssets = async () =>
       die: new ToneAudioBuffer().load("audio/die.mp3"),
       bang: new ToneAudioBuffer().load("audio/bang.mp3"),
       car: new ToneAudioBuffer().load("audio/car.mp3"),
+      spider: new ToneAudioBuffer().load("audio/Stinger.wav"),
     }),
   });
 
