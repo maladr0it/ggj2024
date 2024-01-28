@@ -15,6 +15,10 @@ const animations: Record<string, PIXI.Texture[]> = {
     await PIXI.Texture.fromURL("sprites/dino-run1.png"),
     await PIXI.Texture.fromURL("sprites/dino-run2.png"),
   ],
+  ducking: [
+    await PIXI.Texture.fromURL("sprites/dino-duck-1.png"),
+    await PIXI.Texture.fromURL("sprites/dino-duck-2.png"),
+  ],
   jumping: [await PIXI.Texture.fromURL("sprites/dino-jump1.png")],
   decapitate: [await PIXI.Texture.fromURL("sprites/dino-decap.png")],
   roadkill: [await PIXI.Texture.fromURL("sprites/dino-roadkill1.png")],
@@ -58,6 +62,9 @@ export class Dino extends Entity {
         this.prev_jumping = true;
         this.dy = JUMP_VEL;
         playSound("jump");
+      } else if (state.keyboard.activeButtons.has("down")) {
+        this.playAnimation("ducking");
+        this.sprite.play();
       } else {
         this.playAnimation("running");
       }

@@ -14,12 +14,12 @@ export const generateLevel = (): Entity[] => {
   return [
     new Cactus(1000),
     new PopUpTrigger({
-      x: 1200,
+      x: 4200,
       title: "Problem",
       text: "⚠️<br />No network",
     }),
     new PopUpTrigger({
-      x: 1600,
+      x: 4600,
       title: "Problem",
       text: "🛜<br />Can't reach server",
     }),
