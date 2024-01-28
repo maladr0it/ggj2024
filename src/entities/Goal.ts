@@ -3,6 +3,7 @@ import { state } from "../state";
 import { GROUND_LEVEL } from "../constants";
 import { Dino } from "./Dino";
 import { sprites } from "../assets";
+import { playSound } from "../audio";
 
 export class Goal extends Entity {
   offset: number;
@@ -19,6 +20,7 @@ export class Goal extends Entity {
     if (other instanceof Dino) {
       state.runSpeed = 0;
       state.dino.alive = false;
+      playSound("win");
       // @patrick set the win animation here
       setTimeout(() => {
         window.location.href = "https://globalgamejam.org/";
