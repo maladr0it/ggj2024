@@ -3,37 +3,63 @@ import { Cactus } from "./entities/Cactus";
 import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
 import { Car } from "./entities/Car";
-import { PopUpTrigger } from "./entities/PopUpTrigger";
 import { DEBUG } from "./constants";
-import { UFO } from "./entities/UFO";
-import {
-  createObjective1,
-  createObjective2,
-  createObjective3,
-  createObjective4,
-} from "./entities/Objective";
+import { Tornado } from "./entities/Tornado";
 
 export const generateLevel = (): Entity[] => {
+  let x = 0;
+  const i = (n: number) => {
+    x += n;
+    return x;
+  };
+
   if (DEBUG) {
-    return [new Car(1000), new UFO(2000)];
+    return [new Tornado(1000)];
   }
 
   return [
-    // createObjective1(200),
-    // createObjective2(300),
-    // createObjective3(400),
-    // createObjective4(500),
+    // normal game
+    new Cactus(i(800)),
+    new Cactus(i(800)),
+    new Cactus(i(800)),
 
-    new Cactus(800),
-    new Cactus(1600),
-    new Cactus(2400),
     // car surprise
-    new Car(2600),
+    new Car(i(200)),
 
-    // triple cactus
-    new Cactus(2800),
-    new Cactus(2825),
-    new Cactus(2850),
+    // double cactus
+    new Cactus(i(200)),
+    new Cactus(i(25)),
+
+    // tornado
+    new Tornado(i(300)),
+    new Cactus(i(100)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+
+    new Cactus(i(125)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+
+    new Car(i(600)),
+
+    // // give gun and teach to use it
+    // new GunPickup(3500),
+    // new Cactus(4000),
+    // new Cactus(4300),
+    // new Cactus(4600),
+
+    // // many cacti, shoot them
+    // new Cactus(4000),
+    // new Cactus(4010),
+    // new Cactus(4020),
+    // new Cactus(4030),
 
     // new PopUpTrigger({
     //   x: 4200,

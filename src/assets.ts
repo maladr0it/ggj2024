@@ -19,6 +19,13 @@ const SPRITE_PATHS = [
   "dino/dino-salsa7.png",
   "dino/dino-salsa5.png",
   "dino/dino-salsa8.png",
+  "dino/dino-explode1.png",
+  "dino/dino-explode2.png",
+  "dino/dino-explode3.png",
+  "dino/dino-explode4.png",
+  "dino/dino-explode5.png",
+  "dino/dino-explode6.png",
+  "dino/dino-explode7.png",
 
   // text
   "text/0.png",
@@ -47,6 +54,13 @@ const SPRITE_PATHS = [
   "ufo/ufo9.png",
   "ufo/ufo10.png",
   "ufo/ufo11.png",
+
+  // tornado
+  "tornado/tornado-1.png",
+  "tornado/tornado-2.png",
+  "tornado/tornado-3.png",
+  "tornado/tornado-4.png",
+  "tornado/tornado-5.png",
 
   // misc sprites
   "bullet.png",

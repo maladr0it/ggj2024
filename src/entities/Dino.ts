@@ -7,6 +7,10 @@ import { DinoSalsa } from "./DinoSalsa";
 import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
 import { sprites } from "../assets";
+import { Bullet } from "./Bullet";
+import { Tornado } from "./Tornado";
+
+const DUCK_DY = 10000;
 
 const animations = {
   running: [sprites["dino/dino-run1.png"], sprites["dino/dino-run2.png"]],
@@ -14,6 +18,15 @@ const animations = {
   jumping: [sprites["dino/dino-jump.png"]],
   decapitate: [sprites["dino/dino-decap.png"]],
   roadkill: [sprites["dino/dino-roadkill.png"]],
+  explode: [
+    sprites["dino/dino-explode1.png"],
+    sprites["dino/dino-explode2.png"],
+    sprites["dino/dino-explode3.png"],
+    sprites["dino/dino-explode4.png"],
+    sprites["dino/dino-explode5.png"],
+    sprites["dino/dino-explode6.png"],
+    sprites["dino/dino-explode7.png"],
+  ],
 };
 
 export class Dino extends Entity {
@@ -43,6 +56,9 @@ export class Dino extends Entity {
     }
 
     this.dy += GRAVITY * dt;
+    if (state.keyboard.activeButtons.has("down")) {
+      this.dy += DUCK_DY * dt;
+    }
     this.y = Math.min(this.y + this.dy * dt, GROUND_LEVEL);
 
     if (!this.alive) return;
@@ -91,6 +107,17 @@ export class Dino extends Entity {
     }
   }
 
+  dieFromBullet() {
+    if (this.alive) {
+      this.alive = false;
+      this.playAnimation("explode");
+      this.sprite.loop = false;
+
+      this.head = new DinoHead(state.distance);
+      this.head.spawn(state.scene, this.x, this.y);
+    }
+  }
+
   onCollide(other: Entity): void {
     if (other instanceof Cactus && other.state === CactusState.Alive) {
       this.dieWithDecapitation();
@@ -99,6 +126,13 @@ export class Dino extends Entity {
     if (other instanceof Car) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof Bullet) {
+      this.dieFromBullet();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof Tornado && state.keyboard.activeButtons.has("jump")) {
+      this.dy = -800;
     }
   }
 }
