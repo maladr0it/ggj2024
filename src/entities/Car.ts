@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GROUND_LEVEL } from "../constants";
-import { state } from "../state";
+import { GameStatus, setGameStatus, state } from "../state";
 import { Entity } from "./Entity";
 
 const animations = {
@@ -11,7 +11,7 @@ const animations = {
 const CAR_SPEED = 2_000;
 
 export class Car extends Entity {
-  speed = CAR_SPEED;
+  speed = 0;
 
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "idle");
@@ -21,7 +21,10 @@ export class Car extends Entity {
   }
 
   update(dt: number) {
-    // move the car
+    // if on-screen, speed up the car
+    if (state.clipping.mask.getBounds().intersects(this.hitbox)) {
+      this.speed = CAR_SPEED;
+    }
     this.x -= (this.speed + state.runSpeed) * dt;
   }
 }
