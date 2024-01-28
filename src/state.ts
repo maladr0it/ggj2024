@@ -44,6 +44,7 @@ function generateFreshGameState(): GameState {
   const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
   gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
   gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+  gameOverMessage.visible = false;
   background.container.addChild(gameOverMessage);
   
   return {
