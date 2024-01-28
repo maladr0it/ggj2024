@@ -10,6 +10,8 @@ import { sprites } from "../assets";
 import { Bullet } from "./Bullet";
 import { Tornado } from "./Tornado";
 
+const DUCK_DY = 10000;
+
 const animations = {
   running: [sprites["dino/dino-run1.png"], sprites["dino/dino-run2.png"]],
   ducking: [sprites["dino/dino-duck1.png"], sprites["dino/dino-duck2.png"]],
@@ -54,6 +56,9 @@ export class Dino extends Entity {
     }
 
     this.dy += GRAVITY * dt;
+    if (state.keyboard.activeButtons.has("down")) {
+      this.dy += DUCK_DY * dt;
+    }
     this.y = Math.min(this.y + this.dy * dt, GROUND_LEVEL);
 
     if (!this.alive) return;
