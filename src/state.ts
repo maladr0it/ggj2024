@@ -8,11 +8,13 @@ import {
   SCENE_SIZE,
   SCORE_MULTIPLIER,
   RUN_SPEED,
+  DINO_X_POS,
 } from "./constants";
 
 import { Dino } from "./entities/Dino";
 import { Entity } from "./entities/Entity";
 import { resetObjectives } from "./entities/Objective";
+import { UFO } from "./entities/UFO";
 import { InputSource, inputSource_create } from "./inputSource";
 import { generateLevel } from "./level";
 import { ScoreTicker } from "./score";
@@ -109,10 +111,14 @@ export function resetGame() {
 
   scene.addChild(state.clipContainer);
 
-  state.dino.spawn(scene, 0, GROUND_LEVEL);
+  state.dino.spawn(scene, DINO_X_POS, GROUND_LEVEL);
 
   for (const item of state.entities) {
-    item.spawn(state.clipContainer, item.x, item.y);
+    if (item instanceof UFO) {
+      item.spawn(scene, item.x, item.y);
+    } else {
+      item.spawn(state.clipContainer, item.x, item.y);
+    }
   }
 
   setGameStatus(GameStatus.Unstarted);

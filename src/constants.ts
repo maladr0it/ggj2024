@@ -7,4 +7,6 @@ export const DEATH_DECEL = 750;
 export const RUN_SPEED = 360;
 export const SCORE_MULTIPLIER = 0.01; // Modifies rate score increases relative to distance
 
-export const DEBUG = true;
+export const DINO_X_POS = 0;
+
+export const DEBUG = false;
