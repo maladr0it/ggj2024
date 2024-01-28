@@ -1,13 +1,13 @@
-import * as PIXI from "pixi.js";
 import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { Bullet } from "./Bullet";
 import { playSound } from "../audio";
 import { lerp } from "../utils/math";
+import { sprites } from "../assets";
 
-const animations: Record<string, PIXI.Texture[]> = {
-  default: [await PIXI.Texture.fromURL("sprites/gun.png")],
+const animations = {
+  default: [sprites["gun.png"]],
 };
 
 export class GunPickup extends Entity {

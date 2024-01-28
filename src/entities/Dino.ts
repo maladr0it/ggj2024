@@ -1,23 +1,19 @@
-import * as PIXI from "pixi.js";
-
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { GameStatus, setGameStatus, state } from "../state";
 import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
 import { DinoSalsa } from "./DinoSalsa";
-import { Cactus } from "./Cactus";
+import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
+import { sprites } from "../assets";
 
-// Assets
-const animations: Record<string, PIXI.Texture[]> = {
-  running: [
-    await PIXI.Texture.fromURL("sprites/dino-run1.png"),
-    await PIXI.Texture.fromURL("sprites/dino-run2.png"),
-  ],
-  jumping: [await PIXI.Texture.fromURL("sprites/dino-jump1.png")],
-  decapitate: [await PIXI.Texture.fromURL("sprites/dino-decap.png")],
-  roadkill: [await PIXI.Texture.fromURL("sprites/dino-roadkill1.png")],
+const animations = {
+  running: [sprites["dino/dino-run1.png"], sprites["dino/dino-run2.png"]],
+  ducking: [sprites["dino/dino-duck1.png"], sprites["dino/dino-duck2.png"]],
+  jumping: [sprites["dino/dino-jump.png"]],
+  decapitate: [sprites["dino/dino-decap.png"]],
+  roadkill: [sprites["dino/dino-roadkill.png"]],
 };
 
 export class Dino extends Entity {
@@ -58,6 +54,9 @@ export class Dino extends Entity {
         this.prev_jumping = true;
         this.dy = JUMP_VEL;
         playSound("jump");
+      } else if (state.keyboard.activeButtons.has("down")) {
+        this.playAnimation("ducking");
+        this.sprite.play();
       } else {
         this.playAnimation("running");
       }
@@ -93,7 +92,7 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    if (other instanceof Cactus) {
+    if (other instanceof Cactus && other.state === CactusState.Alive) {
       this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }

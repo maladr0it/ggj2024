@@ -8,7 +8,7 @@ import { Player } from "tone";
 import { playSound } from "../audio";
 
 const animations = {
-  idle: [await PIXI.Texture.fromURL("sprites/car1.png")],
+  idle: [await PIXI.Texture.fromURL("sprites/car.png")],
 };
 
 const CAR_SPEED = 2_000;

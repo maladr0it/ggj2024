@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { DEATH_DECEL, SCENE_SIZE, SCENE_TOP } from "./constants";
+import { DEATH_DECEL, DEBUG, SCENE_SIZE, SCENE_TOP } from "./constants";
 
 import * as Tone from "tone";
 import {
@@ -20,7 +20,7 @@ import {
 
 import "./style.css";
 
-// PIXI.settings.ROUND_PIXELS = false;
+PIXI.settings.ROUND_PIXELS = true;
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -49,12 +49,12 @@ const tick = () => {
   if (getGameStatus() !== GameStatus.Unstarted) {
     state.clipping.update(dt);
     state.dino.update(dt);
-  
+
     // Move the ground.
     state.distance += state.runSpeed * dt;
     for (const layer of state.background) layer.setPosition(state.distance);
     for (const item of state.entities) item.update(dt);
-    
+
     // Update score.
     state.scoreTicker.update();
   }
@@ -69,10 +69,9 @@ const tick = () => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      state.clipping.reveal();
-
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
+        state.clipping.reveal(true);
       }
 
       break;
@@ -105,6 +104,7 @@ const tick = () => {
       if (state.runSpeed === 0 && state.keyboard.activeButtons.has("jump")) {
         resetGame();
         setGameStatus(GameStatus.Initializing);
+        state.clipping.reveal(false);
       }
 
       break;
@@ -114,7 +114,9 @@ const tick = () => {
   log_write("distance:", Math.floor(state.distance));
   log_write("entity count:", state.entities.size);
 
-  logEl.innerText = log_getContent();
+  if (DEBUG) {
+    logEl.innerText = log_getContent();
+  }
   log_clear();
 };
 
@@ -137,11 +139,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", event => {
+document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 

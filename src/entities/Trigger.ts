@@ -1,10 +1,10 @@
-import * as PIXI from "pixi.js";
 import { Entity } from "./Entity";
 import { state } from "../state";
 import { GROUND_LEVEL } from "../constants";
+import { sprites } from "../assets";
 
 const animations = {
-  default: [await PIXI.Texture.fromURL("sprites/gun.png")],
+  default: [sprites["gun.png"]],
 };
 
 export class Trigger extends Entity {
