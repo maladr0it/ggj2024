@@ -19,6 +19,13 @@ const SPRITE_PATHS = [
   "dino/dino-salsa7.png",
   "dino/dino-salsa5.png",
   "dino/dino-salsa8.png",
+  "dino/dino-explode1.png",
+  "dino/dino-explode2.png",
+  "dino/dino-explode3.png",
+  "dino/dino-explode4.png",
+  "dino/dino-explode5.png",
+  "dino/dino-explode6.png",
+  "dino/dino-explode7.png",
 
   // text
   "text/0.png",

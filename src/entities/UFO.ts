@@ -1,6 +1,4 @@
-import * as PIXI from "pixi.js";
-
-import { GameStatus, setGameStatus, state } from "../state";
+import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { sprites } from "../assets";
@@ -23,7 +21,7 @@ const animations = {
 
 export class UFO extends Entity {
   velocity = { x: 100, y: 0 };
-  base_y = 0;
+  base_y = GROUND_LEVEL / 2;
   total_time = 0;
 
   constructor(x = 0, y = GROUND_LEVEL - 100) {
@@ -38,11 +36,6 @@ export class UFO extends Entity {
     // move the ufo
     this.total_time += dt;
     this.x -= (this.velocity.x + state.runSpeed) * dt;
-    this.y = this.base_y + Math.sin(this.total_time * 5) * 40;
-
-    if (this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.dieFromCar();
-      setGameStatus(GameStatus.GameOver);
-    }
+    this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
   }
 }

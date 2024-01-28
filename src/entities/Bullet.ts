@@ -3,6 +3,7 @@ import { Entity } from "./Entity";
 import { SCENE_SIZE } from "../constants";
 import { Cactus, CactusState } from "./Cactus";
 import { sprites } from "../assets";
+import { UFO } from "./UFO";
 
 const animations = {
   default: [sprites["bullet.png"]],
@@ -24,6 +25,7 @@ export class Bullet extends Entity {
     if (this.x > SCENE_SIZE.x) {
       this.despawn();
     }
+    this.sprite.scale.x = Math.sign(this.dx);
   }
 
   onCollide(other: Entity): void {
@@ -32,6 +34,10 @@ export class Bullet extends Entity {
       (other.killedBy === this || other.state === CactusState.Alive)
     ) {
       this.despawn();
+    }
+
+    if (other instanceof UFO) {
+      this.dx = -this.dx;
     }
   }
 }
