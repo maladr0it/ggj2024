@@ -7,7 +7,7 @@ type InputButton =
   | "action_a"
   | "action_b";
 
-type InputSource = {
+export type InputSource = {
   activeButtons: Set<InputButton>;
   prevActiveButtons: Set<InputButton>;
 };

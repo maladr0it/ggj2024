@@ -8,7 +8,6 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { SCENE_SIZE } from "./constants";
 
-import { assets } from "./assets";
 import * as Tone from "tone";
 import {
   GameStatus,
@@ -22,8 +21,6 @@ import {
 import "./style.css";
 
 // PIXI.settings.ROUND_PIXELS = false;
-
-await assets.load();
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -43,12 +40,12 @@ app.stage.addChild(scene);
 // game state
 //
 
-state.scoreTicker.spawn(450, 10, state.background.container);
+state.scoreTicker.spawn(450, 10, state.clipContainer);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
 gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
 gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
-state.background.container.addChild(gameOverMessage);
+state.clipContainer.addChild(gameOverMessage);
 // gameOverMessage.visible = false;
 
 //
@@ -65,15 +62,13 @@ const tick = () => {
 
   state.gameStatusTimer += dt;
 
-  state.background.update(dt);
+  state.clipping.update(dt);
   state.dino.update(dt);
 
   // Move the ground.
   state.distance += state.runSpeed * dt;
-  state.background.setPosition(state.distance);
-  for (const item of state.level) {
-    item.update(dt);
-  }
+  for (const layer of state.background) layer.setPosition(state.distance);
+  for (const item of state.level) item.update(dt);
 
   // Update score.
   state.scoreTicker.update();
@@ -88,7 +83,7 @@ const tick = () => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      state.background.reveal();
+      state.clipping.reveal();
 
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);

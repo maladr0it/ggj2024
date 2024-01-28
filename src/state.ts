@@ -1,7 +1,8 @@
 //
 // game state
 //
-import { Background } from "./background";
+import { assets } from "./assets";
+import { Clipping, Parallax, initBackground } from "./background";
 import {
   GROUND_LEVEL,
   SCENE_SIZE,
@@ -10,10 +11,12 @@ import {
 } from "./constants";
 import { Car } from "./entities/Car";
 import { Dino } from "./entities/Dino";
-import { inputSource_create } from "./inputSource";
+import { InputSource, inputSource_create } from "./inputSource";
 import { LevelEntity, generateLevel } from "./level";
 import { ScoreTicker } from "./score";
 import * as PIXI from "pixi.js";
+
+await assets.load();
 
 export const scene = new PIXI.Container();
 
@@ -22,8 +25,10 @@ export let state: GameState = generateFreshGameState();
 type GameState = {
   scoreTicker: ScoreTicker;
   dino: Dino;
-  background: Background;
-  keyboard: any;
+  clipping: Clipping;
+  clipContainer: PIXI.Container;
+  background: Parallax[];
+  keyboard: InputSource;
   distance: number;
   runSpeed: number;
   gameStatusTimer: number;
@@ -32,17 +37,19 @@ type GameState = {
 };
 
 function generateFreshGameState(): GameState {
+  const clipping = new Clipping(SCENE_SIZE.x, SCENE_SIZE.y);
+  const background = initBackground(SCENE_SIZE.x);
+  for (const layer of background) clipping.container.addChild(layer.container);
+
   const dino = new Dino();
   const keyboard = inputSource_create();
-  const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
   const car = new Car();
-
-  // TODO: Clean up
-  window.setTimeout(() => background.spawn(), 10);
 
   return {
     scoreTicker: new ScoreTicker(),
     dino,
+    clipping,
+    clipContainer: clipping.container,
     keyboard,
     background,
     car,
@@ -90,12 +97,12 @@ export function resetGame() {
   scene.removeChildren();
   state = generateFreshGameState();
 
-  scene.addChild(state.background.container);
+  scene.addChild(state.clipContainer);
 
   state.dino.spawn(scene, 0, GROUND_LEVEL);
 
   for (const item of state.level) {
-    scene.addChild(item.sprite);
+    state.clipContainer.addChild(item.sprite);
   }
 
   setGameStatus(GameStatus.Unstarted);

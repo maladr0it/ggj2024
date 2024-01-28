@@ -1,7 +1,6 @@
 import * as PIXI from "pixi.js";
-import { assets } from "./assets";
 import { Tween } from "./utils/tween";
-import { state } from "./state";
+import { assets } from "./assets";
 
 interface ParallaxParams {
   texture: PIXI.Texture;
@@ -46,14 +45,29 @@ export class Parallax {
   }
 }
 
-export class Background {
+export const initBackground = (width: number) => {
+  const ground = new Parallax({
+    texture: assets().sprites.ground,
+    containerWidth: width,
+  });
+  ground.container.y = 90;
+  const clouds = new Parallax({
+    texture: assets().sprites.cloud,
+    containerWidth: width,
+    scrollSpeed: 0.5,
+    spacing: 400,
+    offset: 100,
+  });
+  clouds.container.y = 50;
+  return [ground, clouds];
+};
+
+export class Clipping {
   container: PIXI.Container;
   width: number;
   height: number;
 
   mask: PIXI.Graphics;
-
-  layers: Parallax[] = [];
 
   constructor(width: number, height: number) {
     this.container = new PIXI.Container();
@@ -64,30 +78,7 @@ export class Background {
     this.mask = new PIXI.Graphics();
     this.container.addChild(this.mask);
     this.container.mask = this.mask;
-    this.updateMask();
-  }
-
-  spawn() {
-    const ground = new Parallax({
-      texture: assets().sprites.ground,
-      containerWidth: this.width,
-    });
-    ground.container.y = 90;
-
-    this.container.addChild(ground.container);
-    this.layers.push(ground);
-
-    const clouds = new Parallax({
-      texture: assets().sprites.cloud,
-      containerWidth: this.width,
-      scrollSpeed: 0.5,
-      spacing: 400,
-      offset: 100,
-    });
-    clouds.container.y = 50;
-
-    this.container.addChild(clouds.container);
-    this.layers.push(clouds);
+    this.update(0);
   }
 
   initialWidth = 45;
@@ -98,22 +89,81 @@ export class Background {
   }
 
   update(dt: number) {
-    this.setPosition(state.distance);
     if (this.revealed) this.revealTween.update(dt);
-    this.updateMask();
-  }
-
-  setPosition(x: number) {
-    for (const layer of this.layers) layer.setPosition(x);
-  }
-
-  updateMask() {
     this.mask.beginFill(0xffffff);
     const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
     this.mask.drawRect(0, 0, revealedWidth, this.height);
   }
-
-  get revealDone() {
-    return this.revealTween.done;
-  }
 }
+
+// export class Background {
+//   container: PIXI.Container;
+//   width: number;
+//   height: number;
+
+//   mask: PIXI.Graphics;
+
+//   layers: Parallax[] = [];
+
+//   constructor(width: number, height: number) {
+//     this.container = new PIXI.Container();
+
+//     this.width = width;
+//     this.height = height;
+
+//     this.mask = new PIXI.Graphics();
+//     this.container.addChild(this.mask);
+//     this.container.mask = this.mask;
+//     this.updateMask();
+//   }
+
+//   spawn() {
+//     const ground = new Parallax({
+//       texture: assets().sprites.ground,
+//       containerWidth: this.width,
+//     });
+//     ground.container.y = 90;
+
+//     this.container.addChild(ground.container);
+//     this.layers.push(ground);
+
+//     const clouds = new Parallax({
+//       texture: assets().sprites.cloud,
+//       containerWidth: this.width,
+//       scrollSpeed: 0.5,
+//       spacing: 400,
+//       offset: 100,
+//     });
+//     clouds.container.y = 50;
+
+//     this.container.addChild(clouds.container);
+//     this.layers.push(clouds);
+//   }
+
+//   initialWidth = 45;
+//   revealTween = new Tween(1 / 2);
+//   private revealed = false;
+//   reveal() {
+//     this.revealed = true;
+//   }
+
+//   update(dt: number) {
+//     this.setPosition(state.distance);
+//     if (this.revealed) this.revealTween.update(dt);
+//     this.updateMask();
+//   }
+
+//   setPosition(x: number) {
+//     for (const layer of this.layers) layer.setPosition(x);
+//   }
+
+//   updateMask() {
+//     this.mask.beginFill(0xffffff);
+//     const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
+//     this.mask.drawRect(0, 0, revealedWidth, this.height);
+//   }
+
+//   get revealDone() {
+//     return this.revealTween.done;
+//   }
+// }

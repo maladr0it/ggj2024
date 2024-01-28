@@ -22,7 +22,7 @@ export class Car extends Entity {
 
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieFromCar();
-      setGameStatus(GameStatus.Dying);
+      setGameStatus(GameStatus.GameOver);
     }
   }
 }
