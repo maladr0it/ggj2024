@@ -9,6 +9,8 @@ import { sprites } from "../assets";
 import { Bullet } from "./Bullet";
 import { Tornado } from "./Tornado";
 import { UFO } from "./UFO";
+import { SurpriseCactus } from "./SurpriseCactus";
+import { Cactus, CactusState } from "./Cactus";
 
 const DUCK_DY = 10000;
 
@@ -119,10 +121,14 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    // if (other instanceof Cactus && other.state === CactusState.Alive) {
-    //   this.dieWithDecapitation();
-    //   setGameStatus(GameStatus.GameOver);
-    // }
+    if (other instanceof Cactus && other.state === CactusState.Alive) {
+      this.dieWithDecapitation();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof SurpriseCactus) {
+      this.dieWithDecapitation();
+      setGameStatus(GameStatus.GameOver);
+    }
     if (other instanceof Car) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);
