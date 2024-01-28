@@ -86,12 +86,11 @@ const tick = () => {
       break;
 
     case GameStatus.GameOver:
-      state.runSpeed *= 0.98;
+      state.runSpeed = Math.max(0, state.runSpeed - 500 * dt);
 
-      const isDone = state.dino.deathState === "DEAD";
-      state.gameOverMessage.visible = isDone;
+      state.gameOverMessage.visible = true;
 
-      if (isDone && state.keyboard.activeButtons.has("jump")) {
+      if (state.runSpeed === 0 && state.keyboard.activeButtons.has("jump")) {
         resetGame();
         setGameStatus(GameStatus.Initializing);
       }
