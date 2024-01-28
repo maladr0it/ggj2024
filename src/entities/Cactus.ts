@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { GameStatus, setGameStatus, state } from "../state";
+import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 
@@ -16,10 +16,7 @@ export class Cactus extends Entity {
 
   update(dt: number) {
     this.x -= state.runSpeed * dt;
-
-    if (this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.dieWithDecapitation();
-      setGameStatus(GameStatus.GameOver);
-    }
   }
+
+  onCollide(other: Entity): void {}
 }
