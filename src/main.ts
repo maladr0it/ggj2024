@@ -6,17 +6,15 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GROUND_LEVEL, RUN_SPEED, SCENE_SIZE } from "./constants";
-import { level } from "./level";
-import { Score, ScoreTicker } from "./score";
+import { SCENE_SIZE } from "./constants";
 
 import { assets } from "./assets";
-import { Background } from "./background";
 import * as Tone from "tone";
 import {
   GameStatus,
   getGameStatus,
-  restartGame,
+  resetGame,
+  scene,
   setGameStatus,
   state,
 } from "./state";
@@ -36,22 +34,22 @@ const app = new PIXI.Application({
   backgroundAlpha: 0,
   antialias: false,
 });
+// @ts-ignore
+window.app = app;
 
-const scene = new PIXI.Container();
 app.stage.addChild(scene);
 
 //
 // game state
 //
-const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
-state.scoreTicker.spawn(450, 10, background.container);
+state.scoreTicker.spawn(450, 10, state.background.container);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
 gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
 gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
-gameOverMessage.visible = false;
-background.container.addChild(gameOverMessage);
+state.background.container.addChild(gameOverMessage);
+// gameOverMessage.visible = false;
 
 //
 // Main loop
@@ -67,13 +65,13 @@ const tick = () => {
 
   state.gameStatusTimer += dt;
 
-  background.update(dt);
+  state.background.update(dt);
   state.dino.update(dt);
 
   // Move the ground.
   state.distance += state.runSpeed * dt;
-  background.setPosition(state.distance);
-  for (const item of level) {
+  state.background.setPosition(state.distance);
+  for (const item of state.level) {
     item.update(dt);
   }
 
@@ -90,9 +88,7 @@ const tick = () => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      background.reveal();
-      // background.update(dt);
-      // state.dino.update(dt);
+      state.background.reveal();
 
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
@@ -109,11 +105,11 @@ const tick = () => {
     case GameStatus.GameOver:
       state.runSpeed *= 0.98;
 
-      gameOverMessage.visible = true;
+      const isDone = state.dino.deathState === "DEAD";
+      gameOverMessage.visible = isDone;
 
-      if (state.keyboard.activeButtons.has("jump")) {
-        restartGame();
-        setGameStatus(GameStatus.Playing);
+      if (isDone && state.keyboard.activeButtons.has("jump")) {
+        resetGame();
       }
 
       break;
@@ -126,13 +122,7 @@ const tick = () => {
 };
 
 const start = () => {
-  scene.addChild(background.container);
-
-  state.dino.spawn(scene, 0, GROUND_LEVEL);
-
-  for (const item of level) {
-    scene.addChild(item.sprite);
-  }
+  resetGame();
 
   requestAnimationFrame(tick);
 };

@@ -13,11 +13,12 @@ const CAR_SPEED = 10;
 export class Car extends Entity {
   constructor() {
     super(animations, "idle");
+
+    this.sprite.scale = { x: 0.5, y: 0.5 };
   }
 
-  update(_dt: number) {
+  update(dt: number) {
     // move the car
-    const bounds = this.w;
-    const wishX = (this.x -= CAR_SPEED);
+    this.x -= CAR_SPEED * dt;
   }
 }
