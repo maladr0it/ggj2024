@@ -66,6 +66,7 @@ const SPRITE_PATHS = [
   "bullet.png",
   "cactus-burn1.png",
   "cactus-burn2.png",
+  "cactus-ghost.png",
   "cactus1.png",
   "spider.png",
   "cloud.png",
