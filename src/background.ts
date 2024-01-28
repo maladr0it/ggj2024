@@ -62,10 +62,11 @@ export class Background {
     this.mask = new PIXI.Graphics();
     this.container.addChild(this.mask);
     this.container.mask = this.mask;
-    this.reveal(0);
   }
 
   spawn() {
+    this.reveal(0);
+    
     const ground = new Parallax({
       texture: assets().sprites.ground,
       containerWidth: this.width,

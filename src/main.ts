@@ -6,12 +6,12 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
+import { SCENE_SIZE } from "./constants";
 import { level } from "./level";
 
 import { assets } from "./assets";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, resetGame, setGameStatus, state } from "./state";
+import { GameStatus, getGameStatus, resetGame, scene, setGameStatus, state } from "./state";
 
 import "./style.css";
 
@@ -28,15 +28,17 @@ const app = new PIXI.Application({
   backgroundAlpha: 0,
   antialias: false,
 });
+// @ts-ignore
+window.app = app
 
-app.stage.addChild(state.scene);
+app.stage.addChild(scene);
+
 
 //
 // game state
 //
 
-state.background.spawn()
-state.scoreTicker.spawn(450, 10, state.scene);
+state.scoreTicker.spawn(450, 10, scene);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
 gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
@@ -99,7 +101,6 @@ const tick = (dt: number) => {
 
       if (state.keyboard.activeButtons.has("jump")) {
         resetGame();
-        setGameStatus(GameStatus.Playing);
       }
 
       break;
@@ -112,21 +113,14 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  state.scene.addChild(state.background.container);
-
-  state.dino.spawn(state.scene, 20, GROUND_LEVEL);
-
-  for (const item of level) {
-    state.scene.addChild(item.sprite);
-  }
-
+  resetGame();
   app.ticker.add(tick);
 };
 
 const onResize = () => {
   app.renderer.resize(window.innerWidth, window.innerHeight);
-  state.scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
-  state.scene.y = 150;
+  scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
+  scene.y = 150;
 };
 
 //
