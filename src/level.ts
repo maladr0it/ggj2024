@@ -11,6 +11,7 @@ import { Spider } from "./entities/Spider";
 import { GhostCactus } from "./entities/GhostCactus";
 import { CactusWithGun } from "./entities/CactusWithGun";
 import { GunPickup } from "./entities/GunPickup";
+import { createEthCableObjective } from "./entities/Objective";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -22,6 +23,9 @@ export const generateLevel = (): Entity[] => {
   if (DEBUG) {
     return [
       new Goal(i(1000)),
+      new UFO(i(1000)),
+      new CactusWithGun(i(1000)),
+      new SurpriseCactus(i(1000)),
     ];
   }
 
@@ -117,8 +121,9 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(125)),
     new Cactus(i(125)),
 
-    new CactusWithGun(i(400)),
-    //
+    new CactusWithGun(i(350)),
+    new CactusWithGun(i(350)),
+    new CactusWithGun(i(350)),
 
     new Goal(i(800)),
   ];
