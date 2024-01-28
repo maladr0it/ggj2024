@@ -6,7 +6,7 @@ import { GROUND_LEVEL, SCENE_SIZE, SCORE_MULTIPLIER } from "./constants";
 import { Car } from "./entities/Car";
 import { Dino } from "./entities/Dino";
 import { inputSource_create } from "./inputSource";
-import { level } from "./level";
+import { LevelEntity, generateLevel } from "./level";
 import { ScoreTicker } from "./score";
 import * as PIXI from "pixi.js";
 
@@ -24,6 +24,7 @@ type GameState = {
   runSpeed: number,
   gameStatusTimer: number,
   car: Car,
+  level: LevelEntity[],
 }
 
 function generateFreshGameState(): GameState {
@@ -44,6 +45,7 @@ function generateFreshGameState(): GameState {
     distance: 0, // distance the dino has travelled
     runSpeed: 10,
     gameStatusTimer: 0,
+    level: generateLevel(),
   };
 }
 
@@ -91,9 +93,11 @@ export function resetGame() {
 
   state.dino.spawn(scene, 20, GROUND_LEVEL);
 
-  for (const item of level) {
+  for (const item of state.level) {
     scene.addChild(item.sprite);
   }
+
+  setGameStatus(GameStatus.Unstarted);
   
   // setGameStatus(GameStatus.Unstarted);
 

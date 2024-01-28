@@ -7,7 +7,6 @@ import {
 import { log_clear, log_getContent, log_write } from "./log";
 
 import { SCENE_SIZE } from "./constants";
-import { level } from "./level";
 
 import { assets } from "./assets";
 import * as Tone from "tone";
@@ -94,7 +93,7 @@ const tick = (dt: number) => {
       // Move the ground.
       state.distance += state.runSpeed;
       state.background.setPosition(state.distance);
-      for (const item of level) {
+      for (const item of state.level) {
         item.update(dt);
       }
       state.car.update(dt);
@@ -122,15 +121,6 @@ const tick = (dt: number) => {
 
 const start = () => {
   resetGame();
-  // scene.addChild(background.container);
-
-  // state.dino.spawn(scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   scene.addChild(item.sprite);
-  // }
-
-  // state.car.spawn(scene, 80, GROUND_LEVEL);
 
   app.ticker.add(tick);
 };

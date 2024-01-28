@@ -4,7 +4,6 @@ import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { state } from "../state";
 import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
-import { level } from "../level";
 import { Entity } from "./Entity";
 
 // Assets
@@ -55,7 +54,7 @@ export class Dino extends Entity {
         state.dino.x + state.distance,
         state.dino.y
       );
-      level.push(head);
+      state.level.push(head);
     }
   }
 }
