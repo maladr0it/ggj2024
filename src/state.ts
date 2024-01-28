@@ -113,7 +113,7 @@ export function resetGame() {
   state.dino.spawn(scene, 0, GROUND_LEVEL);
 
   for (const item of state.level) {
-    state.clipContainer.addChild(item.sprite);
+    item.spawn(state.clipContainer, item.x, item.y);
   }
 
   setGameStatus(GameStatus.Unstarted);

@@ -98,7 +98,7 @@ export class Dino extends Entity {
       this.playAnimation("roadkill");
 
       this.salsa = new DinoSalsa();
-      this.salsa.spawn(state.scene, this.x - 120, this.y - 2);
+      this.salsa.spawn(state.scene, this.x - 120, GROUND_LEVEL);
     }
   }
 
@@ -107,8 +107,8 @@ export class Dino extends Entity {
       this.deathState = "DYING";
       this.playAnimation("roadkill");
 
-      const salsa = new DinoSalsa();
-      salsa.spawn(state.clipContainer, this.x - salsa.w, this.y + 20);
+      this.salsa = new DinoSalsa();
+      this.salsa.spawn(state.scene, this.x - 120, GROUND_LEVEL);
     }
   }
 }
