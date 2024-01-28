@@ -34,9 +34,11 @@ export class Car extends Entity {
     ) {
       this.started = true;
       this.speed = CAR_SPEED;
-      this.sound = playSound("car");
     }
     this.x -= (this.speed + state.runSpeed) * dt;
+    if (this.x < 1300) {
+      this.sound ??= playSound("car");
+    }
   }
 
   cleanup(): void {
