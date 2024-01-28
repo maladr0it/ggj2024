@@ -63,10 +63,12 @@ export class Background {
     this.container.addChild(this.mask);
     this.container.mask = this.mask;
     this.reveal(0);
+  }
 
+  spawn() {
     const ground = new Parallax({
       texture: assets().sprites.ground,
-      containerWidth: width,
+      containerWidth: this.width,
     });
     ground.container.y = 80;
 
@@ -75,7 +77,7 @@ export class Background {
 
     const clouds = new Parallax({
       texture: assets().sprites.cloud,
-      containerWidth: width,
+      containerWidth: this.width,
       scrollSpeed: 0.5,
       spacing: 400,
       offset: 100,

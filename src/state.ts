@@ -1,17 +1,24 @@
 //
 // game state
 //
-import { SCORE_MULTIPLIER } from "./constants";
+import { Background } from "./background";
+import { SCENE_SIZE, SCORE_MULTIPLIER } from "./constants";
 import { Dino } from "./entities/Dino";
 import { inputSource_create } from "./inputSource";
+import { level } from "./level";
 import { ScoreTicker } from "./score";
+import * as PIXI from "pixi.js";
 
 const keyboard = inputSource_create();
 const dino = new Dino();
+const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
+const scene = new PIXI.Container();
 
 export const state = {
   scoreTicker: new ScoreTicker(),
   dino,
+  background,
+  scene,
   keyboard,
   distance: 0, // distance the dino has travelled
   runSpeed: 10,
@@ -55,8 +62,15 @@ export function setGameStatus(newStatus: GameStatus) {
   }
 }
 
-export function restartGame() {
-  
+export function resetGame() {
+  // background.container.removeChildren();
+  // scene.removeChildren();
+
+  // // state.dino.spawn(scene, 20, GROUND_LEVEL);
+
+  // for (const item of level) {
+  //   scene.removeChild(item.sprite);
+  // }
 }
 
 export function getScore() {

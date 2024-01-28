@@ -8,12 +8,10 @@ import { log_clear, log_getContent, log_write } from "./log";
 
 import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
 import { level } from "./level";
-import { Score, ScoreTicker } from "./score";
 
 import { assets } from "./assets";
-import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, restartGame, setGameStatus, state } from "./state";
+import { GameStatus, getGameStatus, resetGame, setGameStatus, state } from "./state";
 
 import "./style.css";
 
@@ -31,20 +29,19 @@ const app = new PIXI.Application({
   antialias: false,
 });
 
-const scene = new PIXI.Container();
-app.stage.addChild(scene);
+app.stage.addChild(state.scene);
 
 //
 // game state
 //
-const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
-state.scoreTicker.spawn(450, 10, scene);
+state.background.spawn()
+state.scoreTicker.spawn(450, 10, state.scene);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
 gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
 gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
-background.container.addChild(gameOverMessage);
+state.background.container.addChild(gameOverMessage);
 
 //
 // Main loop
@@ -82,12 +79,12 @@ const tick = (dt: number) => {
     case GameStatus.Playing:
       gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
-      background.reveal(dt);
+      state.background.reveal(dt);
       state.dino.update(dt);
 
       // Move the ground.
       state.distance += state.runSpeed;
-      background.setPosition(state.distance);
+      state.background.setPosition(state.distance);
       for (const item of level) {
         item.update(dt);
       }
@@ -101,7 +98,7 @@ const tick = (dt: number) => {
       gameOverMessage.visible = true;
 
       if (state.keyboard.activeButtons.has("jump")) {
-        restartGame();
+        resetGame();
         setGameStatus(GameStatus.Playing);
       }
 
@@ -115,12 +112,12 @@ const tick = (dt: number) => {
 };
 
 const start = () => {
-  scene.addChild(background.container);
+  state.scene.addChild(state.background.container);
 
-  state.dino.spawn(scene, 20, GROUND_LEVEL);
+  state.dino.spawn(state.scene, 20, GROUND_LEVEL);
 
   for (const item of level) {
-    scene.addChild(item.sprite);
+    state.scene.addChild(item.sprite);
   }
 
   app.ticker.add(tick);
@@ -128,8 +125,8 @@ const start = () => {
 
 const onResize = () => {
   app.renderer.resize(window.innerWidth, window.innerHeight);
-  scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
-  scene.y = 150;
+  state.scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
+  state.scene.y = 150;
 };
 
 //
