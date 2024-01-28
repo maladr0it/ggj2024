@@ -7,29 +7,53 @@ import { DEBUG } from "./constants";
 import { Tornado } from "./entities/Tornado";
 
 export const generateLevel = (): Entity[] => {
+  let x = 0;
+  const i = (n: number) => {
+    x += n;
+    return x;
+  };
+
   if (DEBUG) {
     return [new Tornado(1000)];
   }
 
   return [
     // normal game
-    new Cactus(800),
-    new Cactus(1600),
-    new Cactus(2400),
+    new Cactus(i(800)),
+    new Cactus(i(800)),
+    new Cactus(i(800)),
 
     // car surprise
-    new Car(2600),
+    new Car(i(200)),
 
-    // triple cactus
-    new Cactus(2800),
-    new Cactus(2825),
-    new Cactus(2850),
+    // double cactus
+    new Cactus(i(200)),
+    new Cactus(i(25)),
 
-    // give gun and teach to use it
-    new GunPickup(3500),
-    new Cactus(4000),
-    new Cactus(4300),
-    new Cactus(4600),
+    // tornado
+    new Tornado(i(300)),
+    new Cactus(i(100)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+
+    new Cactus(i(125)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+
+    new Car(i(600)),
+
+    // // give gun and teach to use it
+    // new GunPickup(3500),
+    // new Cactus(4000),
+    // new Cactus(4300),
+    // new Cactus(4600),
 
     // // many cacti, shoot them
     // new Cactus(4000),
