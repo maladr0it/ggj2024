@@ -24,6 +24,7 @@ export let state: GameState = generateFreshGameState();
 
 type GameState = {
   scoreTicker: ScoreTicker;
+  gameOverMessage: PIXI.Sprite;
   dino: Dino;
   clipping: Clipping;
   clipContainer: PIXI.Container;
@@ -45,8 +46,18 @@ function generateFreshGameState(): GameState {
   const keyboard = inputSource_create();
   const car = new Car();
 
+  const scoreTicker = new ScoreTicker(450, 10, clipping.container);
+
+  // TODO: Clean up.
+  const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
+  gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
+  gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
+  gameOverMessage.visible = false;
+  clipping.container.addChild(gameOverMessage);
+
   return {
-    scoreTicker: new ScoreTicker(),
+    scoreTicker,
+    gameOverMessage,
     dino,
     clipping,
     clipContainer: clipping.container,
@@ -106,36 +117,6 @@ export function resetGame() {
   }
 
   setGameStatus(GameStatus.Unstarted);
-
-  // setGameStatus(GameStatus.Unstarted);
-
-  // state.scene.removeChildren();
-  // state.background.container.removeChildren();
-  // state.scene.addChild(state.background.container);
-
-  // state.background.spawn();
-  // state.dino.spawn(state.scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   state.scene.addChild(item.sprite);
-  // }
-
-  // state.scene.addChild(state.background.container);
-
-  // state.dino.spawn(state.scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   state.scene.addChild(item.sprite);
-  // }
-
-  // background.container.removeChildren();
-  // scene.removeChildren();
-
-  // // state.dino.spawn(scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   scene.removeChild(item.sprite);
-  // }
 }
 
 export function getScore() {
