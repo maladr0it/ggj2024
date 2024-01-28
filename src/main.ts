@@ -69,10 +69,9 @@ const tick = () => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      state.clipping.reveal();
-
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
+        state.clipping.reveal(true);
       }
 
       break;
@@ -105,6 +104,7 @@ const tick = () => {
       if (state.runSpeed === 0 && state.keyboard.activeButtons.has("jump")) {
         resetGame();
         setGameStatus(GameStatus.Initializing);
+        state.clipping.reveal(false);
       }
 
       break;

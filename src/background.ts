@@ -82,10 +82,12 @@ export class Clipping {
     this.update(0);
   }
 
-  initialWidth = 45;
-  revealTween = new Tween(1 / 2);
+  private initialWidth = 45;
+  private revealTween = new Tween(0.5);
   private revealed = false;
-  reveal() {
+  
+  reveal(animated = false) {
+    this.revealTween = new Tween(animated ? 0.5 : 0)
     this.revealed = true;
   }
 
