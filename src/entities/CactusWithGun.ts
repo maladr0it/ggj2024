@@ -38,10 +38,8 @@ export class CactusWithGun extends Entity {
 
     if (this.x < DINO_X_POS - 100) {
       return;
-    }
-
-    else if (this.x < DINO_X_POS + 800) {
-      if (this.coolOffTimer > 0.75 && getGameStatus() === GameStatus.Playing) {
+    } else if (this.x < DINO_X_POS + 800) {
+      if (this.coolOffTimer > 1 && getGameStatus() === GameStatus.Playing) {
         this.coolOffTimer = 0;
         const bullet = new Bullet();
 
