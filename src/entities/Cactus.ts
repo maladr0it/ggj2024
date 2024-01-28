@@ -1,13 +1,11 @@
 import * as PIXI from "pixi.js";
 import { GameStatus, setGameStatus, state } from "../state";
-import {Entity} from "./Entity";
-import {GROUND_LEVEL} from "../constants";
+import { Entity } from "./Entity";
+import { GROUND_LEVEL } from "../constants";
 
 const animations: Record<string, PIXI.Texture[]> = {
-  default: [
-    await PIXI.Texture.fromURL("sprites/cactus1.png"),
-  ],
-}
+  default: [await PIXI.Texture.fromURL("sprites/cactus1.png")],
+};
 
 export class Cactus extends Entity {
   private initialX = 0;
@@ -22,9 +20,9 @@ export class Cactus extends Entity {
 
   update(_dt: number) {
     this.x = this.initialX - state.distance;
-    if(this.isCollidingWith(state.dino.hitbox)) {
+    if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieWithDecapitation();
-      setGameStatus(GameStatus.Dying)
+      setGameStatus(GameStatus.Dying);
     }
   }
 }
