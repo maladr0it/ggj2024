@@ -10,15 +10,15 @@ import { Tornado } from "./entities/Tornado";
 
 export const generateLevel = (): Entity[] => {
   if (DEBUG) {
-    return [
-      new Tornado(1000),
-    ];
+    return [new Tornado(1000)];
   }
 
   return [
+    // normal game
     new Cactus(800),
     new Cactus(1600),
     new Cactus(2400),
+
     // car surprise
     new Car(2600),
 
@@ -26,6 +26,18 @@ export const generateLevel = (): Entity[] => {
     new Cactus(2800),
     new Cactus(2825),
     new Cactus(2850),
+
+    // give gun and teach to use it
+    new GunPickup(3500),
+    new Cactus(4000),
+    new Cactus(4300),
+    new Cactus(4600),
+
+    // // many cacti, shoot them
+    // new Cactus(4000),
+    // new Cactus(4010),
+    // new Cactus(4020),
+    // new Cactus(4030),
 
     // new PopUpTrigger({
     //   x: 4200,

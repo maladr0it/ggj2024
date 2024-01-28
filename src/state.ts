@@ -63,7 +63,7 @@ function generateFreshGameState(): GameState {
     scene: scene,
     keyboard,
     background,
-    distance: 0, // distance the dino has travelled
+    distance: 0,
     runSpeed: 0,
     /** A Set instead of an Array as a conveniently gaurenteed-unique list of entities. */
     entities: new Set(generateLevel()),
@@ -85,7 +85,7 @@ export function getGameStatus() {
 
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
-  
+
   if (status === GameStatus.Initializing) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {

@@ -27,11 +27,8 @@ export class GunPickup extends Entity {
   update(dt: number) {
     if (this.pickedUp) {
       this.y = state.dino.y;
-      this.x = state.dino.x + state.dino.w - 15;
-      if (
-        state.keyboard.activeButtons.has("right") &&
-        this.coolOffTimer > 0.5
-      ) {
+      this.x = state.dino.x + state.dino.hitbox.width - 15;
+      if (state.keyboard.activeButtons.has("jump") && this.coolOffTimer > 0.5) {
         this.coolOffTimer = 0;
         const bullet = new Bullet();
 
