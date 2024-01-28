@@ -61,8 +61,6 @@ const tick = () => {
   // Update score.
   state.scoreTicker.update();
 
-  log_write("run speed", state.runSpeed);
-
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
       if (state.keyboard.activeButtons.has("jump")) {
@@ -100,8 +98,9 @@ const tick = () => {
       break;
   }
 
+  log_write("run speed:", state.runSpeed);
   log_write("distance:", Math.floor(state.distance));
-  log_write("entity count", state.entities.size);
+  log_write("entity count:", state.entities.size);
 
   logEl.innerText = log_getContent();
   log_clear();
