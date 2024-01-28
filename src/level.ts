@@ -9,6 +9,7 @@ import { Goal } from "./entities/Goal";
 import { SurpriseCactus } from "./entities/SurpriseCactus";
 import { Spider } from "./entities/Spider";
 import { GhostCactus } from "./entities/GhostCactus";
+import { CactusWithGun } from "./entities/CactusWithGun";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -18,7 +19,7 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    return [new Spider(i(1000))];
+    return [new CactusWithGun(i(1000))];
     // return [new SurpriseCactus(i(1000))],
   }
 
