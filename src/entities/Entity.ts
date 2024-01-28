@@ -84,4 +84,6 @@ export abstract class Entity {
   isCollidingWith(hitbox: PIXI.Rectangle) {
     return this.sprite.getBounds().intersects(hitbox);
   }
+
+  cleanup() {}
 }

@@ -2,11 +2,20 @@ import { Cactus } from "./entities/Cactus";
 
 import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
-import { UFO } from "./entities/UFO";
 import { Car } from "./entities/Car";
-import { Trigger } from "./entities/Trigger";
+import { PopUpTrigger } from "./entities/PopUpTrigger";
 
 export const generateLevel = (): Entity[] => [
+  new PopUpTrigger({
+    x: 1200,
+    title: "Problem",
+    text: "⚠️<br />No network",
+  }),
+  new PopUpTrigger({
+    x: 1600,
+    title: "Problem",
+    text: "🛜<br />Can't reach server",
+  }),
   new Cactus(1000),
   new Cactus(2000),
   new GunPickup(3000),
