@@ -11,6 +11,7 @@ import { Tornado } from "./Tornado";
 import { UFO } from "./UFO";
 import { SurpriseCactus } from "./SurpriseCactus";
 import { Cactus, CactusState } from "./Cactus";
+import { Spider } from "./Spider";
 
 const DUCK_DY = 10000;
 
@@ -138,7 +139,11 @@ export class Dino extends Entity {
       setGameStatus(GameStatus.GameOver);
     }
     if (other instanceof UFO) {
-      this.dieFromBullet();
+      this.dieFromCar();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof Spider) {
+      this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
     if (other instanceof Tornado && state.keyboard.activeButtons.has("jump")) {

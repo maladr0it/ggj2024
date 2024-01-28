@@ -27,12 +27,9 @@ export class Spider extends Entity {
       return;
     }
 
-    if (this.x < DINO_X_POS + 60) {
-      this.dy = -SURPRISE_JUMP_VEL * dt;
-      this.y = Math.min(this.y + this.dy, GROUND_LEVEL);
-    } else if (this.x < DINO_X_POS + 240) {
+    else if (this.x < DINO_X_POS + 160) {
       this.dy = SURPRISE_JUMP_VEL * dt;
-      this.y = Math.min(this.y + this.dy, GROUND_LEVEL);
+      this.y = Math.min(this.y + this.dy, GROUND_LEVEL - 50);
       this.sound ??= playSound("spider");
     }
   }
