@@ -31,6 +31,7 @@ export class Spider extends Entity {
       this.dy = SURPRISE_JUMP_VEL * dt;
       this.y = Math.min(this.y + this.dy, GROUND_LEVEL - 50);
       this.sound ??= playSound("spider");
+      this.sound.volume.value = 24;
     }
   }
 }
