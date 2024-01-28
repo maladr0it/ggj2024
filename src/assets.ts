@@ -26,6 +26,10 @@ const SPRITE_PATHS = [
   "dino/dino-explode5.png",
   "dino/dino-explode6.png",
   "dino/dino-explode7.png",
+  "dino/dino-fix1.png",
+  "dino/dino-fix2.png",
+  "dino/dino-fix3.png",
+  "dino/dino-fix4.png",
 
   // text
   "text/0.png",
@@ -61,6 +65,16 @@ const SPRITE_PATHS = [
   "tornado/tornado-3.png",
   "tornado/tornado-4.png",
   "tornado/tornado-5.png",
+
+  // modem
+  "modem/modem-broken1.png",
+  "modem/modem-broken2.png",
+  "modem/modem-broken3.png",
+  "modem/modem-broken4.png",
+  "modem/modem-working1.png",
+  "modem/modem-working2.png",
+  "modem/modem-working3.png",
+  "modem/modem-working4.png",
 
   // misc sprites
   "bullet.png",

@@ -11,6 +11,7 @@ import { Tornado } from "./Tornado";
 import { UFO } from "./UFO";
 import { SurpriseCactus } from "./SurpriseCactus";
 import { Cactus, CactusState } from "./Cactus";
+import { Goal } from "./Goal";
 import { Spider } from "./Spider";
 
 const DUCK_DY = 10000;
@@ -30,9 +31,16 @@ const animations = {
     sprites["dino/dino-explode6.png"],
     sprites["dino/dino-explode7.png"],
   ],
+  fixing: [
+    sprites["dino/dino-fix1.png"],
+    sprites["dino/dino-fix2.png"],
+    sprites["dino/dino-fix3.png"],
+    sprites["dino/dino-fix4.png"],
+  ],
 };
 
 export class Dino extends Entity {
+  private hasWon = false;
   public alive = true;
   private prev_jumping = false;
   private head: DinoHead | null = null;
@@ -69,7 +77,12 @@ export class Dino extends Entity {
     const isGrounded = this.y === GROUND_LEVEL;
 
     if (isGrounded) {
-      if (state.keyboard.activeButtons.has("jump") && !this.prev_jumping) {
+      if (this.hasWon) {
+        this.playAnimation("fixing");
+      } else if (
+        state.keyboard.activeButtons.has("jump") &&
+        !this.prev_jumping
+      ) {
         this.prev_jumping = true;
         this.dy = JUMP_VEL;
         playSound("jump");
@@ -148,6 +161,17 @@ export class Dino extends Entity {
     }
     if (other instanceof Tornado && state.keyboard.activeButtons.has("jump")) {
       this.dy = -800;
+    }
+    if (other instanceof Goal) {
+      state.runSpeed = 0;
+      this.hasWon = true;
+      setTimeout(() => {
+        playSound("win");
+        other.playAnimation("working");
+        setTimeout(() => {
+          window.location.href = "https://globalgamejam.org/";
+        }, 2000);
+      }, 2000);
     }
   }
 }

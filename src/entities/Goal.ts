@@ -1,31 +1,31 @@
 import { Entity } from "./Entity";
 import { state } from "../state";
 import { GROUND_LEVEL } from "../constants";
-import { Dino } from "./Dino";
 import { sprites } from "../assets";
-import { playSound } from "../audio";
 
 export class Goal extends Entity {
   offset: number;
   constructor(offset: number) {
-    super({ default: [sprites["cloud.png"]] }, "default");
+    super(
+      {
+        default: [
+          sprites["modem/modem-broken1.png"],
+          sprites["modem/modem-broken2.png"],
+          sprites["modem/modem-broken3.png"],
+          sprites["modem/modem-broken4.png"],
+        ],
+        working: [
+          sprites["modem/modem-working1.png"],
+          sprites["modem/modem-working2.png"],
+          sprites["modem/modem-working3.png"],
+          sprites["modem/modem-working4.png"],
+        ],
+      },
+      "default"
+    );
     this.x = offset;
     this.offset = offset;
     this.sprite.y = GROUND_LEVEL;
-  }
-  completed = false;
-  onCollide(other: Entity): void {
-    if (this.completed) return;
-    this.completed = true;
-    if (other instanceof Dino) {
-      state.runSpeed = 0;
-      state.dino.alive = false;
-      playSound("win");
-      // @patrick set the win animation here
-      setTimeout(() => {
-        window.location.href = "https://globalgamejam.org/";
-      }, 2000);
-    }
   }
   update() {
     this.x = this.offset - state.distance;
