@@ -56,7 +56,7 @@ const tick = () => {
   // Move the ground.
   state.distance += state.runSpeed * dt;
   for (const layer of state.background) layer.setPosition(state.distance);
-  for (const item of state.level) item.update(dt);
+  for (const item of state.entities) item.update(dt);
 
   // Update score.
   state.scoreTicker.update();
@@ -99,6 +99,7 @@ const tick = () => {
   }
 
   log_write("distance:", Math.floor(state.distance));
+  log_write("entity count", state.entities.size);
 
   logEl.innerText = log_getContent();
   log_clear();
@@ -123,11 +124,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", event => {
+document.addEventListener("keyup", (event) => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 

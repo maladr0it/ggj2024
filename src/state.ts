@@ -35,7 +35,7 @@ type GameState = {
   distance: number;
   runSpeed: number;
   gameStatusTimer: number;
-  level: Entity[];
+  entities: Set<Entity>;
 };
 
 function generateFreshGameState(): GameState {
@@ -67,7 +67,8 @@ function generateFreshGameState(): GameState {
     distance: 0, // distance the dino has travelled
     runSpeed: 0,
     gameStatusTimer: 0,
-    level: generateLevel(),
+    /** A Set instead of an Array as a conveniently gaurenteed-unique list of entities. */
+    entities: new Set(generateLevel()),
   };
 }
 
@@ -111,7 +112,7 @@ export function resetGame() {
 
   state.dino.spawn(scene, 0, GROUND_LEVEL);
 
-  for (const item of state.level) {
+  for (const item of state.entities) {
     item.spawn(state.clipContainer, item.x, item.y);
   }
 
