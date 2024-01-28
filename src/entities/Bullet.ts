@@ -15,7 +15,6 @@ export class Bullet extends Entity {
 
   spawn(container: PIXI.Container, x: number, y: number) {
     super.spawn(container, x, y);
-    this.relativeX = x;
   }
 
   update(_dt: number) {
