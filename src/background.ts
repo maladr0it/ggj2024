@@ -46,6 +46,9 @@ export class Parallax {
   }
 }
 
+const groundTexture = PIXI.Texture.from("sprites/ground.png");
+const cloudTexture = PIXI.Texture.from("sprites/cloud.png");
+
 export class Background {
   container: PIXI.Container;
   width: number;
@@ -65,11 +68,10 @@ export class Background {
     this.container.addChild(this.mask);
     this.container.mask = this.mask;
     this.updateMask();
-  }
-
-  spawn() {
+    this.reveal();
+    
     const ground = new Parallax({
-      texture: assets().sprites.ground,
+      texture: groundTexture,
       containerWidth: this.width,
     });
     ground.container.y = 90;
@@ -78,7 +80,7 @@ export class Background {
     this.layers.push(ground);
 
     const clouds = new Parallax({
-      texture: assets().sprites.cloud,
+      texture: cloudTexture,
       containerWidth: this.width,
       scrollSpeed: 0.5,
       spacing: 400,

@@ -34,22 +34,8 @@ const app = new PIXI.Application({
   backgroundAlpha: 0,
   antialias: false,
 });
-// @ts-ignore
-window.app = app;
 
 app.stage.addChild(scene);
-
-//
-// game state
-//
-
-state.scoreTicker.spawn(450, 10, state.background.container);
-
-const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
-gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
-gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
-state.background.container.addChild(gameOverMessage);
-// gameOverMessage.visible = false;
 
 //
 // Main loop
@@ -97,16 +83,16 @@ const tick = () => {
       break;
 
     case GameStatus.Playing:
-      gameOverMessage.visible = false;
+      state.gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
 
       break;
 
     case GameStatus.GameOver:
       state.runSpeed *= 0.98;
+      state.gameOverMessage.visible = true;
 
       const isDone = state.dino.deathState === "DEAD";
-      gameOverMessage.visible = isDone;
 
       if (isDone && state.keyboard.activeButtons.has("jump")) {
         resetGame();

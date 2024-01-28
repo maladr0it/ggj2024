@@ -20,16 +20,17 @@ export const scene = new PIXI.Container();
 export let state: GameState = generateFreshGameState();
 
 type GameState = {
-  scoreTicker: ScoreTicker;
-  dino: Dino;
-  background: Background;
-  keyboard: any;
-  distance: number;
-  runSpeed: number;
-  gameStatusTimer: number;
-  car: Car;
-  level: LevelEntity[];
-};
+  scoreTicker: ScoreTicker,
+  gameOverMessage: PIXI.Sprite,
+  dino: Dino,
+  background: Background,
+  keyboard: any,
+  distance: number,
+  runSpeed: number,
+  gameStatusTimer: number,
+  car: Car,
+  level: LevelEntity[],
+}
 
 function generateFreshGameState(): GameState {
   const dino = new Dino();
@@ -37,11 +38,17 @@ function generateFreshGameState(): GameState {
   const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
   const car = new Car();
 
-  // TODO: Clean up
-  window.setTimeout(() => background.spawn(), 10);
+  const scoreTicker = new ScoreTicker(450, 10, scene);
 
+  // TODO: Clean up.
+  const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
+  gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
+  gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+  background.container.addChild(gameOverMessage);
+  
   return {
-    scoreTicker: new ScoreTicker(),
+    scoreTicker,
+    gameOverMessage,
     dino,
     keyboard,
     background,
@@ -99,36 +106,6 @@ export function resetGame() {
   }
 
   setGameStatus(GameStatus.Unstarted);
-
-  // setGameStatus(GameStatus.Unstarted);
-
-  // state.scene.removeChildren();
-  // state.background.container.removeChildren();
-  // state.scene.addChild(state.background.container);
-
-  // state.background.spawn();
-  // state.dino.spawn(state.scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   state.scene.addChild(item.sprite);
-  // }
-
-  // state.scene.addChild(state.background.container);
-
-  // state.dino.spawn(state.scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   state.scene.addChild(item.sprite);
-  // }
-
-  // background.container.removeChildren();
-  // scene.removeChildren();
-
-  // // state.dino.spawn(scene, 20, GROUND_LEVEL);
-
-  // for (const item of level) {
-  //   scene.removeChild(item.sprite);
-  // }
 }
 
 export function getScore() {
