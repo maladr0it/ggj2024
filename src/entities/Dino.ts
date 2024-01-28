@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
-import { scene, state } from "../state";
+import { state } from "../state";
 import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
@@ -78,8 +78,8 @@ export class Dino extends Entity {
       this.alive = false;
       this.playAnimation("decapitate");
 
-      this.head = new DinoHead();
-      this.head.spawn(state.clipContainer, this.x, this.y);
+      this.head = new DinoHead(state.distance);
+      this.head.spawn(state.scene, this.x, this.y);
     }
   }
 
