@@ -47,7 +47,7 @@ function generateFreshGameState(): GameState {
     background,
     car,
     distance: 0, // distance the dino has travelled
-    runSpeed: 10,
+    runSpeed: 0,
     gameStatusTimer: 0,
     level: generateLevel(),
   };
@@ -92,7 +92,7 @@ export function resetGame() {
 
   scene.addChild(state.background.container);
 
-  state.dino.spawn(scene, 20, GROUND_LEVEL);
+  state.dino.spawn(scene, 0, GROUND_LEVEL);
 
   for (const item of state.level) {
     scene.addChild(item.sprite);
