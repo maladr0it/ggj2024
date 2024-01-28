@@ -11,8 +11,9 @@ import {
 } from "./constants";
 import { Car } from "./entities/Car";
 import { Dino } from "./entities/Dino";
+import { Entity } from "./entities/Entity";
 import { InputSource, inputSource_create } from "./inputSource";
-import { LevelEntity, generateLevel } from "./level";
+import { generateLevel } from "./level";
 import { ScoreTicker } from "./score";
 import * as PIXI from "pixi.js";
 
@@ -26,6 +27,7 @@ type GameState = {
   scoreTicker: ScoreTicker;
   gameOverMessage: PIXI.Sprite;
   dino: Dino;
+
   clipping: Clipping;
   clipContainer: PIXI.Container;
   background: Parallax[];
@@ -33,8 +35,7 @@ type GameState = {
   distance: number;
   runSpeed: number;
   gameStatusTimer: number;
-  car: Car;
-  level: LevelEntity[];
+  level: Entity[];
 };
 
 function generateFreshGameState(): GameState {
@@ -44,7 +45,6 @@ function generateFreshGameState(): GameState {
 
   const dino = new Dino();
   const keyboard = inputSource_create();
-  const car = new Car();
 
   const scoreTicker = new ScoreTicker(450, 10, clipping.container);
 
@@ -63,7 +63,6 @@ function generateFreshGameState(): GameState {
     clipContainer: clipping.container,
     keyboard,
     background,
-    car,
     distance: 0, // distance the dino has travelled
     runSpeed: 0,
     gameStatusTimer: 0,
