@@ -10,13 +10,11 @@ const animations: Record<string, PIXI.Texture[]> = {
 export class Cactus extends Entity {
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "default");
-    this.sprite.anchor.set(0, 1);
     this.x = x;
     this.y = y;
   }
 
   update(dt: number) {
-    // this.x = this.initialX - state.distance;
     this.x -= state.runSpeed * dt;
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieWithDecapitation();

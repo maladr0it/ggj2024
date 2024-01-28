@@ -49,7 +49,9 @@ const tick = () => {
   state.gameStatusTimer += dt;
 
   state.clipping.update(dt);
-  state.dino.update(dt);
+  if (getGameStatus() !== GameStatus.Unstarted) {
+    state.dino.update(dt);
+  }
 
   // Move the ground.
   state.distance += state.runSpeed * dt;
@@ -85,12 +87,13 @@ const tick = () => {
 
     case GameStatus.GameOver:
       state.runSpeed *= 0.98;
-      state.gameOverMessage.visible = true;
 
       const isDone = state.dino.deathState === "DEAD";
+      state.gameOverMessage.visible = isDone;
 
       if (isDone && state.keyboard.activeButtons.has("jump")) {
         resetGame();
+        setGameStatus(GameStatus.Initializing);
       }
 
       break;

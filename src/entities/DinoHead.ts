@@ -1,55 +1,27 @@
 import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL } from "../constants";
-import { state } from "../state";
+import { Entity } from "./Entity";
 
-// Assets
-const anim = [await PIXI.Texture.fromURL("sprites/dino-head.png")];
+const HEAD_VEL_X = -100;
+const HEAD_VEL_Y = -500;
 
-export class DinoHead {
-  private initialX = 0;
-  private dy: number;
-  public sprite: PIXI.AnimatedSprite;
+const animations = {
+  default: [await PIXI.Texture.fromURL("sprites/dino-head.png")],
+};
+
+export class DinoHead extends Entity {
+  private dy = 0;
+  private dx = 0;
 
   constructor() {
-    this.sprite = new PIXI.AnimatedSprite(anim);
-    this.sprite.anchor.set(0, 1);
-    this.dy = -600;
-  }
-
-  set x(x: number) {
-    this.sprite.x = x;
-  }
-
-  set y(y: number) {
-    this.sprite.y = y;
-  }
-
-  get x() {
-    return this.sprite.x;
-  }
-
-  get y() {
-    return this.sprite.y;
-  }
-
-  get hitbox() {
-    return this.sprite.getBounds();
-  }
-
-  spawn(container: PIXI.Container, x: number, y: number) {
-    container.addChild(this.sprite);
-    this.x = x;
-    this.y = y;
-    this.initialX = x;
-  }
-
-  despawn() {
-    this.sprite.parent.removeChild(this.sprite);
+    super(animations, "default");
+    this.dx = HEAD_VEL_X;
+    this.dy = HEAD_VEL_Y;
   }
 
   update(dt: number) {
-    this.x = this.initialX - state.distance;
+    this.x += this.dx * dt;
     this.dy += GRAVITY * dt;
     this.y = Math.min(this.y + this.dy * dt, GROUND_LEVEL + 28);
   }
