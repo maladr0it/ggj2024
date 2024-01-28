@@ -20,43 +20,49 @@ const animations: Record<string, PIXI.Texture[]> = {
 export class Dino extends Entity {
   private dy = 0;
   private dx = 0;
-  private decapitated = false;
+
+  deathState: "ALIVE" | "DYING" | "DEAD" = "ALIVE";
+  deathTimer = 2;
 
   constructor() {
     super(animations, "jumping");
   }
 
   update(dt: number) {
-    // apply forces
-    const prevDinoY = this.y;
     this.dy += GRAVITY * dt;
     this.y = Math.min(this.y + this.dy * dt, GROUND_LEVEL);
 
-    // dino hit the ground
-    if (prevDinoY < GROUND_LEVEL && this.y === GROUND_LEVEL) {
-      this.playAnimation("running");
+    if (this.deathState === "DYING") {
+      this.deathTimer -= dt;
+      if (this.deathTimer <= 0) {
+        this.deathState = "DEAD";
+      }
+      return;
     }
 
-    // dino jumped
-    if (state.keyboard.activeButtons.has("jump") && this.y === GROUND_LEVEL) {
-      this.dy = JUMP_VEL;
+    if (this.deathState === "DEAD") return;
+
+    const isGrounded = this.y === GROUND_LEVEL;
+
+    if (isGrounded) {
+      if (state.keyboard.activeButtons.has("jump")) {
+        this.dy = JUMP_VEL;
+        playSound("jump");
+      } else {
+        this.playAnimation("running");
+      }
+    } else {
       this.playAnimation("jumping");
-      playSound("jump");
     }
   }
 
   dieWithDecapitation() {
-    if (!this.decapitated) {
-      this.decapitated = true;
-      this.playAnimation("decapitate");
-      playSound("die");
-      const head = new DinoHead();
-      head.spawn(
-        this.sprite.parent,
-        state.dino.x + state.distance,
-        state.dino.y
-      );
-      level.push(head);
-    }
+    if (this.deathState !== "ALIVE") return;
+    this.deathState = "DYING";
+    this.playAnimation("decapitate");
+    playSound("die");
+    const head = new DinoHead();
+    head.spawn(this.sprite.parent, state.dino.x + state.distance, state.dino.y);
+    level.push(head);
   }
 }

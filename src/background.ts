@@ -88,9 +88,16 @@ export class Background {
     this.layers.push(clouds);
   }
 
+  initialWidth = 45;
+  revealTween = new Tween(1 / 2);
+  private revealed = false;
+  reveal() {
+    this.revealed = true;
+  }
+
   update(dt: number) {
     this.setPosition(state.distance);
-    this.revealTween.update(dt);
+    if (this.revealed) this.revealTween.update(dt);
     this.updateMask();
   }
 
@@ -98,15 +105,13 @@ export class Background {
     for (const layer of this.layers) layer.setPosition(x);
   }
 
-  initialWidth = 45;
-  revealTween = new Tween(1 / 2);
   updateMask() {
     this.mask.beginFill(0xffffff);
     const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
     this.mask.drawRect(0, 0, revealedWidth, this.height);
   }
 
-  get revealed() {
+  get revealDone() {
     return this.revealTween.done;
   }
 }

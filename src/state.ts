@@ -14,7 +14,7 @@ export const state = {
   dino,
   keyboard,
   distance: 0, // distance the dino has travelled
-  runSpeed: 10,
+  runSpeed: 0,
   gameStatusTimer: 0,
 };
 
@@ -22,7 +22,6 @@ export enum GameStatus {
   Unstarted,
   Initializing, // Initial jump
   Playing,
-  Dying,
   GameOver,
 }
 
@@ -40,10 +39,8 @@ export function setGameStatus(newStatus: GameStatus) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {
     state.runSpeed = RUN_SPEED;
-  } else if (status === GameStatus.Dying) {
-    state.runSpeed = RUN_SPEED / 5;
   } else if (status === GameStatus.GameOver) {
-    state.runSpeed = 0;
+    state.runSpeed = RUN_SPEED / 10;
     state.dino.sprite.stop();
 
     // Update high score if previous one was beaten.
@@ -54,9 +51,7 @@ export function setGameStatus(newStatus: GameStatus) {
   }
 }
 
-export function restartGame() {
-  
-}
+export function restartGame() {}
 
 export function getScore() {
   return Math.floor(state.distance * SCORE_MULTIPLIER);

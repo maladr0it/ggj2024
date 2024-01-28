@@ -6,14 +6,20 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
+import { GROUND_LEVEL, RUN_SPEED, SCENE_SIZE } from "./constants";
 import { level } from "./level";
 import { Score, ScoreTicker } from "./score";
 
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, restartGame, setGameStatus, state } from "./state";
+import {
+  GameStatus,
+  getGameStatus,
+  restartGame,
+  setGameStatus,
+  state,
+} from "./state";
 
 import "./style.css";
 
@@ -42,8 +48,9 @@ const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 state.scoreTicker.spawn(450, 10, background.container);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
-gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
-gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
+gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
+gameOverMessage.visible = false;
 background.container.addChild(gameOverMessage);
 
 //
@@ -51,13 +58,27 @@ background.container.addChild(gameOverMessage);
 //
 let then = Date.now();
 
-const tick = (now: number) => {
+const tick = () => {
   requestAnimationFrame(tick);
 
+  const now = Date.now();
   const dt = (now - then) / 1000;
   then = now;
 
   state.gameStatusTimer += dt;
+
+  background.update(dt);
+  state.dino.update(dt);
+
+  // Move the ground.
+  state.distance += state.runSpeed * dt;
+  background.setPosition(state.distance);
+  for (const item of level) {
+    item.update(dt);
+  }
+
+  // Update score.
+  state.scoreTicker.update();
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
@@ -69,8 +90,9 @@ const tick = (now: number) => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      background.update(dt);
-      state.dino.update(dt);
+      background.reveal();
+      // background.update(dt);
+      // state.dino.update(dt);
 
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
@@ -78,30 +100,15 @@ const tick = (now: number) => {
 
       break;
 
-    // @ts-ignore fallthrough
-    case GameStatus.Dying:
-      if (state.gameStatusTimer > 20) {
-        setGameStatus(GameStatus.GameOver);
-      }
     case GameStatus.Playing:
       gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
-      background.update(dt);
-      state.dino.update(dt);
-
-      // Move the ground.
-      state.distance += state.runSpeed * dt;
-      background.setPosition(state.distance);
-      for (const item of level) {
-        item.update(dt);
-      }
-
-      // Update score.
-      state.scoreTicker.update();
 
       break;
 
     case GameStatus.GameOver:
+      state.runSpeed *= 0.98;
+
       gameOverMessage.visible = true;
 
       if (state.keyboard.activeButtons.has("jump")) {

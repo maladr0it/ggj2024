@@ -70,6 +70,7 @@ export abstract class Entity {
         `Animation name ${animName} doesn't exist on this entity`
       );
     }
+    if (animName === this.currentAnimation) return;
     this.currentAnimation = animName;
     this.sprite.textures = this.animations[animName];
 
