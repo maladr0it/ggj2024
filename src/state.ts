@@ -54,6 +54,10 @@ export function setGameStatus(newStatus: GameStatus) {
   }
 }
 
+export function restartGame() {
+  
+}
+
 export function getScore() {
   return Math.floor(state.distance * SCORE_MULTIPLIER);
 }

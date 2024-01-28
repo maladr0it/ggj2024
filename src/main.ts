@@ -13,7 +13,7 @@ import { Score, ScoreTicker } from "./score";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, setGameStatus, state } from "./state";
+import { GameStatus, getGameStatus, restartGame, setGameStatus, state } from "./state";
 
 import "./style.css";
 
@@ -40,6 +40,11 @@ app.stage.addChild(scene);
 const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
 state.scoreTicker.spawn(450, 10, background.container);
+
+const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
+gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
+gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+background.container.addChild(gameOverMessage);
 
 //
 // Main loop
@@ -79,6 +84,7 @@ const tick = (now: number) => {
         setGameStatus(GameStatus.GameOver);
       }
     case GameStatus.Playing:
+      gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
       background.update(dt);
       state.dino.update(dt);
@@ -96,6 +102,13 @@ const tick = (now: number) => {
       break;
 
     case GameStatus.GameOver:
+      gameOverMessage.visible = true;
+
+      if (state.keyboard.activeButtons.has("jump")) {
+        restartGame();
+        setGameStatus(GameStatus.Playing);
+      }
+
       break;
   }
 

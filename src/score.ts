@@ -1,16 +1,16 @@
 import * as PIXI from "pixi.js";
 import { getScore } from "./state";
 
-const number0 = PIXI.Texture.from("public/sprites/text/0.png");
-const number1 = PIXI.Texture.from("public/sprites/text/1.png");
-const number2 = PIXI.Texture.from("public/sprites/text/2.png");
-const number3 = PIXI.Texture.from("public/sprites/text/3.png");
-const number4 = PIXI.Texture.from("public/sprites/text/4.png");
-const number5 = PIXI.Texture.from("public/sprites/text/5.png");
-const number6 = PIXI.Texture.from("public/sprites/text/6.png");
-const number7 = PIXI.Texture.from("public/sprites/text/7.png");
-const number8 = PIXI.Texture.from("public/sprites/text/8.png");
-const number9 = PIXI.Texture.from("public/sprites/text/9.png");
+const number0 = PIXI.Texture.from("sprites/text/0.png");
+const number1 = PIXI.Texture.from("sprites/text/1.png");
+const number2 = PIXI.Texture.from("sprites/text/2.png");
+const number3 = PIXI.Texture.from("sprites/text/3.png");
+const number4 = PIXI.Texture.from("sprites/text/4.png");
+const number5 = PIXI.Texture.from("sprites/text/5.png");
+const number6 = PIXI.Texture.from("sprites/text/6.png");
+const number7 = PIXI.Texture.from("sprites/text/7.png");
+const number8 = PIXI.Texture.from("sprites/text/8.png");
+const number9 = PIXI.Texture.from("sprites/text/9.png");
 
 const numbers = [
   number0,
@@ -72,7 +72,7 @@ export class ScoreTicker {
     this.container.y = y;
     stage.addChild(this.container);
 
-    this.highScorePrefix = PIXI.Sprite.from("public/sprites/text/hi.png");
+    this.highScorePrefix = PIXI.Sprite.from("sprites/text/hi.png");
     this.highScorePrefix.alpha = HIGH_SCORE_ALPHA;
     this.container.addChild(this.highScorePrefix);
     
