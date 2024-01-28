@@ -8,7 +8,7 @@ const animations = {
   idle: [await PIXI.Texture.fromURL("sprites/car1.png")],
 };
 
-const CAR_SPEED = 1500;
+const CAR_SPEED = 2_000;
 
 export class Car extends Entity {
   speed = CAR_SPEED;

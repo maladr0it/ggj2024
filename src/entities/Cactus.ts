@@ -16,6 +16,7 @@ export class Cactus extends Entity {
 
   update(dt: number) {
     this.x -= state.runSpeed * dt;
+
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);

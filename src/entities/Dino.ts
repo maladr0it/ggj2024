@@ -73,7 +73,6 @@ export class Dino extends Entity {
   }
 
   dieWithDecapitation() {
-    // uncomment this to get decapitation
     if (this.alive) {
       this.alive = false;
       this.playAnimation("decapitate");

@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { SCENE_SIZE, SCENE_TOP } from "./constants";
+import { DEATH_DECEL, SCENE_SIZE, SCENE_TOP } from "./constants";
 
 import * as Tone from "tone";
 import {
@@ -86,7 +86,7 @@ const tick = () => {
       break;
 
     case GameStatus.GameOver:
-      state.runSpeed = Math.max(0, state.runSpeed - 500 * dt);
+      state.runSpeed = Math.max(state.runSpeed - dt * DEATH_DECEL, 0);
 
       state.gameOverMessage.visible = true;
 
@@ -98,8 +98,9 @@ const tick = () => {
       break;
   }
 
+  log_write("run speed:", state.runSpeed);
   log_write("distance:", Math.floor(state.distance));
-  log_write("entity count", state.entities.size);
+  log_write("entity count:", state.entities.size);
 
   logEl.innerText = log_getContent();
   log_clear();
