@@ -77,7 +77,7 @@ html {
   height: 150px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   body {
     --background-color: var(--google-gray-900);
     --error-code-color: var(--google-gray-500);
@@ -94,7 +94,7 @@ html {
     --small-link-color: var(--google-blue-300);
     --text-color: var(--google-gray-500);
   }
-}
+} */
 /* Copyright 2014 The Chromium Authors
    Use of this source code is governed by a BSD-style license that can be
    found in the LICENSE file. */

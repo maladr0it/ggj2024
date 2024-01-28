@@ -49,6 +49,7 @@ export class Dino extends Entity {
     if (!this.decapitated) {
       this.decapitated = true;
       this.playAnimation("decapitate");
+      playSound("die");
       const head = new DinoHead();
       head.spawn(
         this.sprite.parent,
