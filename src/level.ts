@@ -1,10 +1,10 @@
 import { Cactus } from "./entities/Cactus";
 
-import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
 import { Car } from "./entities/Car";
 import { DEBUG } from "./constants";
 import { Tornado } from "./entities/Tornado";
+import { UFO } from "./entities/UFO";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -14,10 +14,7 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    const stressCacti = Array(1000)
-      .fill(0)
-      .map((_, i) => new Cactus(i * 100));
-    return [new Tornado(1000), ...stressCacti];
+    return [new UFO(1000)];
   }
 
   return [
