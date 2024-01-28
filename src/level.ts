@@ -8,6 +8,7 @@ import { UFO } from "./entities/UFO";
 import { Goal } from "./entities/Goal";
 import { SurpriseCactus } from "./entities/SurpriseCactus";
 import { Spider } from "./entities/Spider";
+import { GhostCactus } from "./entities/GhostCactus";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -44,19 +45,56 @@ export const generateLevel = (): Entity[] => {
     // new Cactus(i(25)),
     // new Cactus(i(25)),
     // // cactus gap
-    // new Cactus(i(125)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
+    // new Cactus(i(150)),
     // // cactus gap
-    // new Cactus(i(125)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
+    // new Cactus(i(150)),
 
-    // surprise
-    new Car(i(2000)),
+    // // surprise
+    // new Car(i(650)),
 
-    // thread the needle
-    new Cactus(i(1000)),
-    new Cactus(i(125)),
+    // ghost cactuses
+    new GhostCactus(i(400)),
+    new GhostCactus(i(400)),
+
+    new GhostCactus(i(400)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+    new GhostCactus(i(25)),
+
+    new Car(i(300)),
+    new Car(i(50)),
   ];
 };
