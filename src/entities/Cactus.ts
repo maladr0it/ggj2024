@@ -8,21 +8,18 @@ const animations: Record<string, PIXI.Texture[]> = {
 };
 
 export class Cactus extends Entity {
-  private initialX = 0;
-
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "default");
     this.sprite.anchor.set(0, 1);
-    this.initialX = x;
     this.x = x;
     this.y = y;
   }
 
-  update(_dt: number) {
-    this.x = this.initialX - state.distance;
+  update(dt: number) {
+    this.x -= state.runSpeed * dt;
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieWithDecapitation();
-      setGameStatus(GameStatus.Dying);
+      setGameStatus(GameStatus.GameOver);
     }
   }
 }

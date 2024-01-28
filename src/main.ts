@@ -6,20 +6,24 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { GROUND_LEVEL, SCENE_SIZE } from "./constants";
-import { level } from "./level";
-import { Score, ScoreTicker } from "./score";
+import { SCENE_SIZE } from "./constants";
 
 import { assets } from "./assets";
-import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, restartGame, setGameStatus, state } from "./state";
+import {
+  GameStatus,
+  getGameStatus,
+  resetGame,
+  scene,
+  setGameStatus,
+  state,
+} from "./state";
 
 import "./style.css";
 
-await assets.load();
+// PIXI.settings.ROUND_PIXELS = false;
 
-PIXI.settings.ROUND_PIXELS = false;
+await assets.load();
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
@@ -30,34 +34,52 @@ const app = new PIXI.Application({
   backgroundAlpha: 0,
   antialias: false,
 });
+// @ts-ignore
+window.app = app;
 
-const scene = new PIXI.Container();
 app.stage.addChild(scene);
 
 //
 // game state
 //
-const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 
-state.scoreTicker.spawn(450, 10, scene);
+state.scoreTicker.spawn(450, 10, state.background.container);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
-gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
-gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
-background.container.addChild(gameOverMessage);
+gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
+gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
+state.background.container.addChild(gameOverMessage);
+// gameOverMessage.visible = false;
 
 //
 // Main loop
 //
-const tick = (dt: number) => {
-  // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
+let then = Date.now();
 
-  // update status timer for auto-transitions
+const tick = () => {
+  requestAnimationFrame(tick);
+
+  const now = Date.now();
+  const dt = (now - then) / 1000;
+  then = now;
+
   state.gameStatusTimer += dt;
+
+  state.background.update(dt);
+  state.dino.update(dt);
+
+  // Move the ground.
+  state.distance += state.runSpeed * dt;
+  state.background.setPosition(state.distance);
+  for (const item of state.level) {
+    item.update(dt);
+  }
+
+  // Update score.
+  state.scoreTicker.update();
 
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
-      state.scoreTicker.container.visible = false;
       if (state.keyboard.activeButtons.has("jump")) {
         setGameStatus(GameStatus.Initializing);
       }
@@ -66,7 +88,7 @@ const tick = (dt: number) => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
-      state.dino.update(dt);
+      state.background.reveal();
 
       if (state.dino.currentAnimation !== "jumping") {
         setGameStatus(GameStatus.Playing);
@@ -74,56 +96,35 @@ const tick = (dt: number) => {
 
       break;
 
-    // @ts-ignore fallthrough
-    case GameStatus.Dying:
-      if(state.gameStatusTimer > 20) {
-        setGameStatus(GameStatus.GameOver);
-      }
     case GameStatus.Playing:
       gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
-      background.reveal(dt);
-      state.dino.update(dt);
-
-      // Move the ground.
-      state.distance += state.runSpeed;
-      background.setPosition(state.distance);
-      for (const item of level) {
-        item.update(dt);
-      }
-
-      // Update score.
-      state.scoreTicker.update();
 
       break;
 
     case GameStatus.GameOver:
-      gameOverMessage.visible = true;
+      state.runSpeed *= 0.98;
 
-      if (state.keyboard.activeButtons.has("jump")) {
-        restartGame();
-        setGameStatus(GameStatus.Playing);
+      const isDone = state.dino.deathState === "DEAD";
+      gameOverMessage.visible = isDone;
+
+      if (isDone && state.keyboard.activeButtons.has("jump")) {
+        resetGame();
       }
 
       break;
   }
 
-  log_write("distance:", state.distance);
+  log_write("distance:", Math.floor(state.distance));
 
   logEl.innerText = log_getContent();
   log_clear();
 };
 
 const start = () => {
-  scene.addChild(background.container);
+  resetGame();
 
-  state.dino.spawn(scene, 20, GROUND_LEVEL);
-
-  for (const item of level) {
-    scene.addChild(item.sprite);
-  }
-
-  app.ticker.add(tick);
+  requestAnimationFrame(tick);
 };
 
 const onResize = () => {
@@ -139,11 +140,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 
