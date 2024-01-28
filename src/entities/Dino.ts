@@ -1,11 +1,12 @@
 import * as PIXI from "pixi.js";
 
 import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
-import { scene, state } from "../state";
+import { GameStatus, setGameStatus, state } from "../state";
 import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
 import { DinoSalsa } from "./DinoSalsa";
+import { Cactus } from "./Cactus";
 
 // Assets
 const animations: Record<string, PIXI.Texture[]> = {
@@ -19,7 +20,6 @@ const animations: Record<string, PIXI.Texture[]> = {
 };
 
 export class Dino extends Entity {
-  private dy = 0;
   private prev_jumping = false;
 
   deathState: "ALIVE" | "DYING" | "DEAD" = "ALIVE";
@@ -109,6 +109,17 @@ export class Dino extends Entity {
 
       this.salsa = new DinoSalsa();
       this.salsa.spawn(state.scene, this.x - 120, GROUND_LEVEL);
+    }
+  }
+
+  onCollide(other: Entity): void {
+    if (other instanceof Cactus) {
+      this.dieWithDecapitation();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof DinoHead) {
+      this.dieFromCar();
+      setGameStatus(GameStatus.GameOver);
     }
   }
 }

@@ -8,6 +8,8 @@ export abstract class Entity {
   sprite: PIXI.AnimatedSprite;
   animations: Record<string, PIXI.Texture[]>;
   currentAnimation: string;
+  dx = 0;
+  dy = 0;
 
   constructor(
     animations: Record<string, PIXI.Texture[]>,
@@ -49,8 +51,16 @@ export abstract class Entity {
     return this.sprite.y;
   }
 
+  /** @deprecated use getVelocityDependentHitbox instead */
   get hitbox() {
     return this.sprite.getBounds();
+  }
+
+  getVelocityDependentHitbox(dt: number) {
+    const hitbox = this.sprite.getBounds();
+    hitbox.width += dt * this.dx;
+    hitbox.height += dt * this.dy;
+    return hitbox;
   }
 
   get w() {
@@ -87,7 +97,10 @@ export abstract class Entity {
 
   update(_dt: number) {}
 
+  /** @deprecated use onCollide instead */
   isCollidingWith(hitbox: PIXI.Rectangle) {
     return this.sprite.getBounds().intersects(hitbox);
   }
+
+  onCollide(other: Entity) {}
 }
