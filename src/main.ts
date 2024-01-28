@@ -35,10 +35,9 @@ const app = new PIXI.Application({
   antialias: false,
 });
 // @ts-ignore
-window.app = app
+window.app = app;
 
 app.stage.addChild(scene);
-
 
 //
 // game state
@@ -47,8 +46,8 @@ app.stage.addChild(scene);
 state.scoreTicker.spawn(450, 10, scene);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
-gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
-gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
+gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
 state.background.container.addChild(gameOverMessage);
 
 //

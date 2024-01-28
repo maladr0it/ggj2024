@@ -14,12 +14,13 @@ const animations: Record<string, PIXI.Texture[]> = {
   ],
   jumping: [await PIXI.Texture.fromURL("sprites/dino-jump1.png")],
   decapitate: [await PIXI.Texture.fromURL("sprites/dino-decap.png")],
+  roadkill: [await PIXI.Texture.fromURL("sprites/dino-roadkill1.png")],
 };
 
 export class Dino extends Entity {
   private dy = 0;
   private dx = 0;
-  private decapitated = false;
+  dead = false;
 
   constructor() {
     super(animations, "jumping");
@@ -45,8 +46,8 @@ export class Dino extends Entity {
   }
 
   dieWithDecapitation() {
-    if (!this.decapitated) {
-      this.decapitated = true;
+    if (!this.dead) {
+      this.dead = true;
       this.playAnimation("decapitate");
       const head = new DinoHead();
       head.spawn(
@@ -55,6 +56,13 @@ export class Dino extends Entity {
         state.dino.y
       );
       state.level.push(head);
+    }
+  }
+
+  dieFromCar() {
+    if (!this.dead) {
+      this.dead = true;
+      this.playAnimation("roadkill");
     }
   }
 }
