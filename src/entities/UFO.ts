@@ -1,6 +1,4 @@
-import * as PIXI from "pixi.js";
-
-import { GameStatus, setGameStatus, state } from "../state";
+import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { sprites } from "../assets";
@@ -39,10 +37,5 @@ export class UFO extends Entity {
     this.total_time += dt;
     this.x -= (this.velocity.x + state.runSpeed) * dt;
     this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
-
-    if (this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.dieFromCar();
-      setGameStatus(GameStatus.GameOver);
-    }
   }
 }
