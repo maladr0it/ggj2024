@@ -1,8 +1,9 @@
 import * as PIXI from "pixi.js";
 import { state } from "../state";
 import { Entity } from "./Entity";
-import { GROUND_LEVEL } from "../constants";
+import { GROUND_LEVEL, SCENE_SIZE } from "../constants";
 import { Bullet } from "./Bullet";
+import { log_write } from "../log";
 
 const animations: Record<string, PIXI.Texture[]> = {
   default: [await PIXI.Texture.fromURL("sprites/gun.png")],
@@ -38,7 +39,6 @@ export class GunPickup extends Entity {
           this.y - this.hitbox.height
         );
         this.bullets.push(bullet);
-        console.log(this.bullets.length);
       }
       this.coolOffTimer += dt;
     } else {
@@ -51,6 +51,11 @@ export class GunPickup extends Entity {
 
     for (const bullet of this.bullets) {
       bullet.update(dt);
+      if (bullet.x > SCENE_SIZE.x) {
+        this.bullets.splice(this.bullets.indexOf(bullet), 1);
+        bullet.despawn();
+      }
     }
+    log_write("bullet count", this.bullets.length);
   }
 }
