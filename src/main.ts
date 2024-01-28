@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { SCENE_SIZE } from "./constants";
+import { SCENE_SIZE, SCENE_TOP } from "./constants";
 
 import * as Tone from "tone";
 import {
@@ -114,7 +114,7 @@ const start = () => {
 const onResize = () => {
   app.renderer.resize(window.innerWidth, window.innerHeight);
   scene.x = (window.innerWidth - SCENE_SIZE.x) / 2;
-  scene.y = 150;
+  scene.y = SCENE_TOP;
 };
 
 //
