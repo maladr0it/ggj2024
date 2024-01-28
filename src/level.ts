@@ -19,10 +19,11 @@ export const generateLevel = (): Entity[] => {
   }
 
   return [
-    createObjective1(200),
-    createObjective2(300),
-    createObjective3(400),
-    createObjective4(500),
+    // createObjective1(200),
+    // createObjective2(300),
+    // createObjective3(400),
+    // createObjective4(500),
+
     new Cactus(800),
     new Cactus(1600),
     new Cactus(2400),
