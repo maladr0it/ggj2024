@@ -9,7 +9,7 @@ import {
   SCORE_MULTIPLIER,
   RUN_SPEED,
 } from "./constants";
-import { Car } from "./entities/Car";
+
 import { Dino } from "./entities/Dino";
 import { Entity } from "./entities/Entity";
 import { InputSource, inputSource_create } from "./inputSource";
@@ -27,7 +27,7 @@ type GameState = {
   scoreTicker: ScoreTicker;
   gameOverMessage: PIXI.Sprite;
   dino: Dino;
-
+  scene: PIXI.Container;
   clipping: Clipping;
   clipContainer: PIXI.Container;
   background: Parallax[];
@@ -61,6 +61,7 @@ function generateFreshGameState(): GameState {
     dino,
     clipping,
     clipContainer: clipping.container,
+    scene: scene,
     keyboard,
     background,
     distance: 0, // distance the dino has travelled

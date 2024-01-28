@@ -25,16 +25,20 @@ export class Dino extends Entity {
   deathState: "ALIVE" | "DYING" | "DEAD" = "ALIVE";
   deathTimer = 2;
   private head: DinoHead | null = null;
+  private salsa: DinoSalsa | null = null;
 
   constructor() {
     super(animations, "jumping");
   }
 
   despawn(): void {
-    super.despawn();
     if (this.head) {
       this.head.despawn();
     }
+    if (this.salsa) {
+      this.salsa.despawn();
+    }
+    super.despawn();
   }
 
   update(dt: number) {
@@ -78,13 +82,23 @@ export class Dino extends Entity {
   }
 
   dieWithDecapitation() {
+    // uncomment this to get decapitation
+
+    // if (this.deathState === "ALIVE") {
+    //   this.deathState = "DYING";
+    //   this.playAnimation("decapitate");
+
+    //   this.head = new DinoHead();
+    //   this.head.spawn(state.clipContainer, this.x, this.y);
+    // }
+
+    // just testing roadkill anim
     if (this.deathState === "ALIVE") {
       this.deathState = "DYING";
-      this.playAnimation("decapitate");
+      this.playAnimation("roadkill");
 
-      this.head = new DinoHead();
-
-      this.head.spawn(scene, this.x, this.y);
+      this.salsa = new DinoSalsa();
+      this.salsa.spawn(state.scene, this.x - 120, this.y - 2);
     }
   }
 
@@ -94,7 +108,7 @@ export class Dino extends Entity {
       this.playAnimation("roadkill");
 
       const salsa = new DinoSalsa();
-      salsa.spawn(this.sprite, 0, 0);
+      salsa.spawn(state.clipContainer, this.x - salsa.w, this.y + 20);
     }
   }
 }
