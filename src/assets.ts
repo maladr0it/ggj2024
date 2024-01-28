@@ -80,7 +80,9 @@ const SPRITE_PATHS = [
   "bullet.png",
   "cactus-burn1.png",
   "cactus-burn2.png",
+  "cactus-ghost.png",
   "cactus1.png",
+  "spider.png",
   "cloud.png",
   "ground.png",
   "gun.png",
@@ -90,7 +92,7 @@ const SPRITE_PATHS = [
 const AUDIO_PATHS = ["bang.mp3", "car.mp3", "die.mp3", "jump.mp3"] as const;
 
 const spriteData = await Promise.all(
-  SPRITE_PATHS.map((path) => PIXI.Texture.fromURL(`sprites/${path}`))
+  SPRITE_PATHS.map(path => PIXI.Texture.fromURL(`sprites/${path}`))
 );
 const _sprites: Record<string, PIXI.Texture> = {};
 for (let i = 0; i < SPRITE_PATHS.length; i += 1) {
@@ -102,7 +104,7 @@ export const sprites = _sprites as Record<
 >;
 
 const audioData = await Promise.all(
-  AUDIO_PATHS.map((path) => new ToneAudioBuffer().load(`audio/${path}`))
+  AUDIO_PATHS.map(path => new ToneAudioBuffer().load(`audio/${path}`))
 );
 const _audio: Record<string, ToneAudioBuffer> = {};
 for (let i = 0; i < AUDIO_PATHS.length; i += 1) {
@@ -128,6 +130,8 @@ const loadAssets = async () =>
       die: new ToneAudioBuffer().load("audio/die.mp3"),
       bang: new ToneAudioBuffer().load("audio/bang.mp3"),
       car: new ToneAudioBuffer().load("audio/car.mp3"),
+      win: new ToneAudioBuffer().load("audio/win.mp3"),
+      spider: new ToneAudioBuffer().load("audio/Stinger.wav"),
     }),
   });
 
@@ -160,7 +164,7 @@ const awaitValues = async <T extends object>(
   const result: Partial<AwaitedValues<T>> = {};
   const keys = Object.keys(obj) as (keyof T)[];
   await Promise.all(
-    keys.map(async (key) => {
+    keys.map(async key => {
       result[key] = await obj[key];
     })
   );

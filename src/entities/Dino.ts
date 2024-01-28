@@ -12,6 +12,7 @@ import { UFO } from "./UFO";
 import { SurpriseCactus } from "./SurpriseCactus";
 import { Cactus, CactusState } from "./Cactus";
 import { Goal } from "./Goal";
+import { Spider } from "./Spider";
 
 const DUCK_DY = 10000;
 
@@ -151,7 +152,11 @@ export class Dino extends Entity {
       setGameStatus(GameStatus.GameOver);
     }
     if (other instanceof UFO) {
-      this.dieFromBullet();
+      this.dieFromCar();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof Spider) {
+      this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
     if (other instanceof Tornado && state.keyboard.activeButtons.has("jump")) {
@@ -161,6 +166,7 @@ export class Dino extends Entity {
       state.runSpeed = 0;
       this.hasWon = true;
       setTimeout(() => {
+        playSound("win");
         other.playAnimation("working");
         setTimeout(() => {
           window.location.href = "https://globalgamejam.org/";

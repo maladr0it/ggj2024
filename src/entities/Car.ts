@@ -36,8 +36,8 @@ export class Car extends Entity {
     }
     this.x -= (this.speed + state.runSpeed) * dt;
 
-    // start the sound before the car appears
-    if (this.x < 1300) {
+    // start the sound as the car appears
+    if (this.x < 800) {
       this.sound ??= playSound("car");
     }
     // if we die before the car appears, the sound needs to stop

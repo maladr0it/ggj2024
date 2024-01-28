@@ -27,7 +27,6 @@ export class Goal extends Entity {
     this.offset = offset;
     this.sprite.y = GROUND_LEVEL;
   }
-  completed = false;
   update() {
     this.x = this.offset - state.distance;
   }
