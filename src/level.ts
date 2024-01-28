@@ -6,6 +6,7 @@ import { Car } from "./entities/Car";
 import { PopUpTrigger } from "./entities/PopUpTrigger";
 
 export const generateLevel = (): Entity[] => [
+  new Cactus(1000),
   new PopUpTrigger({
     x: 1200,
     title: "Problem",
@@ -16,7 +17,6 @@ export const generateLevel = (): Entity[] => [
     title: "Problem",
     text: "🛜<br />Can't reach server",
   }),
-  new Cactus(1000),
   new Cactus(2000),
   new GunPickup(3000),
   new Cactus(3150),

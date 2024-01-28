@@ -23,6 +23,8 @@ let x = 80;
 let y = 140;
 
 export class PopUpTrigger extends Trigger {
+  element?: HTMLElement;
+
   constructor({ x: triggerX, title = "Problem", text }: PopUpTriggerParams) {
     super(triggerX, () => {
       const element = createElement(template(title, text));
@@ -40,9 +42,12 @@ export class PopUpTrigger extends Trigger {
       });
       x += 20;
       y += 20;
+      this.element = element;
     });
   }
-  despawn(): void {}
+  cleanup(): void {
+    this.element?.remove();
+  }
 }
 
 const createElement = (html: string) =>

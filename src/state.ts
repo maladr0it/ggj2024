@@ -106,7 +106,9 @@ export function setGameStatus(newStatus: GameStatus) {
 }
 
 export function resetGame() {
+  for (const entity of state.entities) entity.cleanup();
   scene.removeChildren();
+
   state = generateFreshGameState();
 
   scene.addChild(state.clipContainer);
