@@ -5,6 +5,7 @@ import { Entity } from "./entities/Entity";
 import { Car } from "./entities/Car";
 import { DEBUG } from "./constants";
 import { Tornado } from "./entities/Tornado";
+import { UFO } from "./entities/UFO";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -14,7 +15,7 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    return [new Tornado(1000)];
+    return [new UFO(1000)];
   }
 
   return [
