@@ -16,13 +16,13 @@ const animations = {
     await PIXI.Texture.fromURL("sprites/ufo/ufo8.png"),
     await PIXI.Texture.fromURL("sprites/ufo/ufo9.png"),
     await PIXI.Texture.fromURL("sprites/ufo/ufo10.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo 11.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo11.png"),
   ],
 };
 
 export class UFO extends Entity {
   velocity = { x: 100, y: 0 };
-  base_y = 0;
+  base_y = GROUND_LEVEL / 2;
   total_time = 0;
 
   constructor(x = 0, y = GROUND_LEVEL - 100) {
@@ -37,7 +37,7 @@ export class UFO extends Entity {
     // move the ufo
     this.total_time += dt;
     this.x -= (this.velocity.x + state.runSpeed) * dt;
-    this.y = this.base_y + Math.sin(this.total_time * 5) * 40;
+    this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
 
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieFromCar();
