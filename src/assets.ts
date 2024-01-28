@@ -14,6 +14,7 @@ const loadAssets = async () =>
     audio: awaitValues({
       jump: new ToneAudioBuffer().load("audio/jump.mp3"),
       die: new ToneAudioBuffer().load("audio/die.mp3"),
+      bang: new ToneAudioBuffer().load("audio/bang.mp3"),
     }),
   });
 
@@ -46,7 +47,7 @@ const awaitValues = async <T extends object>(
   const result: Partial<AwaitedValues<T>> = {};
   const keys = Object.keys(obj) as (keyof T)[];
   await Promise.all(
-    keys.map(async (key) => {
+    keys.map(async key => {
       result[key] = await obj[key];
     })
   );

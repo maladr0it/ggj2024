@@ -7,6 +7,48 @@ canvas {
   image-rendering: pixelated;
 }
 
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  width: 28em;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  border-radius: 0.75em 0.75em 0 0;
+  overflow: hidden;
+}
+
+.popup__title-bar {
+  background: #ddd;
+  font-weight: bold;
+  display: flex;
+  padding: 0.33em 0.5em;
+  align-items: center;
+}
+
+.popup__title {
+  flex: 1;
+  text-align: center;
+}
+
+.popup__close {
+  background: red;
+  border-radius: 50%;
+  width: 1em;
+  height: 1em;
+}
+
+.popup__contents {
+  height: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  line-height: 1.15;
+  text-align: center;
+  background: white;
+}
+
 
 /* Copyright 2017 The Chromium Authors
  * Use of this source code is governed by a BSD-style license that can be

@@ -3,6 +3,7 @@ import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { Bullet } from "./Bullet";
+import { playSound } from "../audio";
 
 const animations: Record<string, PIXI.Texture[]> = {
   default: [await PIXI.Texture.fromURL("sprites/gun.png")],
@@ -32,6 +33,7 @@ export class GunPickup extends Entity {
       ) {
         this.coolOffTimer = 0;
         const bullet = new Bullet();
+        playSound("bang", true);
         bullet.spawn(
           this.sprite.parent,
           this.x + this.hitbox.width,
