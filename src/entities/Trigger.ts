@@ -2,6 +2,7 @@ import { Entity } from "./Entity";
 import { state } from "../state";
 import { GROUND_LEVEL } from "../constants";
 import { sprites } from "../assets";
+import { Dino } from "./Dino";
 
 const animations = {
   default: [sprites["gun.png"]],
@@ -19,12 +20,14 @@ export class Trigger extends Entity {
     this.onHit = onHit;
   }
   fired = false;
-  update() {
+  onCollide(other: Entity): void {
     if (this.fired) return;
-    this.x = this.offset - state.distance;
-    if (this.isCollidingWith(state.dino.hitbox)) {
+    if (other instanceof Dino) {
       this.onHit();
       this.fired = true;
     }
+  }
+  update() {
+    this.x = this.offset - state.distance;
   }
 }

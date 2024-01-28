@@ -12,6 +12,7 @@ import {
 
 import { Dino } from "./entities/Dino";
 import { Entity } from "./entities/Entity";
+import { resetObjectives } from "./entities/Objective";
 import { InputSource, inputSource_create } from "./inputSource";
 import { generateLevel } from "./level";
 import { ScoreTicker } from "./score";
@@ -85,7 +86,7 @@ export function getGameStatus() {
 
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
-  
+
   if (status === GameStatus.Initializing) {
     state.dino.sprite.play();
   } else if (status === GameStatus.Playing) {
@@ -102,6 +103,7 @@ export function setGameStatus(newStatus: GameStatus) {
 export function resetGame() {
   for (const entity of state.entities) entity.cleanup();
   scene.removeChildren();
+  resetObjectives();
 
   state = generateFreshGameState();
 

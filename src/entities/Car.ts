@@ -3,7 +3,6 @@ import * as PIXI from "pixi.js";
 import { GROUND_LEVEL } from "../constants";
 import { GameStatus, getGameStatus, state } from "../state";
 import { Entity } from "./Entity";
-import { log_write } from "../log";
 import { Player } from "tone";
 import { playSound } from "../audio";
 

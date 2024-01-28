@@ -6,16 +6,23 @@ import { Car } from "./entities/Car";
 import { PopUpTrigger } from "./entities/PopUpTrigger";
 import { DEBUG } from "./constants";
 import { UFO } from "./entities/UFO";
+import {
+  createObjective1,
+  createObjective2,
+  createObjective3,
+  createObjective4,
+} from "./entities/Objective";
 
 export const generateLevel = (): Entity[] => {
   if (DEBUG) {
-    return [
-      new Car(1000),
-      new UFO(2000),
-    ];
+    return [new Car(1000), new UFO(2000)];
   }
 
   return [
+    createObjective1(200),
+    createObjective2(300),
+    createObjective3(400),
+    createObjective4(500),
     new Cactus(800),
     new Cactus(1600),
     new Cactus(2400),

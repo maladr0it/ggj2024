@@ -50,6 +50,32 @@ canvas {
   background: white;
 }
 
+@keyframes objective-complete {
+  0% {
+    transform: none;
+    background-color: transparent;
+  }
+  2% {
+    transform: translateY(-0.5em);
+    background-color: lime;
+  }
+  8% {
+    transform: none;
+  }
+  100% {
+    background-color: transparent;
+  }
+
+}
+
+.objective {
+  display: inline-block;
+}
+
+.objective-complete{
+  text-decoration: line-through;
+  animation: objective-complete 3s;
+}
 
 /* Copyright 2017 The Chromium Authors
  * Use of this source code is governed by a BSD-style license that can be
