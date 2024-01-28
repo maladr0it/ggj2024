@@ -3,9 +3,7 @@ import { Cactus } from "./entities/Cactus";
 import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
 import { Car } from "./entities/Car";
-import { PopUpTrigger } from "./entities/PopUpTrigger";
 import { DEBUG } from "./constants";
-import { UFO } from "./entities/UFO";
 import { Tornado } from "./entities/Tornado";
 
 export const generateLevel = (): Entity[] => {

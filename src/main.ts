@@ -87,6 +87,7 @@ const tick = () => {
           const hitboxA = entityA.getVelocityDependentHitbox(dt);
           const hitboxB = entityB.getVelocityDependentHitbox(dt);
           if (hitboxA.intersects(hitboxB)) {
+            // @ts-ignore
             entityA.onCollide(entityB);
             log_write(
               `${entityA.constructor.name} colliding with ${entityB.constructor.name}`

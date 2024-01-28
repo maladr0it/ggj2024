@@ -102,6 +102,5 @@ export abstract class Entity {
     return this.sprite.getBounds().intersects(hitbox);
   }
 
-  onCollide(other: Entity) {}
   cleanup() {}
 }
