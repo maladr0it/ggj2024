@@ -6,7 +6,7 @@ import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
 import { DinoSalsa } from "./DinoSalsa";
-import { Cactus } from "./Cactus";
+import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
 
 // Assets
@@ -93,7 +93,7 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    if (other instanceof Cactus) {
+    if (other instanceof Cactus && other.state === CactusState.Alive) {
       this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
