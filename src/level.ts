@@ -21,33 +21,38 @@ export const generateLevel = (): Entity[] => {
   }
 
   return [
-    new Cactus(i(800)),
-    new Cactus(i(800)),
-    new Cactus(i(800)),
+    // new Cactus(i(800)),
+    // new Cactus(i(800)),
+    // new Cactus(i(800)),
 
-    // car surprise
-    new Car(i(200)),
+    // // car surprise
+    // new Car(i(200)),
 
-    new Cactus(i(200)),
-    new Cactus(i(25)),
+    // new Cactus(i(200)),
+    // new Cactus(i(25)),
 
     // tornado
-    new Tornado(i(300)),
-    new Cactus(i(75)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    // cactus gap
-    new Cactus(i(125)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
+    // new Tornado(i(300)),
+    // new Cactus(i(75)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // // cactus gap
+    // new Cactus(i(125)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // // cactus gap
+    // new Cactus(i(125)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+
     // surprise
-    new Car(i(600)),
+    new Car(i(2000)),
 
     // thread the needle
     new Cactus(i(1000)),
