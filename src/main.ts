@@ -20,7 +20,7 @@ import {
 
 import "./style.css";
 
-// PIXI.settings.ROUND_PIXELS = false;
+PIXI.settings.ROUND_PIXELS = true;
 
 const canvasWrapperEl = document.getElementById("canvas-wrapper")!;
 const logEl = document.getElementById("log")!;
