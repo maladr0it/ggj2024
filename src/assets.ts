@@ -15,6 +15,7 @@ const loadAssets = async () =>
       jump: new ToneAudioBuffer().load("audio/jump.mp3"),
       die: new ToneAudioBuffer().load("audio/die.mp3"),
       bang: new ToneAudioBuffer().load("audio/bang.mp3"),
+      car: new ToneAudioBuffer().load("audio/car.mp3"),
     }),
   });
 

@@ -4,6 +4,7 @@ import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { Bullet } from "./Bullet";
 import { playSound } from "../audio";
+import { lerp } from "../utils/math";
 
 const animations: Record<string, PIXI.Texture[]> = {
   default: [await PIXI.Texture.fromURL("sprites/gun.png")],
@@ -32,7 +33,10 @@ export class GunPickup extends Entity {
       ) {
         this.coolOffTimer = 0;
         const bullet = new Bullet();
-        playSound("bang", true);
+
+        const sound = playSound("bang");
+        sound.playbackRate = lerp(0.8, 1.2, Math.random());
+
         bullet.spawn(
           this.sprite.parent,
           this.x + this.hitbox.width,

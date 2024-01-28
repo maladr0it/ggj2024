@@ -1,9 +1,11 @@
 import * as PIXI from "pixi.js";
 
 import { GROUND_LEVEL } from "../constants";
-import { state } from "../state";
+import { GameStatus, setGameStatus, state } from "../state";
 import { Entity } from "./Entity";
 import { log_write } from "../log";
+import { Player } from "tone";
+import { playSound } from "../audio";
 
 const animations = {
   idle: [await PIXI.Texture.fromURL("sprites/car1.png")],
@@ -12,7 +14,8 @@ const animations = {
 const CAR_SPEED = 2_000;
 
 export class Car extends Entity {
-  speed = CAR_SPEED;
+  speed = 0;
+  started = false;
 
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "idle");
@@ -21,8 +24,22 @@ export class Car extends Entity {
     this.y = y;
   }
 
+  sound?: Player;
+
   update(dt: number) {
-    // move the car
+    // if on-screen, speed up the car
+    if (
+      !this.started &&
+      state.clipping.mask.getBounds().intersects(this.hitbox)
+    ) {
+      this.started = true;
+      this.speed = CAR_SPEED;
+      this.sound = playSound("car");
+    }
     this.x -= (this.speed + state.runSpeed) * dt;
+  }
+
+  cleanup(): void {
+    this.sound?.dispose();
   }
 }
