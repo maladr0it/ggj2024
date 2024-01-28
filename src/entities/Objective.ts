@@ -1,6 +1,6 @@
 import { Entity } from "./Entity";
 import { state } from "../state";
-import { GROUND_LEVEL } from "../constants";
+import { GROUND_LEVEL, SCENE_SIZE } from "../constants";
 import { Dino } from "./Dino";
 import * as PIXI from "pixi.js";
 import { sprites } from "../assets";
@@ -8,12 +8,13 @@ import { sprites } from "../assets";
 export class Objective extends Entity {
   offset: number;
   onCompleted: () => void;
+  total_time = 0;
   constructor(
     offset: number,
-    texture: PIXI.Texture,
+    textures: PIXI.Texture[],
     onCompleted: () => void = () => console.log("well done")
   ) {
-    super({ default: [texture] }, "default");
+    super({ default: textures }, "default");
     this.x = offset;
     this.offset = offset;
     this.sprite.y = GROUND_LEVEL;
@@ -25,29 +26,21 @@ export class Objective extends Entity {
       this.despawn();
     }
   }
-  update() {
+  update(dt: number) {
+    this.total_time += dt;
+    this.y = GROUND_LEVEL / -4 + Math.sin(this.total_time * 5) * 60;
     this.x = this.offset - state.distance;
+    if (state.distance > this.offset) {
+      this.x = SCENE_SIZE.x + (this.x % SCENE_SIZE.x);
+    }
   }
 }
 
-export const createObjective1 = (x: number) =>
-  new Objective(x, sprites["cactus-burn1.png"], () => {
-    document.querySelector(".objective-1")!.classList.add("objective-complete");
-  });
-
-export const createObjective2 = (x: number) =>
-  new Objective(x, sprites["cactus-burn1.png"], () => {
-    document.querySelector(".objective-2")!.classList.add("objective-complete");
-  });
-
-export const createObjective3 = (x: number) =>
-  new Objective(x, sprites["cactus-burn1.png"], () => {
-    document.querySelector(".objective-3")!.classList.add("objective-complete");
-  });
-
-export const createObjective4 = (x: number) =>
-  new Objective(x, sprites["cactus-burn1.png"], () => {
-    document.querySelector(".objective-4")!.classList.add("objective-complete");
+export const createEthCableObjective = (x: number) =>
+  new Objective(x, [sprites["eth-cable.png"]], () => {
+    document
+      .querySelector(".objective-eth-cable")!
+      .classList.add("objective-complete");
   });
 
 export const resetObjectives = () => {
