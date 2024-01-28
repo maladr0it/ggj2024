@@ -19,6 +19,7 @@ export enum CactusState {
 
 export class Cactus extends Entity {
   state = CactusState.Alive;
+  killedBy: Bullet | null = null;
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "default");
     this.x = x;
@@ -32,6 +33,7 @@ export class Cactus extends Entity {
   onCollide(other: Entity): void {
     if (other instanceof Bullet) {
       this.playAnimation("burn");
+      this.killedBy ??= other;
       this.state = CactusState.Dead;
     }
   }
