@@ -16,7 +16,6 @@ export class Cactus extends Entity {
   }
 
   update(dt: number) {
-    // this.x = this.initialX - state.distance;
     this.x -= state.runSpeed * dt;
     if (this.isCollidingWith(state.dino.hitbox)) {
       state.dino.dieWithDecapitation();
