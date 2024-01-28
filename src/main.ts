@@ -13,7 +13,13 @@ import { Score, ScoreTicker } from "./score";
 import { assets } from "./assets";
 import { Background } from "./background";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, restartGame, setGameStatus, state } from "./state";
+import {
+  GameStatus,
+  getGameStatus,
+  restartGame,
+  setGameStatus,
+  state,
+} from "./state";
 
 import "./style.css";
 
@@ -42,8 +48,8 @@ const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
 state.scoreTicker.spawn(450, 10, scene);
 
 const gameOverMessage = PIXI.Sprite.from("sprites/text/game-over.png");
-gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2 // TODO: Use get size instead of hardcoding.
-gameOverMessage.y = SCENE_SIZE.y / 2 - 20 // TODO: Use get size instead of hardcoding.
+gameOverMessage.x = SCENE_SIZE.x / 2 - 189 / 2; // TODO: Use get size instead of hardcoding.
+gameOverMessage.y = SCENE_SIZE.y / 2 - 20; // TODO: Use get size instead of hardcoding.
 background.container.addChild(gameOverMessage);
 
 //
@@ -76,7 +82,7 @@ const tick = (dt: number) => {
 
     // @ts-ignore fallthrough
     case GameStatus.Dying:
-      if(state.gameStatusTimer > 20) {
+      if (state.gameStatusTimer > 20) {
         setGameStatus(GameStatus.GameOver);
       }
     case GameStatus.Playing:
@@ -91,6 +97,7 @@ const tick = (dt: number) => {
       for (const item of level) {
         item.update(dt);
       }
+      state.car.update(dt);
 
       // Update score.
       state.scoreTicker.update();
@@ -122,6 +129,8 @@ const start = () => {
   for (const item of level) {
     scene.addChild(item.sprite);
   }
+
+  state.car.spawn(scene, 80, GROUND_LEVEL);
 
   app.ticker.add(tick);
 };

@@ -2,16 +2,19 @@
 // game state
 //
 import { SCORE_MULTIPLIER } from "./constants";
+import { Car } from "./entities/Car";
 import { Dino } from "./entities/Dino";
 import { inputSource_create } from "./inputSource";
 import { ScoreTicker } from "./score";
 
 const keyboard = inputSource_create();
 const dino = new Dino();
+const car = new Car();
 
 export const state = {
   scoreTicker: new ScoreTicker(),
   dino,
+  car,
   keyboard,
   distance: 0, // distance the dino has travelled
   runSpeed: 10,
@@ -31,7 +34,6 @@ let status = GameStatus.Unstarted; // Don't mutate directly! Use e.g. startGame(
 export function getGameStatus() {
   return status;
 }
-
 
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
@@ -55,18 +57,16 @@ export function setGameStatus(newStatus: GameStatus) {
   }
 }
 
-export function restartGame() {
-  
-}
+export function restartGame() {}
 
 export function getScore() {
   return Math.floor(state.distance * SCORE_MULTIPLIER);
 }
 
 export function getHighScore() {
-  return parseInt(window.localStorage.getItem('dino-score') ?? '0');
+  return parseInt(window.localStorage.getItem("dino-score") ?? "0");
 }
 
 export function saveHighScore(newHighScore: number) {
-  window.localStorage.setItem('dino-score', JSON.stringify(newHighScore));
+  window.localStorage.setItem("dino-score", JSON.stringify(newHighScore));
 }
