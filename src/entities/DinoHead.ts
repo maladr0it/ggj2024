@@ -1,22 +1,18 @@
-import * as PIXI from "pixi.js";
-
 import { GRAVITY, GROUND_LEVEL } from "../constants";
 import { Entity } from "./Entity";
 import { state } from "../state";
+import { sprites } from "../assets";
 
 const HEAD_VEL_X = -100;
 const HEAD_VEL_Y = -500;
 
 const animations = {
-  default: [await PIXI.Texture.fromURL("sprites/dino-head.png")],
+  default: [sprites["dino/dino-head.png"]],
 };
 
 export class DinoHead extends Entity {
   worldX: number;
   groundY = GROUND_LEVEL + 28;
-
-  private dy = 0;
-  private dx = 0;
 
   constructor(worldX: number) {
     super(animations, "default");

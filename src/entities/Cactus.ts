@@ -1,15 +1,12 @@
-import * as PIXI from "pixi.js";
 import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { Bullet } from "./Bullet";
+import { sprites } from "../assets";
 
-const animations: Record<string, PIXI.Texture[]> = {
-  default: [await PIXI.Texture.fromURL("sprites/cactus1.png")],
-  burn: [
-    await PIXI.Texture.fromURL("sprites/cactus-burn1.png"),
-    await PIXI.Texture.fromURL("sprites/cactus-burn2.png"),
-  ],
+const animations = {
+  default: [sprites["cactus1.png"]],
+  burn: [sprites["cactus-burn1.png"], sprites["cactus-burn2.png"]],
 };
 
 export enum CactusState {

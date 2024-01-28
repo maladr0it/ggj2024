@@ -8,7 +8,7 @@ import { DEBUG } from "./constants";
 
 export const generateLevel = (): Entity[] => {
   if (DEBUG) {
-    return [];
+    return [new Car(1000)];
   }
 
   return [

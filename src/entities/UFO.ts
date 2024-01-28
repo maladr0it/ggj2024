@@ -6,17 +6,17 @@ import { GROUND_LEVEL } from "../constants";
 
 const animations = {
   idle: [
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-1.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-2.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-3.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-4.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-5.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-6.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-7.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-8.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-9.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-10.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo-11.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo1.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo2.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo3.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo4.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo5.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo6.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo7.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo8.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo9.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo10.png"),
+    await PIXI.Texture.fromURL("sprites/ufo/ufo 11.png"),
   ],
 };
 

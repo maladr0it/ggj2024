@@ -2,9 +2,10 @@ import * as PIXI from "pixi.js";
 import { Entity } from "./Entity";
 import { SCENE_SIZE } from "../constants";
 import { Cactus, CactusState } from "./Cactus";
+import { sprites } from "../assets";
 
-const animations: Record<string, PIXI.Texture[]> = {
-  default: [await PIXI.Texture.fromURL("sprites/bullet.png")],
+const animations = {
+  default: [sprites["bullet.png"]],
 };
 
 export class Bullet extends Entity {

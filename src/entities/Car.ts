@@ -5,7 +5,7 @@ import { GameStatus, setGameStatus, state } from "../state";
 import { Entity } from "./Entity";
 
 const animations = {
-  idle: [await PIXI.Texture.fromURL("sprites/car1.png")],
+  idle: [await PIXI.Texture.fromURL("sprites/car.png")],
 };
 
 const CAR_SPEED = 2_000;
