@@ -43,6 +43,27 @@ export const createEthCableObjective = (x: number) =>
       .classList.add("objective-complete");
   });
 
+export const createModemObjective = (x: number) =>
+  new Objective(x, [sprites["eth-cable.png"]], () => {
+    document
+      .querySelector(".objective-modem")!
+      .classList.add("objective-complete");
+  });
+
+export const createRouterObjective = (x: number) =>
+  new Objective(x, [sprites["eth-cable.png"]], () => {
+    document
+      .querySelector(".objective-router")!
+      .classList.add("objective-complete");
+  });
+
+export const createReconnectObjective = (x: number) =>
+  new Objective(x, [sprites["eth-cable.png"]], () => {
+    document
+      .querySelector(".objective-reconnect")!
+      .classList.add("objective-complete");
+  });
+
 export const resetObjectives = () => {
   for (const element of document.querySelectorAll(".objective")) {
     element.classList.remove("objective-complete");
