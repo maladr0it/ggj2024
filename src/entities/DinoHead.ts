@@ -4,9 +4,7 @@ import { GRAVITY, GROUND_LEVEL } from "../constants";
 import { state } from "../state";
 
 // Assets
-const anim = [
-  await PIXI.Texture.fromURL("sprites/dino-head.png"),
-];
+const anim = [await PIXI.Texture.fromURL("sprites/dino-head.png")];
 
 export class DinoHead {
   private initialX = 0;
@@ -16,7 +14,7 @@ export class DinoHead {
   constructor() {
     this.sprite = new PIXI.AnimatedSprite(anim);
     this.sprite.anchor.set(0, 1);
-    this.dy = -5;
+    this.dy = -600;
   }
 
   set x(x: number) {

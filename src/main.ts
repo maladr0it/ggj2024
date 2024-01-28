@@ -44,10 +44,14 @@ state.scoreTicker.spawn(450, 10, background.container);
 //
 // Main loop
 //
-const tick = (dt: number) => {
-  // const { activeButtons, pressedButtons } = inputSource_read(keyboard);
+let then = Date.now();
 
-  // update status timer for auto-transitions
+const tick = (now: number) => {
+  requestAnimationFrame(tick);
+
+  const dt = (now - then) / 1000;
+  then = now;
+
   state.gameStatusTimer += dt;
 
   switch (getGameStatus()) {
@@ -60,6 +64,7 @@ const tick = (dt: number) => {
 
     // After game starts have dino jump once before dino starts moving
     case GameStatus.Initializing:
+      background.update(dt);
       state.dino.update(dt);
 
       if (state.dino.currentAnimation !== "jumping") {
@@ -79,7 +84,7 @@ const tick = (dt: number) => {
       state.dino.update(dt);
 
       // Move the ground.
-      state.distance += state.runSpeed;
+      state.distance += state.runSpeed * dt;
       background.setPosition(state.distance);
       for (const item of level) {
         item.update(dt);
@@ -94,7 +99,7 @@ const tick = (dt: number) => {
       break;
   }
 
-  log_write("distance:", state.distance);
+  log_write("distance:", Math.floor(state.distance));
 
   logEl.innerText = log_getContent();
   log_clear();
@@ -109,7 +114,7 @@ const start = () => {
     scene.addChild(item.sprite);
   }
 
-  app.ticker.add(tick);
+  requestAnimationFrame(tick);
 };
 
 const onResize = () => {

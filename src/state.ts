@@ -41,7 +41,7 @@ export function setGameStatus(newStatus: GameStatus) {
   } else if (status === GameStatus.Playing) {
     state.runSpeed = RUN_SPEED;
   } else if (status === GameStatus.Dying) {
-    state.runSpeed = 3;
+    state.runSpeed = RUN_SPEED / 5;
   } else if (status === GameStatus.GameOver) {
     state.runSpeed = 0;
     state.dino.sprite.stop();

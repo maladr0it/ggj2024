@@ -99,7 +99,7 @@ export class Background {
   }
 
   initialWidth = 45;
-  revealTween = new Tween(30);
+  revealTween = new Tween(1 / 2);
   updateMask() {
     this.mask.beginFill(0xffffff);
     const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
