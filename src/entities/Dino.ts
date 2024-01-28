@@ -119,10 +119,10 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    if (other instanceof Cactus && other.state === CactusState.Alive) {
-      this.dieWithDecapitation();
-      setGameStatus(GameStatus.GameOver);
-    }
+    // if (other instanceof Cactus && other.state === CactusState.Alive) {
+    //   this.dieWithDecapitation();
+    //   setGameStatus(GameStatus.GameOver);
+    // }
     if (other instanceof Car) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);

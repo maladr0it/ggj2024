@@ -34,6 +34,22 @@ const app = new PIXI.Application({
 
 app.stage.addChild(scene);
 
+const checkCollisions = (dt: number) => {
+  const entities = [...state.entities];
+  const hitboxes = entities.map(entity =>
+    entity.getVelocityDependentHitbox(dt)
+  );
+
+  for (let i = 0; i < entities.length; i++) {
+    for (let j = i + 1; j < entities.length; j++) {
+      if (hitboxes[i].intersects(hitboxes[j])) {
+        entities[i].onCollide(entities[j]);
+        entities[j].onCollide(entities[i]);
+      }
+    }
+  }
+};
+
 //
 // Main loop
 //
@@ -80,21 +96,7 @@ const tick = () => {
       state.gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
 
-      for (const entityA of state.entities) {
-        for (const entityB of state.entities) {
-          if (entityA === entityB) continue;
-
-          const hitboxA = entityA.getVelocityDependentHitbox(dt);
-          const hitboxB = entityB.getVelocityDependentHitbox(dt);
-          if (hitboxA.intersects(hitboxB)) {
-            // @ts-ignore
-            entityA.onCollide(entityB);
-            log_write(
-              `${entityA.constructor.name} colliding with ${entityB.constructor.name}`
-            );
-          }
-        }
-      }
+      checkCollisions(dt);
       break;
 
     case GameStatus.GameOver:
@@ -140,11 +142,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 

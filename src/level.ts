@@ -14,7 +14,10 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    return [new Tornado(1000)];
+    const stressCacti = Array(1000)
+      .fill(0)
+      .map((_, i) => new Cactus(i * 100));
+    return [new Tornado(1000), ...stressCacti];
   }
 
   return [
