@@ -3,6 +3,7 @@
 //
 import { Background } from "./background";
 import { GROUND_LEVEL, SCENE_SIZE, SCORE_MULTIPLIER } from "./constants";
+import { Car } from "./entities/Car";
 import { Dino } from "./entities/Dino";
 import { inputSource_create } from "./inputSource";
 import { level } from "./level";
@@ -22,12 +23,14 @@ type GameState = {
   distance: number,
   runSpeed: number,
   gameStatusTimer: number,
+  car: Car,
 }
 
 function generateFreshGameState(): GameState {
   const dino = new Dino();
   const keyboard = inputSource_create();
   const background = new Background(SCENE_SIZE.x, SCENE_SIZE.y);
+  const car = new Car();
   
   // TODO: Clean up
   window.setTimeout(() => background.spawn(), 10);
@@ -37,6 +40,7 @@ function generateFreshGameState(): GameState {
     dino,
     keyboard,
     background,
+    car,
     distance: 0, // distance the dino has travelled
     runSpeed: 10,
     gameStatusTimer: 0,
@@ -56,7 +60,6 @@ let status = GameStatus.Unstarted; // Don't mutate directly! Use e.g. startGame(
 export function getGameStatus() {
   return status;
 }
-
 
 export function setGameStatus(newStatus: GameStatus) {
   status = newStatus;
@@ -129,9 +132,9 @@ export function getScore() {
 }
 
 export function getHighScore() {
-  return parseInt(window.localStorage.getItem('dino-score') ?? '0');
+  return parseInt(window.localStorage.getItem("dino-score") ?? "0");
 }
 
 export function saveHighScore(newHighScore: number) {
-  window.localStorage.setItem('dino-score', JSON.stringify(newHighScore));
+  window.localStorage.setItem("dino-score", JSON.stringify(newHighScore));
 }

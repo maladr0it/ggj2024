@@ -11,7 +11,14 @@ import { level } from "./level";
 
 import { assets } from "./assets";
 import * as Tone from "tone";
-import { GameStatus, getGameStatus, resetGame, scene, setGameStatus, state } from "./state";
+import {
+  GameStatus,
+  getGameStatus,
+  resetGame,
+  scene,
+  setGameStatus,
+  state,
+} from "./state";
 
 import "./style.css";
 
@@ -75,7 +82,7 @@ const tick = (dt: number) => {
 
     // @ts-ignore fallthrough
     case GameStatus.Dying:
-      if(state.gameStatusTimer > 20) {
+      if (state.gameStatusTimer > 20) {
         setGameStatus(GameStatus.GameOver);
       }
     case GameStatus.Playing:
@@ -90,6 +97,7 @@ const tick = (dt: number) => {
       for (const item of level) {
         item.update(dt);
       }
+      state.car.update(dt);
 
       // Update score.
       state.scoreTicker.update();
@@ -114,6 +122,16 @@ const tick = (dt: number) => {
 
 const start = () => {
   resetGame();
+  // scene.addChild(background.container);
+
+  // state.dino.spawn(scene, 20, GROUND_LEVEL);
+
+  // for (const item of level) {
+  //   scene.addChild(item.sprite);
+  // }
+
+  // state.car.spawn(scene, 80, GROUND_LEVEL);
+
   app.ticker.add(tick);
 };
 
