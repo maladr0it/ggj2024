@@ -94,8 +94,6 @@ export function setGameStatus(newStatus: GameStatus) {
   } else if (status === GameStatus.Playing) {
     state.runSpeed = RUN_SPEED;
   } else if (status === GameStatus.GameOver) {
-    state.dino.sprite.stop();
-
     // Update high score if previous one was beaten.
     if (getScore() > getHighScore()) {
       saveHighScore(getScore());

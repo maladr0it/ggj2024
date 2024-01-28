@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { SCENE_SIZE, SCENE_TOP } from "./constants";
+import { DEATH_DECEL, SCENE_SIZE, SCENE_TOP } from "./constants";
 
 import * as Tone from "tone";
 import {
@@ -61,6 +61,8 @@ const tick = () => {
   // Update score.
   state.scoreTicker.update();
 
+  log_write("run speed", state.runSpeed);
+
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
       if (state.keyboard.activeButtons.has("jump")) {
@@ -86,7 +88,7 @@ const tick = () => {
       break;
 
     case GameStatus.GameOver:
-      state.runSpeed = Math.max(0, state.runSpeed - 500 * dt);
+      state.runSpeed = Math.max(state.runSpeed - dt * DEATH_DECEL, 0);
 
       state.gameOverMessage.visible = true;
 
