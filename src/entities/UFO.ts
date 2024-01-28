@@ -21,10 +21,9 @@ const animations = {
 
 export class UFO extends Entity {
   velocity = { x: 100, y: 0 };
-  base_y = GROUND_LEVEL / 2;
-  total_time = 0;
+  base_y = GROUND_LEVEL - 80;
 
-  constructor(x = 0, y = GROUND_LEVEL - 100) {
+  constructor(x = 0, y = GROUND_LEVEL - 120) {
     super(animations, "idle");
     this.x = x;
     this.y = y;
@@ -34,8 +33,7 @@ export class UFO extends Entity {
 
   update(dt: number) {
     // move the ufo
-    this.total_time += dt;
     this.x -= (this.velocity.x + state.runSpeed) * dt;
-    this.y = this.base_y + Math.sin(this.total_time * 3.5) * GROUND_LEVEL;
+    this.y = this.base_y + Math.sin(state.distance / 100) * 35;
   }
 }

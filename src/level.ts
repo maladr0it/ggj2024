@@ -20,8 +20,11 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    return [new CactusWithGun(i(1000))];
-    // return [new SurpriseCactus(i(1000))],
+    return [
+      new UFO(i(1000)),
+      new CactusWithGun(i(1000)),
+      new SurpriseCactus(i(1000))
+    ];
   }
 
   return [
