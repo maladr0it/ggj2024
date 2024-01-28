@@ -7,7 +7,7 @@ export interface LevelEntity {
   sprite: PIXI.AnimatedSprite;
 }
 
-export const level: LevelEntity[] = [
+export const generateLevel = (): LevelEntity[] => [
   new Cactus(1000),
   new Cactus(2000),
   new GunPickup(3000),
