@@ -7,8 +7,7 @@ const animations: Record<string, PIXI.Texture[]> = {
 };
 
 export class Bullet extends Entity {
-  private dx = 10;
-
+  dx = 10;
   constructor() {
     super(animations, "default");
     this.sprite.anchor.set(0, 0.12);

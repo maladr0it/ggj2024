@@ -83,6 +83,20 @@ const tick = () => {
       state.gameOverMessage.visible = false;
       state.scoreTicker.container.visible = true;
 
+      for (const entityA of state.entities) {
+        for (const entityB of state.entities) {
+          if (entityA === entityB) continue;
+
+          const hitboxA = entityA.getVelocityDependentHitbox(dt);
+          const hitboxB = entityB.getVelocityDependentHitbox(dt);
+          if (hitboxA.intersects(hitboxB)) {
+            entityA.onCollide(entityB);
+            log_write(
+              `${entityA.constructor.name} colliding with ${entityB.constructor.name}`
+            );
+          }
+        }
+      }
       break;
 
     case GameStatus.GameOver:

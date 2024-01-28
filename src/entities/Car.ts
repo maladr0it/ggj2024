@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GROUND_LEVEL } from "../constants";
-import { GameStatus, setGameStatus, state } from "../state";
+import { state } from "../state";
 import { Entity } from "./Entity";
 
 const animations = {
@@ -23,10 +23,5 @@ export class Car extends Entity {
   update(dt: number) {
     // move the car
     this.x -= (this.speed + state.runSpeed) * dt;
-
-    if (this.isCollidingWith(state.dino.hitbox)) {
-      state.dino.dieFromCar();
-      setGameStatus(GameStatus.GameOver);
-    }
   }
 }
