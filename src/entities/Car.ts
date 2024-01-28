@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GROUND_LEVEL } from "../constants";
-import { GameStatus, setGameStatus, state } from "../state";
+import { state } from "../state";
 import { Entity } from "./Entity";
 import { log_write } from "../log";
 import { Player } from "tone";
