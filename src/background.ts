@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import { Tween } from "./utils/tween";
 import { assets } from "./assets";
+import { SCENE_TOP } from "./constants";
 
 interface ParallaxParams {
   texture: PIXI.Texture;
@@ -92,7 +93,7 @@ export class Clipping {
     if (this.revealed) this.revealTween.update(dt);
     this.mask.beginFill(0xffffff);
     const revealedWidth = this.revealTween.lerp(this.initialWidth, this.width);
-    this.mask.drawRect(0, 0, revealedWidth, this.height);
+    this.mask.drawRect(0, -SCENE_TOP, revealedWidth, this.height + SCENE_TOP);
   }
 }
 
