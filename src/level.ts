@@ -6,12 +6,12 @@ import { Car } from "./entities/Car";
 import { PopUpTrigger } from "./entities/PopUpTrigger";
 import { DEBUG } from "./constants";
 import { UFO } from "./entities/UFO";
+import { Tornado } from "./entities/Tornado";
 
 export const generateLevel = (): Entity[] => {
   if (DEBUG) {
     return [
-      new Car(1000),
-      new UFO(2000),
+      new Tornado(1000),
     ];
   }
 

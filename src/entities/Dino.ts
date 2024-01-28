@@ -8,6 +8,7 @@ import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
 import { sprites } from "../assets";
 import { Bullet } from "./Bullet";
+import { Tornado } from "./Tornado";
 
 const animations = {
   running: [sprites["dino/dino-run1.png"], sprites["dino/dino-run2.png"]],
@@ -124,6 +125,9 @@ export class Dino extends Entity {
     if (other instanceof Bullet) {
       this.dieFromBullet();
       setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof Tornado && state.keyboard.activeButtons.has("jump")) {
+      this.dy = -800;
     }
   }
 }

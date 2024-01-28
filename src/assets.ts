@@ -55,6 +55,13 @@ const SPRITE_PATHS = [
   "ufo/ufo10.png",
   "ufo/ufo11.png",
 
+  // tornado
+  "tornado/tornado-1.png",
+  "tornado/tornado-2.png",
+  "tornado/tornado-3.png",
+  "tornado/tornado-4.png",
+  "tornado/tornado-5.png",
+
   // misc sprites
   "bullet.png",
   "cactus-burn1.png",
