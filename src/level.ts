@@ -5,6 +5,7 @@ import { Car } from "./entities/Car";
 import { DEBUG } from "./constants";
 import { Tornado } from "./entities/Tornado";
 import { UFO } from "./entities/UFO";
+import { Goal } from "./entities/Goal";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
