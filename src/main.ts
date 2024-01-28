@@ -6,7 +6,7 @@ import {
 } from "./inputSource";
 import { log_clear, log_getContent, log_write } from "./log";
 
-import { SCENE_SIZE, SCENE_TOP } from "./constants";
+import { DEATH_DECEL, SCENE_SIZE, SCENE_TOP } from "./constants";
 
 import * as Tone from "tone";
 import {
@@ -61,6 +61,8 @@ const tick = () => {
   // Update score.
   state.scoreTicker.update();
 
+  log_write("run speed", state.runSpeed);
+
   switch (getGameStatus()) {
     case GameStatus.Unstarted:
       if (state.keyboard.activeButtons.has("jump")) {
@@ -100,12 +102,11 @@ const tick = () => {
       break;
 
     case GameStatus.GameOver:
-      state.runSpeed *= 0.98;
+      state.runSpeed = Math.max(state.runSpeed - dt * DEATH_DECEL, 0);
 
-      const isDone = state.dino.deathState === "DEAD";
-      state.gameOverMessage.visible = isDone;
+      state.gameOverMessage.visible = true;
 
-      if (isDone && state.keyboard.activeButtons.has("jump")) {
+      if (state.runSpeed === 0 && state.keyboard.activeButtons.has("jump")) {
         resetGame();
         setGameStatus(GameStatus.Initializing);
       }
@@ -139,11 +140,11 @@ const onResize = () => {
 canvasWrapperEl.appendChild(app.view);
 
 window.addEventListener("resize", onResize);
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
   Tone.start();
   inputSource_handleKeyDown(state.keyboard, event.key);
 });
-document.addEventListener("keyup", (event) => {
+document.addEventListener("keyup", event => {
   inputSource_handleKeyUp(state.keyboard, event.key);
 });
 

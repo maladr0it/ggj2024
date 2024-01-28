@@ -103,4 +103,5 @@ export abstract class Entity {
   }
 
   onCollide(other: Entity) {}
+  cleanup() {}
 }

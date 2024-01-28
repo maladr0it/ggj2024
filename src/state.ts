@@ -94,9 +94,6 @@ export function setGameStatus(newStatus: GameStatus) {
   } else if (status === GameStatus.Playing) {
     state.runSpeed = RUN_SPEED;
   } else if (status === GameStatus.GameOver) {
-    state.runSpeed = RUN_SPEED / 10;
-    state.dino.sprite.stop();
-
     // Update high score if previous one was beaten.
     if (getScore() > getHighScore()) {
       saveHighScore(getScore());
@@ -106,7 +103,9 @@ export function setGameStatus(newStatus: GameStatus) {
 }
 
 export function resetGame() {
+  for (const entity of state.entities) entity.cleanup();
   scene.removeChildren();
+
   state = generateFreshGameState();
 
   scene.addChild(state.clipContainer);

@@ -20,10 +20,8 @@ const animations: Record<string, PIXI.Texture[]> = {
 };
 
 export class Dino extends Entity {
+  public alive = true;
   private prev_jumping = false;
-
-  deathState: "ALIVE" | "DYING" | "DEAD" = "ALIVE";
-  deathTimer = 2;
   private head: DinoHead | null = null;
   private salsa: DinoSalsa | null = null;
 
@@ -50,15 +48,7 @@ export class Dino extends Entity {
     this.dy += GRAVITY * dt;
     this.y = Math.min(this.y + this.dy * dt, GROUND_LEVEL);
 
-    if (this.deathState === "DYING") {
-      this.deathTimer -= dt;
-      if (this.deathTimer <= 0) {
-        this.deathState = "DEAD";
-      }
-      return;
-    }
-
-    if (this.deathState === "DEAD") return;
+    if (!this.alive) return;
 
     const isGrounded = this.y === GROUND_LEVEL;
 
@@ -82,29 +72,18 @@ export class Dino extends Entity {
   }
 
   dieWithDecapitation() {
-    // uncomment this to get decapitation
+    if (this.alive) {
+      this.alive = false;
+      this.playAnimation("decapitate");
 
-    // if (this.deathState === "ALIVE") {
-    //   this.deathState = "DYING";
-    //   this.playAnimation("decapitate");
-
-    //   this.head = new DinoHead();
-    //   this.head.spawn(state.clipContainer, this.x, this.y);
-    // }
-
-    // just testing roadkill anim
-    if (this.deathState === "ALIVE") {
-      this.deathState = "DYING";
-      this.playAnimation("roadkill");
-
-      this.salsa = new DinoSalsa();
-      this.salsa.spawn(state.scene, this.x - 120, GROUND_LEVEL);
+      this.head = new DinoHead();
+      this.head.spawn(state.clipContainer, this.x, this.y);
     }
   }
 
   dieFromCar() {
-    if (this.deathState === "ALIVE") {
-      this.deathState = "DYING";
+    if (this.alive) {
+      this.alive = false;
       this.playAnimation("roadkill");
 
       this.salsa = new DinoSalsa();
