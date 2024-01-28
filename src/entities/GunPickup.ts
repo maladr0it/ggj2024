@@ -14,7 +14,6 @@ export class GunPickup extends Entity {
   private initialX = 0;
   private pickedUp = false;
   private coolOffTimer = 0;
-  private bullets: Bullet[] = [];
 
   constructor(x = 0, y = GROUND_LEVEL) {
     super(animations, "default");
@@ -40,7 +39,6 @@ export class GunPickup extends Entity {
           this.x + this.hitbox.width,
           this.y - this.hitbox.height
         );
-        this.bullets.push(bullet);
       }
       this.coolOffTimer += dt;
     } else {
@@ -50,14 +48,5 @@ export class GunPickup extends Entity {
     if (this.isCollidingWith(state.dino.hitbox) && !this.pickedUp) {
       this.pickedUp = true;
     }
-
-    for (const bullet of this.bullets) {
-      bullet.update(dt);
-      if (bullet.x > SCENE_SIZE.x) {
-        this.bullets.splice(this.bullets.indexOf(bullet), 1);
-        bullet.despawn();
-      }
-    }
-    log_write("bullet count", this.bullets.length);
   }
 }

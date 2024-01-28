@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import { state } from "../state";
 
 const DEFAULT_ANIMATION_SPEED = 0.2;
 
@@ -28,6 +29,8 @@ export abstract class Entity {
     this.spawned = true;
 
     this.sprite.play();
+
+    state.entities.add(this);
   }
 
   set x(x: number) {
@@ -59,7 +62,10 @@ export abstract class Entity {
   }
 
   despawn() {
-    this.sprite.parent.removeChild(this.sprite);
+    const { entities } = state;
+    const { sprite } = this;
+    sprite.parent.removeChild(sprite);
+    entities.delete(this);
   }
 
   playAnimation(animName: string) {
