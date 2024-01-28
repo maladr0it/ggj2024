@@ -38,4 +38,8 @@ export class UFO extends Entity {
     this.x -= (this.velocity.x + state.runSpeed) * dt;
     this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
   }
+
+  onCollide(_other: Entity) {
+    // pass
+  }
 }

@@ -4,11 +4,11 @@ import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
 import { DinoSalsa } from "./DinoSalsa";
-import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
 import { sprites } from "../assets";
 import { Bullet } from "./Bullet";
 import { Tornado } from "./Tornado";
+import { UFO } from "./UFO";
 
 const DUCK_DY = 10000;
 
@@ -119,15 +119,19 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    if (other instanceof Cactus && other.state === CactusState.Alive) {
-      this.dieWithDecapitation();
-      setGameStatus(GameStatus.GameOver);
-    }
+    // if (other instanceof Cactus && other.state === CactusState.Alive) {
+    //   this.dieWithDecapitation();
+    //   setGameStatus(GameStatus.GameOver);
+    // }
     if (other instanceof Car) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);
     }
     if (other instanceof Bullet) {
+      this.dieFromBullet();
+      setGameStatus(GameStatus.GameOver);
+    }
+    if (other instanceof UFO) {
       this.dieFromBullet();
       setGameStatus(GameStatus.GameOver);
     }
