@@ -3,20 +3,21 @@ import * as PIXI from "pixi.js";
 import { GameStatus, setGameStatus, state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
+import { sprites } from "../assets";
 
 const animations = {
   idle: [
-    await PIXI.Texture.fromURL("sprites/ufo/ufo1.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo2.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo3.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo4.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo5.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo6.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo7.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo8.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo9.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo10.png"),
-    await PIXI.Texture.fromURL("sprites/ufo/ufo11.png"),
+    sprites["ufo/ufo1.png"],
+    sprites["ufo/ufo2.png"],
+    sprites["ufo/ufo3.png"],
+    sprites["ufo/ufo4.png"],
+    sprites["ufo/ufo5.png"],
+    sprites["ufo/ufo6.png"],
+    sprites["ufo/ufo7.png"],
+    sprites["ufo/ufo8.png"],
+    sprites["ufo/ufo9.png"],
+    sprites["ufo/ufo10.png"],
+    sprites["ufo/ufo11.png"],
   ],
 };
 

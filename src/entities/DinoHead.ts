@@ -4,7 +4,7 @@ import { state } from "../state";
 import { sprites } from "../assets";
 
 const HEAD_VEL_X = -100;
-const HEAD_VEL_Y = -500;
+const HEAD_VEL_Y = -200;
 
 const animations = {
   default: [sprites["dino/dino-head.png"]],
