@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 import { GROUND_LEVEL } from "../constants";
-import { state } from "../state";
+import { GameStatus, getGameStatus, state } from "../state";
 import { Entity } from "./Entity";
 import { log_write } from "../log";
 import { Player } from "tone";
@@ -36,8 +36,14 @@ export class Car extends Entity {
       this.speed = CAR_SPEED;
     }
     this.x -= (this.speed + state.runSpeed) * dt;
+
+    // start the sound before the car appears
     if (this.x < 1300) {
       this.sound ??= playSound("car");
+    }
+    // if we die before the car appears, the sound needs to stop
+    if (!this.started && getGameStatus() === GameStatus.GameOver) {
+      this.sound?.dispose();
     }
   }
 
