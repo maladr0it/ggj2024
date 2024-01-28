@@ -5,6 +5,6 @@ export const GROUND_LEVEL = 101;
 export const JUMP_VEL = -400;
 export const DEATH_DECEL = 750;
 export const RUN_SPEED = 360;
-export const SCORE_MULTIPLIER = 0.005; // Modifies rate score increases relative to distance
+export const SCORE_MULTIPLIER = 0.01; // Modifies rate score increases relative to distance
 
-export const DEBUG = false;
+export const DEBUG = true;

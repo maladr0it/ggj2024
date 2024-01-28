@@ -70,6 +70,7 @@ const SPRITE_PATHS = [
   "cloud.png",
   "ground.png",
   "gun.png",
+  "eth-cable.png",
 ] as const;
 
 const AUDIO_PATHS = ["bang.mp3", "car.mp3", "die.mp3", "jump.mp3"] as const;

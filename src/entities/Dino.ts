@@ -4,7 +4,6 @@ import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
 import { Entity } from "./Entity";
 import { DinoSalsa } from "./DinoSalsa";
-import { Cactus, CactusState } from "./Cactus";
 import { Car } from "./Car";
 import { sprites } from "../assets";
 import { Bullet } from "./Bullet";

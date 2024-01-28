@@ -15,25 +15,21 @@ export const generateLevel = (): Entity[] => {
   };
 
   if (DEBUG) {
-    return [new Goal(200), new UFO(1000)];
+    return [new UFO(i(1000))];
   }
 
   return [
-    // normal game
     new Cactus(i(800)),
     new Cactus(i(800)),
     new Cactus(i(800)),
-
     // car surprise
     new Car(i(200)),
-
     // double cactus
     new Cactus(i(200)),
     new Cactus(i(25)),
-
     // tornado
     new Tornado(i(300)),
-    new Cactus(i(100)),
+    new Cactus(i(75)),
     new Cactus(i(25)),
     new Cactus(i(25)),
     new Cactus(i(25)),
@@ -43,25 +39,27 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(25)),
     new Cactus(i(25)),
     new Cactus(i(25)),
-
+    // cactus gap
     new Cactus(i(125)),
     new Cactus(i(25)),
     new Cactus(i(25)),
-
+    // surprise
     new Car(i(600)),
+    // thread the needle
+    new Cactus(i(1000)),
+    new Cactus(i(125)),
+    new Cactus(i(150)),
 
     // // give gun and teach to use it
     // new GunPickup(3500),
     // new Cactus(4000),
     // new Cactus(4300),
     // new Cactus(4600),
-
     // // many cacti, shoot them
     // new Cactus(4000),
     // new Cactus(4010),
     // new Cactus(4020),
     // new Cactus(4030),
-
     // new PopUpTrigger({
     //   x: 4200,
     //   title: "Problem",
@@ -72,7 +70,6 @@ export const generateLevel = (): Entity[] => {
     //   title: "Problem",
     //   text: "🛜<br />Can't reach server",
     // }),
-
     // new Cactus(3200),
     // new Cactus(3500),
     // new Cactus(3800),
