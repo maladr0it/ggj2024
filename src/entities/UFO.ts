@@ -39,7 +39,7 @@ export class UFO extends Entity {
     this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
   }
 
-  onCollide(other: Entity) {
+  onCollide(_other: Entity) {
     // pass
   }
 }

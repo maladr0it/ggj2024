@@ -1,6 +1,5 @@
 import { Cactus } from "./entities/Cactus";
 
-import { GunPickup } from "./entities/GunPickup";
 import { Entity } from "./entities/Entity";
 import { Car } from "./entities/Car";
 import { DEBUG } from "./constants";
