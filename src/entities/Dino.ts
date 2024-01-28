@@ -175,7 +175,7 @@ export class Dino extends Entity {
         other.playAnimation("working");
         setTimeout(() => {
           window.location.href = "https://www.aol.com/";
-        }, 1400);
+        }, 1000);
       }, 300);
     }
   }
