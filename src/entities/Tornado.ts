@@ -2,7 +2,6 @@ import { state } from "../state";
 import { Entity } from "./Entity";
 import { GROUND_LEVEL } from "../constants";
 import { sprites } from "../assets";
-import { Dino } from "./Dino";
 
 const animations = {
   default: [
@@ -23,5 +22,9 @@ export class Tornado extends Entity {
 
   update(dt: number) {
     this.x -= state.runSpeed * dt;
+  }
+
+  onCollide(other: Entity): void {
+    // pass
   }
 }
