@@ -20,6 +20,7 @@ const animations: Record<string, PIXI.Texture[]> = {
 
 export class Dino extends Entity {
   private dy = 0;
+  private prev_jumping = false;
 
   deathState: "ALIVE" | "DYING" | "DEAD" = "ALIVE";
   deathTimer = 2;
@@ -58,7 +59,8 @@ export class Dino extends Entity {
     const isGrounded = this.y === GROUND_LEVEL;
 
     if (isGrounded) {
-      if (state.keyboard.activeButtons.has("jump")) {
+      if (state.keyboard.activeButtons.has("jump") && !this.prev_jumping) {
+        this.prev_jumping = true;
         this.dy = JUMP_VEL;
         playSound("jump");
       } else {
@@ -66,6 +68,12 @@ export class Dino extends Entity {
       }
     } else {
       this.playAnimation("jumping");
+    }
+
+    if (state.keyboard.activeButtons.has("jump")) {
+      this.prev_jumping = true;
+    } else {
+      this.prev_jumping = false;
     }
   }
 
