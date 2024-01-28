@@ -19,7 +19,6 @@ const keyboardMap = {
   ArrowLeft: "left",
   ArrowRight: "right",
   " ": "jump",
-  c: "action_b",
 } as const satisfies Record<string, InputButton>;
 
 const isInputKey = (key: string): key is keyof typeof keyboardMap => {
