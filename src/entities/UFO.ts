@@ -36,10 +36,6 @@ export class UFO extends Entity {
     // move the ufo
     this.total_time += dt;
     this.x -= (this.velocity.x + state.runSpeed) * dt;
-    this.y = this.base_y + Math.sin(this.total_time * 5) * GROUND_LEVEL;
-  }
-
-  onCollide(_other: Entity) {
-    // pass
+    this.y = this.base_y + Math.sin(this.total_time * 3.5) * GROUND_LEVEL;
   }
 }
