@@ -16,6 +16,7 @@ import {
   createModemObjective,
   createRouterObjective,
 } from "./entities/Objective";
+import { PopUpTrigger } from "./entities/PopUpTrigger";
 
 export const generateLevel = (): Entity[] => {
   let x = 0;
@@ -34,36 +35,61 @@ export const generateLevel = (): Entity[] => {
   }
 
   return [
-    new Cactus(i(800)),
-    new Cactus(i(800)),
+    // new Cactus(i(800)),
+    // new Cactus(i(800)),
+    // new Cactus(i(800)),
+
+    // //
+    // // car surprise
+    // new Car(i(200)),
+    // new Cactus(i(200)),
+    // new Cactus(i(25)),
+
+    // //
+    // // tornado
+    // new Tornado(i(300)),
+    // new Cactus(i(75)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // new Cactus(i(25)),
+    // // cactus gap
+    // new Cactus(i(150)),
+    // // cactus gap
+    // new Cactus(i(150)),
+    // // surprise
+    // new Car(i(650)),
+
+    // createEthCableObjective(i(100)),
+
+    // DBG
     new Cactus(i(800)),
 
-    //
-    // car surprise
-    new Car(i(200)),
+    new PopUpTrigger({
+      x: i(200),
+      text: "POPUP1",
+    }),
+
+    new Cactus(i(150)),
     new Cactus(i(200)),
-    new Cactus(i(25)),
+    new Cactus(i(250)),
 
-    //
-    // tornado
-    new Tornado(i(300)),
-    new Cactus(i(75)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    new Cactus(i(25)),
-    // cactus gap
-    new Cactus(i(150)),
-    // cactus gap
-    new Cactus(i(150)),
-    // surprise
-    new Car(i(650)),
+    new PopUpTrigger({
+      x: i(200),
+      text: "POPUP2",
+    }),
 
-    createEthCableObjective(i(100)),
+    new PopUpTrigger({
+      x: i(300),
+      text: "POPUP3",
+    }),
+
+    new Cactus(i(550)),
+    new Cactus(i(25)),
 
     // ghost cactuses
     new GhostCactus(i(400)),
@@ -114,8 +140,7 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(200)),
     new Spider(i(175)),
 
-    createModemObjective(i(200)),
-    createRouterObjective(i(200)),
+    // createRouterObjective(i(200)),
 
     new Cactus(i(250)),
     new Cactus(i(50)),
