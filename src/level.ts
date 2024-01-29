@@ -14,6 +14,7 @@ import { GunPickup } from "./entities/GunPickup";
 import {
   createEthCableObjective,
   createModemObjective,
+  createReconnectObjective,
   createRouterObjective,
 } from "./entities/Objective";
 import { PopUpTrigger } from "./entities/PopUpTrigger";
@@ -36,7 +37,7 @@ export const generateLevel = (): Entity[] => {
 
   return [
     new Cactus(i(800)),
-    new Cactus(i(800)),
+    new Cactus(i(400)),
     new Cactus(i(800)),
 
     //
@@ -45,7 +46,6 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(200)),
     new Cactus(i(25)),
 
-    //
     // tornado
     new Tornado(i(300)),
     new Cactus(i(75)),
@@ -60,33 +60,36 @@ export const generateLevel = (): Entity[] => {
     // cactus gap
     new Cactus(i(150)),
     // cactus gap
-    new Cactus(i(150)),
+    new Cactus(i(160)),
     // surprise
     new Car(i(650)),
 
     createEthCableObjective(i(100)),
 
+    // Popups
     new PopUpTrigger({
       x: i(200),
-      text: "POPUP1",
+      text: "⚠️<br />No network",
     }),
 
     new Cactus(i(150)),
     new Cactus(i(200)),
-    new Cactus(i(250)),
+    new Cactus(i(300)),
 
     new PopUpTrigger({
       x: i(200),
-      text: "POPUP2",
+      text: "🛜<br />Can't reach server",
     }),
 
     new PopUpTrigger({
       x: i(300),
-      text: "POPUP3",
+      text: "❌<br/>Absolutely offline",
     }),
 
     new Cactus(i(550)),
     new Cactus(i(25)),
+
+    createModemObjective(i(100)),
 
     // ghost cactuses
     new GhostCactus(i(400)),
@@ -137,15 +140,16 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(200)),
     new Spider(i(175)),
 
-    // createRouterObjective(i(200)),
+    createRouterObjective(i(200)),
 
+    // Surprise cactus
     new Cactus(i(250)),
     new Cactus(i(50)),
     new Cactus(i(200)),
     new Cactus(i(200)),
-
     new UFO(i(800)),
     new SurpriseCactus(i(400)),
+
     new GunPickup(i(600)),
     new Cactus(i(400)),
     new Cactus(i(400)),
@@ -153,12 +157,12 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(125)),
     new Cactus(i(125)),
 
-    createRouterObjective(i(200)),
-
     new CactusWithGun(i(350)),
-    new CactusWithGun(i(350)),
+    new CactusWithGun(i(1000)),
     new CactusWithGun(i(350)),
 
-    new Goal(i(800)),
+    createReconnectObjective(i(400)),
+    new Goal(i(1000)),
+    new Car(i(400)),
   ];
 };
