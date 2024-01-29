@@ -28,7 +28,7 @@ export class Objective extends Entity {
   }
   update(dt: number) {
     this.total_time += dt;
-    this.y = GROUND_LEVEL / -4 + Math.sin(this.total_time * 5) * 60;
+    // this.y = GROUND_LEVEL / -4 + Math.sin(this.total_time * 5) * 60;
     this.x = this.offset - state.distance;
     if (state.distance > this.offset) {
       this.x = SCENE_SIZE.x + (this.x % SCENE_SIZE.x);

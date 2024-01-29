@@ -9,4 +9,5 @@ export const SCORE_MULTIPLIER = 0.01; // Modifies rate score increases relative 
 
 export const DINO_X_POS = 0;
 
-export const DEBUG = true;
+export const DEBUG = !true;
+export const GOD_MODE = !true;

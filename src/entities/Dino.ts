@@ -1,4 +1,4 @@
-import { GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
+import { GOD_MODE, GRAVITY, GROUND_LEVEL, JUMP_VEL } from "../constants";
 import { GameStatus, setGameStatus, state } from "../state";
 import { playSound } from "../audio";
 import { DinoHead } from "./DinoHead";
@@ -135,27 +135,31 @@ export class Dino extends Entity {
   }
 
   onCollide(other: Entity): void {
-    if (other instanceof Cactus && other.state === CactusState.Alive) {
+    if (
+      !GOD_MODE &&
+      other instanceof Cactus &&
+      other.state === CactusState.Alive
+    ) {
       this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
-    if (other instanceof SurpriseCactus) {
+    if (!GOD_MODE && other instanceof SurpriseCactus) {
       this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
-    if (other instanceof Car) {
+    if (!GOD_MODE && other instanceof Car) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);
     }
-    if (other instanceof Bullet) {
+    if (!GOD_MODE && other instanceof Bullet) {
       this.dieFromBullet();
       setGameStatus(GameStatus.GameOver);
     }
-    if (other instanceof UFO) {
+    if (!GOD_MODE && other instanceof UFO) {
       this.dieFromCar();
       setGameStatus(GameStatus.GameOver);
     }
-    if (other instanceof Spider) {
+    if (!GOD_MODE && other instanceof Spider) {
       this.dieWithDecapitation();
       setGameStatus(GameStatus.GameOver);
     }
