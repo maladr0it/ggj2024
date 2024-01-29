@@ -163,19 +163,20 @@ export class Dino extends Entity {
       this.dy = -800;
     }
     if (other instanceof Goal) {
-      // @ts-ignore
-      document.getElementById("no-internet-message").innerText = "Reconnecting..."
-      // @ts-ignore
-      document.getElementById("error-information-popup-container").innerHTML = ""
-      
+      if (this.hasWon) return;
+      document.getElementById("no-internet-message")!.innerText =
+        "Reconnecting...";
+      document.getElementById("error-information-popup-container")!.innerHTML =
+        "";
+
       state.runSpeed = 0;
       this.hasWon = true;
       setTimeout(() => {
-        playSound("win");
+        const player = playSound("win");
         other.playAnimation("working");
-        setTimeout(() => {
+        player.onstop = () => {
           window.location.href = "https://www.aol.com/";
-        }, 1400);
+        };
       }, 300);
     }
   }
