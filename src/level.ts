@@ -64,6 +64,8 @@ export const generateLevel = (): Entity[] => {
     // surprise
     new Car(i(650)),
 
+    new UFO(i(200)),
+
     createEthCableObjective(i(100)),
 
     // Popups
@@ -147,9 +149,9 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(50)),
     new Cactus(i(200)),
     new Cactus(i(200)),
-    new UFO(i(800)),
     new SurpriseCactus(i(400)),
 
+    // Guns
     new GunPickup(i(600)),
     new Cactus(i(400)),
     new Cactus(i(400)),
@@ -158,11 +160,11 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(125)),
 
     new CactusWithGun(i(350)),
-    new CactusWithGun(i(1000)),
-    new CactusWithGun(i(350)),
+    new CactusWithGun(i(800)),
+    new CactusWithGun(i(300)),
 
     createReconnectObjective(i(400)),
-    new Goal(i(1000)),
-    new Car(i(400)),
+    new Goal(i(800)),
+    new Car(i(200)),
   ];
 };
