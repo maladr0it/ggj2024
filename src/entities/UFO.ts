@@ -19,11 +19,14 @@ const animations = {
   ],
 };
 
-export class UFO extends Entity {
-  velocity = { x: 100, y: 0 };
-  base_y = GROUND_LEVEL - 80;
+const UFO_SPEED = 100;
 
-  constructor(x = 0, y = GROUND_LEVEL - 120) {
+export class UFO extends Entity {
+  speed = 0;
+  started = false;
+  base_y = GROUND_LEVEL - 150;
+
+  constructor(x = 0, y = GROUND_LEVEL - 160) {
     super(animations, "idle");
     this.x = x;
     this.y = y;
@@ -32,8 +35,16 @@ export class UFO extends Entity {
   }
 
   update(dt: number) {
-    // move the ufo
-    this.x -= (this.velocity.x + state.runSpeed) * dt;
-    this.y = this.base_y + Math.sin(state.distance / 100) * 35;
+    // if on-screen, speed up the ufo
+    if (
+      !this.started &&
+      state.clipping.mask.getBounds().intersects(this.hitbox)
+    ) {
+      this.started = true;
+      this.speed = UFO_SPEED;
+    }
+    this.x -= (this.speed + state.runSpeed) * dt;
+
+    this.y = this.base_y + Math.sin(state.distance / 100) * 30;
   }
 }

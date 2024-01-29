@@ -58,7 +58,7 @@ export const generateLevel = (): Entity[] => {
     // ghost cactuses
     new GhostCactus(i(400)),
     new GhostCactus(i(400)),
-    new GhostCactus(i(400)),
+    new GhostCactus(i(400)),    
     new GhostCactus(i(25)),
     new GhostCactus(i(25)),
     new GhostCactus(i(25)),
@@ -109,6 +109,7 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(200)),
     new Cactus(i(200)),
 
+    new UFO(i(800)),
     new SurpriseCactus(i(400)),
     new GunPickup(i(600)),
     new Cactus(i(400)),
@@ -118,6 +119,8 @@ export const generateLevel = (): Entity[] => {
     new Cactus(i(125)),
 
     new CactusWithGun(i(400)),
+
+    
     //
 
     new Goal(i(800)),
