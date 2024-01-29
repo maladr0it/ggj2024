@@ -35,39 +35,36 @@ export const generateLevel = (): Entity[] => {
   }
 
   return [
-    // new Cactus(i(800)),
-    // new Cactus(i(800)),
-    // new Cactus(i(800)),
-
-    // //
-    // // car surprise
-    // new Car(i(200)),
-    // new Cactus(i(200)),
-    // new Cactus(i(25)),
-
-    // //
-    // // tornado
-    // new Tornado(i(300)),
-    // new Cactus(i(75)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // new Cactus(i(25)),
-    // // cactus gap
-    // new Cactus(i(150)),
-    // // cactus gap
-    // new Cactus(i(150)),
-    // // surprise
-    // new Car(i(650)),
-
-    // createEthCableObjective(i(100)),
-
-    // DBG
     new Cactus(i(800)),
+    new Cactus(i(800)),
+    new Cactus(i(800)),
+
+    //
+    // car surprise
+    new Car(i(200)),
+    new Cactus(i(200)),
+    new Cactus(i(25)),
+
+    //
+    // tornado
+    new Tornado(i(300)),
+    new Cactus(i(75)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    new Cactus(i(25)),
+    // cactus gap
+    new Cactus(i(150)),
+    // cactus gap
+    new Cactus(i(150)),
+    // surprise
+    new Car(i(650)),
+
+    createEthCableObjective(i(100)),
 
     new PopUpTrigger({
       x: i(200),
@@ -94,7 +91,7 @@ export const generateLevel = (): Entity[] => {
     // ghost cactuses
     new GhostCactus(i(400)),
     new GhostCactus(i(400)),
-    new GhostCactus(i(400)),    
+    new GhostCactus(i(400)),
     new GhostCactus(i(25)),
     new GhostCactus(i(25)),
     new GhostCactus(i(25)),
