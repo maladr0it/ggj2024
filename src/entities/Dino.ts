@@ -172,8 +172,8 @@ export class Dino extends Entity {
       state.runSpeed = 0;
       this.hasWon = true;
       setTimeout(() => {
-        const player = playSound("win");
         other.playAnimation("working");
+        const player = playSound("win");
         player.onstop = () => {
           window.location.href = "https://www.aol.com/";
         };
