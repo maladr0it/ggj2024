@@ -161,7 +161,7 @@ export const generateLevel = (): Entity[] => {
 
     new CactusWithGun(i(350)),
     new CactusWithGun(i(800)),
-    new CactusWithGun(i(300)),
+    new CactusWithGun(i(350)),
 
     createReconnectObjective(i(400)),
     new Goal(i(800)),
